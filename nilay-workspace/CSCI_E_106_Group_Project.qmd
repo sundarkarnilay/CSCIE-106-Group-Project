@@ -2,7 +2,7 @@
 title: "HARVARD EXTENSION SCHOOL"
 subtitle: "EXT CSCI E-106 Model Data Class Special Project Template"
 author:
-- Author One
+- Nilay Sundarkar
 - Author Two
 - Author Three
 - Author Four
