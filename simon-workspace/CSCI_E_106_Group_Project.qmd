@@ -1,0 +1,177 @@
+---
+title: "HARVARD EXTENSION SCHOOL"
+subtitle: "EXT CSCI E-106 Model Data Class Special Project Template"
+author:
+- Author One
+- Author Two
+- Author Three
+- Author Four
+
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: margin=1.3cm
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+  html_document:
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Data
+
+Refer to the **Housing prices in Ames, Iowa**
+
+```         
+2930 observations, 82 variables
+```
+
+```{r}
+#Step 0: Data Preparations
+#install.packages("visdat")
+library(readr)
+library(visdat)
+# Checking for NA, or missing data using graphics 
+ames_data <- read_csv("ames.csv")
+vis_miss(ames_data)
+str(ames_data)
+```
+
+## **Description**
+
+Data set contains information from the Ames Assessor's Office used in
+computing assessed values for individual residential properties sold in
+Ames, IA from 2006 to 2010. See
+[here](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt) for
+detailed variable descriptions.
+
+## **Objective**
+
+Using the data build a prediction model using explanatory variables or
+predictors to allow a typical buyer or real estate agent to sit down and
+estimate the selling price of a house "SalePrice" (It is a continuous
+variable) is the response variable.
+
+## Due Date: May 6, 2024 at 11:59 pm EST
+
+## **Instructions:**
+
+|     |     |                                                                                                                                                                                                                                                            |
+|--------|--------|--------------------------------------------------------|
+| 1   |     | Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle\@g.harvard.edu the name of the team members and their emails.                    |
+| 2   |     | Review the dataset named "ames'csv, report on preliminary findings (missing data, type of variables, distributions).                                                                                                                                       |
+| 3   |     | Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.                                                                                                                            |
+| 4   |     | Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.                                                               |
+| 5   |     | Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.                                                                                                         |
+| 6   |     | Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.                                                                                                                       |
+| 7   |     | Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.                                                                                          |
+| 8   |     | Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).                                                                                                                          |
+| 9   |     | Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.                                                                                      |
+| 10  |     | Use the test data set to assess the model performances from above.                                                                                                                                                                                         |
+| 11  |     | Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.                                                                                               |
+| 12  |     | Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.  |
+| 13  |     | Each student must submit the files on Canvas to get the full credit.                                                                                                                                                                                       |
+
+**Notes:** **No typographical errors, grammar mistakes, or misspelled
+words, use English language** **All tables need to be numbered and
+describe their content in the body of the document** **All
+figures/graphs need to be numbered and describe their content** **All
+results must be accurate and clearly explained for a casual reviewer to
+fully understand their purpose and impact** **Submit both the RMD
+markdown file and PDF with the sections with appropriate explanations. A
+more formal document in Word can be used in place of the pdf file but
+must include all appropriate explanations.**
+
+This data was taken from the Kaggle competition please click on the link
+below for details:
+<https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/rules>
+
+|                                                                                                                                                                                                                                                                                                                   |
+|------------------------------------------------------------------------|
+| This section will describe the model usage, your conclusions and any regulatory and internal requirements. In a real world scenario, this section is for senior management who do not need to know the details. They need to know high level (the purpose of the model, limitations of the model and any issues). |
+
+: ***Executive Summary***
+
+## I. Introduction (5 points)
+
+*This section needs to introduce the reader to the problem to be
+resolved, the purpose, and the scope of the statistical testing applied.
+What you are doing with your prediction? What is the purpose of the
+model? What methods were trained on the data, how large is the test
+sample, and how did you build the model?*
+
+## I. Description of the data and quality (15 points)
+
+*Here you need to include your review of data, the statistical test
+applied to understand the predictors and the response and how are they
+correlated. Extensive graph analysis is recommended. Is the data
+continuous, or categorical, do any transformation needed? Do you need
+dummies?*
+
+## III. Model Development Process (15 points)
+
+*Build a regression model to predict price. And of course, create the
+train data set which contains 70% of the data and use set.seed (1023).
+The remaining 30% will be your test data set. Investigate the data and
+combine the level of categorical variables if needed and drop variables.
+For example, you can drop id, Latitude, Longitude, etc.*
+
+## IV. Model Performance Testing (15 points)
+
+*Use the test data set to assess the model performances. Here, build the
+best multiple linear models by using the stepwise both ways selection
+method. Compare the performance of the best two linear models. Make sure
+that model assumption(s) are checked for the final linear model. Apply
+remedy measures (transformation, etc.) that helps satisfy the
+assumptions. In particular you must deeply investigate unequal variances
+and multicollinearity. If necessary, apply remedial methods (WLS, Ridge,
+Elastic Net, Lasso, etc.).*
+
+## V. Challenger Models (15 points)
+
+*Build an alternative model based on one of the following approaches to
+predict price: regression tree, NN, or SVM or regression model with
+alternative variables. Always check the applicable model assumptions.
+Apply in-sample and out-of-sample testing, back testing and review the
+comparative goodness of fit of the candidate models. Describe step by
+step your procedure to get to the best model and why you believe it is
+fit for purpose.*
+
+## VI. Model Limitation and Assumptions (15 points)
+
+*Based on the performances on both train and test data sets, determine
+your primary (champion) model and the other model which would be your
+benchmark model. Validate your models using the test sample. Do the
+residuals look normal? Does it matter given your technique? How is the
+prediction performance using Pseudo R\^2, SSE, **RMSE**? Benchmark the
+model against alternatives. How good is the relative fit? Are there any
+serious violations of the model assumptions? Has the model had issues or
+limitations that the user must know? (Which assumptions are needed to
+support the Champion model?)*
+
+## VII. Ongoing Model Monitoring Plan (5 points)
+
+*How would you picture the model needing to be monitored, which
+quantitative thresholds and triggers would you set to decide when the
+model needs to be replaced? What are the assumptions that the model must
+comply with for its continuous use?*
+
+## VIII. Conclusion (5 points)
+
+*Summarize your results here. What is the best model for the data and
+why?*
+
+## Bibliography (7 points)
+
+*Please include all references, articles and papers in this section.*
+
+One can fin our preferred bibliography format at the below:
+
+[Harvard referencing
+(shef.ac.uk)](https://librarydevelopment.group.shef.ac.uk/referencing/harvard.html)
+
+## Appendix (3 points)
+
+*Please add any additional supporting graphs, plots and data analysis.*

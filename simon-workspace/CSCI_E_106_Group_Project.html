@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Author One">
+<meta name="author" content="Author Two">
+<meta name="author" content="Author Three">
+<meta name="author" content="Author Four">
+<meta name="dcterms.date" content="2024-02-28">
+
+<title>HARVARD EXTENSION SCHOOL</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="CSCI_E_106_Group_Project_files/libs/clipboard/clipboard.min.js"></script>
+<script src="CSCI_E_106_Group_Project_files/libs/quarto-html/quarto.js"></script>
+<script src="CSCI_E_106_Group_Project_files/libs/quarto-html/popper.min.js"></script>
+<script src="CSCI_E_106_Group_Project_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="CSCI_E_106_Group_Project_files/libs/quarto-html/anchor.min.js"></script>
+<link href="CSCI_E_106_Group_Project_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="CSCI_E_106_Group_Project_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="CSCI_E_106_Group_Project_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="CSCI_E_106_Group_Project_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="CSCI_E_106_Group_Project_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">HARVARD EXTENSION SCHOOL</h1>
+<p class="subtitle lead">EXT CSCI E-106 Model Data Class Special Project Template</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Author One </p>
+             <p>Author Two </p>
+             <p>Author Three </p>
+             <p>Author Four </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 28, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Refer to the <strong>Housing prices in Ames, Iowa</strong></p>
+<pre><code>2930 observations, 82 variables</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 0: Data Preparations</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("visdat")</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking for NA, or missing data using graphics </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ames_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ames.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 2930 Columns: 82
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (43): MS.Zoning, Street, Alley, Lot.Shape, Land.Contour, Utilities, Lot....
+dbl (39): Order, PID, area, price, MS.SubClass, Lot.Frontage, Lot.Area, Over...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(ames_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="CSCI_E_106_Group_Project_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ames_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [2,930 × 82] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Order          : num [1:2930] 1 2 3 4 5 6 7 8 9 10 ...
+ $ PID            : num [1:2930] 5.26e+08 5.26e+08 5.26e+08 5.26e+08 5.27e+08 ...
+ $ area           : num [1:2930] 1656 896 1329 2110 1629 ...
+ $ price          : num [1:2930] 215000 105000 172000 244000 189900 ...
+ $ MS.SubClass    : num [1:2930] 20 20 20 20 60 60 120 120 120 60 ...
+ $ MS.Zoning      : chr [1:2930] "RL" "RH" "RL" "RL" ...
+ $ Lot.Frontage   : num [1:2930] 141 80 81 93 74 78 41 43 39 60 ...
+ $ Lot.Area       : num [1:2930] 31770 11622 14267 11160 13830 ...
+ $ Street         : chr [1:2930] "Pave" "Pave" "Pave" "Pave" ...
+ $ Alley          : chr [1:2930] NA NA NA NA ...
+ $ Lot.Shape      : chr [1:2930] "IR1" "Reg" "IR1" "Reg" ...
+ $ Land.Contour   : chr [1:2930] "Lvl" "Lvl" "Lvl" "Lvl" ...
+ $ Utilities      : chr [1:2930] "AllPub" "AllPub" "AllPub" "AllPub" ...
+ $ Lot.Config     : chr [1:2930] "Corner" "Inside" "Corner" "Corner" ...
+ $ Land.Slope     : chr [1:2930] "Gtl" "Gtl" "Gtl" "Gtl" ...
+ $ Neighborhood   : chr [1:2930] "NAmes" "NAmes" "NAmes" "NAmes" ...
+ $ Condition.1    : chr [1:2930] "Norm" "Feedr" "Norm" "Norm" ...
+ $ Condition.2    : chr [1:2930] "Norm" "Norm" "Norm" "Norm" ...
+ $ Bldg.Type      : chr [1:2930] "1Fam" "1Fam" "1Fam" "1Fam" ...
+ $ House.Style    : chr [1:2930] "1Story" "1Story" "1Story" "1Story" ...
+ $ Overall.Qual   : num [1:2930] 6 5 6 7 5 6 8 8 8 7 ...
+ $ Overall.Cond   : num [1:2930] 5 6 6 5 5 6 5 5 5 5 ...
+ $ Year.Built     : num [1:2930] 1960 1961 1958 1968 1997 ...
+ $ Year.Remod.Add : num [1:2930] 1960 1961 1958 1968 1998 ...
+ $ Roof.Style     : chr [1:2930] "Hip" "Gable" "Hip" "Hip" ...
+ $ Roof.Matl      : chr [1:2930] "CompShg" "CompShg" "CompShg" "CompShg" ...
+ $ Exterior.1st   : chr [1:2930] "BrkFace" "VinylSd" "Wd Sdng" "BrkFace" ...
+ $ Exterior.2nd   : chr [1:2930] "Plywood" "VinylSd" "Wd Sdng" "BrkFace" ...
+ $ Mas.Vnr.Type   : chr [1:2930] "Stone" "None" "BrkFace" "None" ...
+ $ Mas.Vnr.Area   : num [1:2930] 112 0 108 0 0 20 0 0 0 0 ...
+ $ Exter.Qual     : chr [1:2930] "TA" "TA" "TA" "Gd" ...
+ $ Exter.Cond     : chr [1:2930] "TA" "TA" "TA" "TA" ...
+ $ Foundation     : chr [1:2930] "CBlock" "CBlock" "CBlock" "CBlock" ...
+ $ Bsmt.Qual      : chr [1:2930] "TA" "TA" "TA" "TA" ...
+ $ Bsmt.Cond      : chr [1:2930] "Gd" "TA" "TA" "TA" ...
+ $ Bsmt.Exposure  : chr [1:2930] "Gd" "No" "No" "No" ...
+ $ BsmtFin.Type.1 : chr [1:2930] "BLQ" "Rec" "ALQ" "ALQ" ...
+ $ BsmtFin.SF.1   : num [1:2930] 639 468 923 1065 791 ...
+ $ BsmtFin.Type.2 : chr [1:2930] "Unf" "LwQ" "Unf" "Unf" ...
+ $ BsmtFin.SF.2   : num [1:2930] 0 144 0 0 0 0 0 0 0 0 ...
+ $ Bsmt.Unf.SF    : num [1:2930] 441 270 406 1045 137 ...
+ $ Total.Bsmt.SF  : num [1:2930] 1080 882 1329 2110 928 ...
+ $ Heating        : chr [1:2930] "GasA" "GasA" "GasA" "GasA" ...
+ $ Heating.QC     : chr [1:2930] "Fa" "TA" "TA" "Ex" ...
+ $ Central.Air    : chr [1:2930] "Y" "Y" "Y" "Y" ...
+ $ Electrical     : chr [1:2930] "SBrkr" "SBrkr" "SBrkr" "SBrkr" ...
+ $ X1st.Flr.SF    : num [1:2930] 1656 896 1329 2110 928 ...
+ $ X2nd.Flr.SF    : num [1:2930] 0 0 0 0 701 678 0 0 0 776 ...
+ $ Low.Qual.Fin.SF: num [1:2930] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Bsmt.Full.Bath : num [1:2930] 1 0 0 1 0 0 1 0 1 0 ...
+ $ Bsmt.Half.Bath : num [1:2930] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Full.Bath      : num [1:2930] 1 1 1 2 2 2 2 2 2 2 ...
+ $ Half.Bath      : num [1:2930] 0 0 1 1 1 1 0 0 0 1 ...
+ $ Bedroom.AbvGr  : num [1:2930] 3 2 3 3 3 3 2 2 2 3 ...
+ $ Kitchen.AbvGr  : num [1:2930] 1 1 1 1 1 1 1 1 1 1 ...
+ $ Kitchen.Qual   : chr [1:2930] "TA" "TA" "Gd" "Ex" ...
+ $ TotRms.AbvGrd  : num [1:2930] 7 5 6 8 6 7 6 5 5 7 ...
+ $ Functional     : chr [1:2930] "Typ" "Typ" "Typ" "Typ" ...
+ $ Fireplaces     : num [1:2930] 2 0 0 2 1 1 0 0 1 1 ...
+ $ Fireplace.Qu   : chr [1:2930] "Gd" NA NA "TA" ...
+ $ Garage.Type    : chr [1:2930] "Attchd" "Attchd" "Attchd" "Attchd" ...
+ $ Garage.Yr.Blt  : num [1:2930] 1960 1961 1958 1968 1997 ...
+ $ Garage.Finish  : chr [1:2930] "Fin" "Unf" "Unf" "Fin" ...
+ $ Garage.Cars    : num [1:2930] 2 1 1 2 2 2 2 2 2 2 ...
+ $ Garage.Area    : num [1:2930] 528 730 312 522 482 470 582 506 608 442 ...
+ $ Garage.Qual    : chr [1:2930] "TA" "TA" "TA" "TA" ...
+ $ Garage.Cond    : chr [1:2930] "TA" "TA" "TA" "TA" ...
+ $ Paved.Drive    : chr [1:2930] "P" "Y" "Y" "Y" ...
+ $ Wood.Deck.SF   : num [1:2930] 210 140 393 0 212 360 0 0 237 140 ...
+ $ Open.Porch.SF  : num [1:2930] 62 0 36 0 34 36 0 82 152 60 ...
+ $ Enclosed.Porch : num [1:2930] 0 0 0 0 0 0 170 0 0 0 ...
+ $ X3Ssn.Porch    : num [1:2930] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Screen.Porch   : num [1:2930] 0 120 0 0 0 0 0 144 0 0 ...
+ $ Pool.Area      : num [1:2930] 0 0 0 0 0 0 0 0 0 0 ...
+ $ Pool.QC        : chr [1:2930] NA NA NA NA ...
+ $ Fence          : chr [1:2930] NA "MnPrv" NA NA ...
+ $ Misc.Feature   : chr [1:2930] NA NA "Gar2" NA ...
+ $ Misc.Val       : num [1:2930] 0 0 12500 0 0 0 0 0 0 0 ...
+ $ Mo.Sold        : num [1:2930] 5 6 6 4 3 6 4 1 3 6 ...
+ $ Yr.Sold        : num [1:2930] 2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+ $ Sale.Type      : chr [1:2930] "WD" "WD" "WD" "WD" ...
+ $ Sale.Condition : chr [1:2930] "Normal" "Normal" "Normal" "Normal" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   Order = col_double(),
+  ..   PID = col_double(),
+  ..   area = col_double(),
+  ..   price = col_double(),
+  ..   MS.SubClass = col_double(),
+  ..   MS.Zoning = col_character(),
+  ..   Lot.Frontage = col_double(),
+  ..   Lot.Area = col_double(),
+  ..   Street = col_character(),
+  ..   Alley = col_character(),
+  ..   Lot.Shape = col_character(),
+  ..   Land.Contour = col_character(),
+  ..   Utilities = col_character(),
+  ..   Lot.Config = col_character(),
+  ..   Land.Slope = col_character(),
+  ..   Neighborhood = col_character(),
+  ..   Condition.1 = col_character(),
+  ..   Condition.2 = col_character(),
+  ..   Bldg.Type = col_character(),
+  ..   House.Style = col_character(),
+  ..   Overall.Qual = col_double(),
+  ..   Overall.Cond = col_double(),
+  ..   Year.Built = col_double(),
+  ..   Year.Remod.Add = col_double(),
+  ..   Roof.Style = col_character(),
+  ..   Roof.Matl = col_character(),
+  ..   Exterior.1st = col_character(),
+  ..   Exterior.2nd = col_character(),
+  ..   Mas.Vnr.Type = col_character(),
+  ..   Mas.Vnr.Area = col_double(),
+  ..   Exter.Qual = col_character(),
+  ..   Exter.Cond = col_character(),
+  ..   Foundation = col_character(),
+  ..   Bsmt.Qual = col_character(),
+  ..   Bsmt.Cond = col_character(),
+  ..   Bsmt.Exposure = col_character(),
+  ..   BsmtFin.Type.1 = col_character(),
+  ..   BsmtFin.SF.1 = col_double(),
+  ..   BsmtFin.Type.2 = col_character(),
+  ..   BsmtFin.SF.2 = col_double(),
+  ..   Bsmt.Unf.SF = col_double(),
+  ..   Total.Bsmt.SF = col_double(),
+  ..   Heating = col_character(),
+  ..   Heating.QC = col_character(),
+  ..   Central.Air = col_character(),
+  ..   Electrical = col_character(),
+  ..   X1st.Flr.SF = col_double(),
+  ..   X2nd.Flr.SF = col_double(),
+  ..   Low.Qual.Fin.SF = col_double(),
+  ..   Bsmt.Full.Bath = col_double(),
+  ..   Bsmt.Half.Bath = col_double(),
+  ..   Full.Bath = col_double(),
+  ..   Half.Bath = col_double(),
+  ..   Bedroom.AbvGr = col_double(),
+  ..   Kitchen.AbvGr = col_double(),
+  ..   Kitchen.Qual = col_character(),
+  ..   TotRms.AbvGrd = col_double(),
+  ..   Functional = col_character(),
+  ..   Fireplaces = col_double(),
+  ..   Fireplace.Qu = col_character(),
+  ..   Garage.Type = col_character(),
+  ..   Garage.Yr.Blt = col_double(),
+  ..   Garage.Finish = col_character(),
+  ..   Garage.Cars = col_double(),
+  ..   Garage.Area = col_double(),
+  ..   Garage.Qual = col_character(),
+  ..   Garage.Cond = col_character(),
+  ..   Paved.Drive = col_character(),
+  ..   Wood.Deck.SF = col_double(),
+  ..   Open.Porch.SF = col_double(),
+  ..   Enclosed.Porch = col_double(),
+  ..   X3Ssn.Porch = col_double(),
+  ..   Screen.Porch = col_double(),
+  ..   Pool.Area = col_double(),
+  ..   Pool.QC = col_character(),
+  ..   Fence = col_character(),
+  ..   Misc.Feature = col_character(),
+  ..   Misc.Val = col_double(),
+  ..   Mo.Sold = col_double(),
+  ..   Yr.Sold = col_double(),
+  ..   Sale.Type = col_character(),
+  ..   Sale.Condition = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+</section>
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description"><strong>Description</strong></h2>
+<p>Data set contains information from the Ames Assessor’s Office used in computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010. See <a href="http://jse.amstat.org/v19n3/decock/DataDocumentation.txt">here</a> for detailed variable descriptions.</p>
+</section>
+<section id="objective" class="level2">
+<h2 class="anchored" data-anchor-id="objective"><strong>Objective</strong></h2>
+<p>Using the data build a prediction model using explanatory variables or predictors to allow a typical buyer or real estate agent to sit down and estimate the selling price of a house “SalePrice” (It is a continuous variable) is the response variable.</p>
+</section>
+<section id="due-date-may-6-2024-at-1159-pm-est" class="level2">
+<h2 class="anchored" data-anchor-id="due-date-may-6-2024-at-1159-pm-est">Due Date: May 6, 2024 at 11:59 pm EST</h2>
+</section>
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions"><strong>Instructions:</strong></h2>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 77%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td></td>
+<td>Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle@g.harvard.edu the name of the team members and their emails.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td></td>
+<td>Review the dataset named “ames’csv, report on preliminary findings (missing data, type of variables, distributions).</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td></td>
+<td>Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td></td>
+<td>Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td></td>
+<td>Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td></td>
+<td>Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td></td>
+<td>Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td></td>
+<td>Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td></td>
+<td>Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td></td>
+<td>Use the test data set to assess the model performances from above.</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td></td>
+<td>Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td></td>
+<td>Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td></td>
+<td>Each student must submit the files on Canvas to get the full credit.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes:</strong> <strong>No typographical errors, grammar mistakes, or misspelled words, use English language</strong> <strong>All tables need to be numbered and describe their content in the body of the document</strong> <strong>All figures/graphs need to be numbered and describe their content</strong> <strong>All results must be accurate and clearly explained for a casual reviewer to fully understand their purpose and impact</strong> <strong>Submit both the RMD markdown file and PDF with the sections with appropriate explanations. A more formal document in Word can be used in place of the pdf file but must include all appropriate explanations.</strong></p>
+<p>This data was taken from the Kaggle competition please click on the link below for details: <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/rules" class="uri">https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/rules</a></p>
+<table class="table">
+<caption><strong><em>Executive Summary</em></strong></caption>
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>This section will describe the model usage, your conclusions and any regulatory and internal requirements. In a real world scenario, this section is for senior management who do not need to know the details. They need to know high level (the purpose of the model, limitations of the model and any issues).</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="i.-introduction-5-points" class="level2">
+<h2 class="anchored" data-anchor-id="i.-introduction-5-points">I. Introduction (5 points)</h2>
+<p><em>This section needs to introduce the reader to the problem to be resolved, the purpose, and the scope of the statistical testing applied. What you are doing with your prediction? What is the purpose of the model? What methods were trained on the data, how large is the test sample, and how did you build the model?</em></p>
+</section>
+<section id="i.-description-of-the-data-and-quality-15-points" class="level2">
+<h2 class="anchored" data-anchor-id="i.-description-of-the-data-and-quality-15-points">I. Description of the data and quality (15 points)</h2>
+<p><em>Here you need to include your review of data, the statistical test applied to understand the predictors and the response and how are they correlated. Extensive graph analysis is recommended. Is the data continuous, or categorical, do any transformation needed? Do you need dummies?</em></p>
+</section>
+<section id="iii.-model-development-process-15-points" class="level2">
+<h2 class="anchored" data-anchor-id="iii.-model-development-process-15-points">III. Model Development Process (15 points)</h2>
+<p><em>Build a regression model to predict price. And of course, create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set. Investigate the data and combine the level of categorical variables if needed and drop variables. For example, you can drop id, Latitude, Longitude, etc.</em></p>
+</section>
+<section id="iv.-model-performance-testing-15-points" class="level2">
+<h2 class="anchored" data-anchor-id="iv.-model-performance-testing-15-points">IV. Model Performance Testing (15 points)</h2>
+<p><em>Use the test data set to assess the model performances. Here, build the best multiple linear models by using the stepwise both ways selection method. Compare the performance of the best two linear models. Make sure that model assumption(s) are checked for the final linear model. Apply remedy measures (transformation, etc.) that helps satisfy the assumptions. In particular you must deeply investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).</em></p>
+</section>
+<section id="v.-challenger-models-15-points" class="level2">
+<h2 class="anchored" data-anchor-id="v.-challenger-models-15-points">V. Challenger Models (15 points)</h2>
+<p><em>Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM or regression model with alternative variables. Always check the applicable model assumptions. Apply in-sample and out-of-sample testing, back testing and review the comparative goodness of fit of the candidate models. Describe step by step your procedure to get to the best model and why you believe it is fit for purpose.</em></p>
+</section>
+<section id="vi.-model-limitation-and-assumptions-15-points" class="level2">
+<h2 class="anchored" data-anchor-id="vi.-model-limitation-and-assumptions-15-points">VI. Model Limitation and Assumptions (15 points)</h2>
+<p><em>Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model. Validate your models using the test sample. Do the residuals look normal? Does it matter given your technique? How is the prediction performance using Pseudo R^2, SSE, <strong>RMSE</strong>? Benchmark the model against alternatives. How good is the relative fit? Are there any serious violations of the model assumptions? Has the model had issues or limitations that the user must know? (Which assumptions are needed to support the Champion model?)</em></p>
+</section>
+<section id="vii.-ongoing-model-monitoring-plan-5-points" class="level2">
+<h2 class="anchored" data-anchor-id="vii.-ongoing-model-monitoring-plan-5-points">VII. Ongoing Model Monitoring Plan (5 points)</h2>
+<p><em>How would you picture the model needing to be monitored, which quantitative thresholds and triggers would you set to decide when the model needs to be replaced? What are the assumptions that the model must comply with for its continuous use?</em></p>
+</section>
+<section id="viii.-conclusion-5-points" class="level2">
+<h2 class="anchored" data-anchor-id="viii.-conclusion-5-points">VIII. Conclusion (5 points)</h2>
+<p><em>Summarize your results here. What is the best model for the data and why?</em></p>
+</section>
+<section id="bibliography-7-points" class="level2">
+<h2 class="anchored" data-anchor-id="bibliography-7-points">Bibliography (7 points)</h2>
+<p><em>Please include all references, articles and papers in this section.</em></p>
+<p>One can fin our preferred bibliography format at the below:</p>
+<p><a href="https://librarydevelopment.group.shef.ac.uk/referencing/harvard.html">Harvard referencing (shef.ac.uk)</a></p>
+</section>
+<section id="appendix-3-points" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-3-points">Appendix (3 points)</h2>
+<p><em>Please add any additional supporting graphs, plots and data analysis.</em></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
