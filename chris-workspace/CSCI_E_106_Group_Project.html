@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Author One">
-<meta name="author" content="Author Two">
+<meta name="author" content="Nilay Sundarkar">
+<meta name="author" content="Christopher Craddock">
 <meta name="author" content="Author Three">
 <meta name="author" content="Author Four">
-<meta name="dcterms.date" content="2024-02-28">
+<meta name="dcterms.date" content="2024-04-29">
 
 <title>HARVARD EXTENSION SCHOOL</title>
 <style>
@@ -95,8 +95,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
-             <p>Author One </p>
-             <p>Author Two </p>
+             <p>Nilay Sundarkar </p>
+             <p>Christopher Craddock </p>
              <p>Author Three </p>
              <p>Author Four </p>
           </div>
@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 28, 2024</p>
+      <p class="date">April 29, 2024</p>
     </div>
   </div>
   
@@ -124,8 +124,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("visdat")</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking for NA, or missing data using graphics </span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ames_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ames.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking for NA, or missing data using graphics </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ames_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ames.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 2930 Columns: 82
 ── Column specification ────────────────────────────────────────────────────────
@@ -138,7 +141,7 @@ dbl (39): Order, PID, area, price, MS.SubClass, Lot.Frontage, Lot.Area, Over...
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(ames_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="CSCI_E_106_Group_Project_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<p><img src="CSCI_E_106_Group_Project_files/figure-html/Load%20Libraries,%20load%20and%20and%20check%20ames%20dataset-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ames_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -329,9 +332,9 @@ dbl (39): Order, PID, area, price, MS.SubClass, Lot.Frontage, Lot.Area, Over...
 <h2 class="anchored" data-anchor-id="instructions"><strong>Instructions:</strong></h2>
 <table class="table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 77%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 47%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -402,6 +405,1157 @@ dbl (39): Order, PID, area, price, MS.SubClass, Lot.Frontage, Lot.Area, Over...
 </tbody>
 </table>
 <p><strong>Notes:</strong> <strong>No typographical errors, grammar mistakes, or misspelled words, use English language</strong> <strong>All tables need to be numbered and describe their content in the body of the document</strong> <strong>All figures/graphs need to be numbered and describe their content</strong> <strong>All results must be accurate and clearly explained for a casual reviewer to fully understand their purpose and impact</strong> <strong>Submit both the RMD markdown file and PDF with the sections with appropriate explanations. A more formal document in Word can be used in place of the pdf file but must include all appropriate explanations.</strong></p>
+<ol type="1">
+<li><p>Send email details - done by Simon</p></li>
+<li><p>Review the dataset named “ames’csv, report on preliminary findings (missing data, type of variables, distributions).</p>
+<p>Data set contains information from the Ames Assessor’s Office used in computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010.</p>
+<p>The data has 82 columns which include 23 nominal, 23 ordinal, 14 discrete, and 20 continuous variables (and 2 additional observation identifiers).</p></li>
+<li><p>Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine training dataset size (70% of total observations)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ames.smp_size <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fl">0.70</span> <span class="sc">*</span> <span class="fu">nrow</span>(ames_data))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Set seed of 1023 for reproducability</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1023</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample indices for training dataset</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>ames.train_index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(ames_data)), <span class="at">size =</span> ames.smp_size)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data into training and test datasets (70%/30%)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ames.train_data <span class="ot">&lt;-</span> ames_data[ames.train_index, ]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>ames.test_data <span class="ot">&lt;-</span> ames_data[<span class="sc">-</span>ames.train_index, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li>Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.</li>
+</ol>
+<p>Dropping Order, PID as they are just an identifier for the observations.</p>
+<p>Dropping “Pool.QC”, “Misc.Feature”, “Alley”,“Fence”, “Fireplace.Qu”, “Lot.Frontage”,“Garage.Yr.Blt”, “Garage.Finish”, “Garage.Qual”,“Garage.Cond”, “Garage.Type” as they have high number of missing values.</p>
+<p>Cleaning NA rows for the rest of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ames_data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ames_data)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># check which columns have NA values and how many per column</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span><span class="fu">sapply</span>(ames_data.df, <span class="cf">function</span>(y) <span class="fu">sum</span>(<span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(y)))))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(na_count)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>na_count<span class="sc">$</span>name<span class="ot">&lt;-</span><span class="fu">rownames</span>(na_count)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span> na_count[na_count<span class="sc">$</span>na_count<span class="sc">&gt;</span><span class="dv">0</span>,]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(na_count)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span> na_count[<span class="fu">order</span>(na_count<span class="sc">$</span>na_count, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>na_count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               na_count           name
+Pool.QC            2917        Pool.QC
+Misc.Feature       2824   Misc.Feature
+Alley              2732          Alley
+Fence              2358          Fence
+Fireplace.Qu       1422   Fireplace.Qu
+Lot.Frontage        490   Lot.Frontage
+Garage.Yr.Blt       159  Garage.Yr.Blt
+Garage.Finish       159  Garage.Finish
+Garage.Qual         159    Garage.Qual
+Garage.Cond         159    Garage.Cond
+Garage.Type         157    Garage.Type
+Bsmt.Exposure        83  Bsmt.Exposure
+BsmtFin.Type.2       81 BsmtFin.Type.2
+Bsmt.Qual            80      Bsmt.Qual
+Bsmt.Cond            80      Bsmt.Cond
+BsmtFin.Type.1       80 BsmtFin.Type.1
+Mas.Vnr.Type         23   Mas.Vnr.Type
+Mas.Vnr.Area         23   Mas.Vnr.Area
+Bsmt.Full.Bath        2 Bsmt.Full.Bath
+Bsmt.Half.Bath        2 Bsmt.Half.Bath
+BsmtFin.SF.1          1   BsmtFin.SF.1
+BsmtFin.SF.2          1   BsmtFin.SF.2
+Bsmt.Unf.SF           1    Bsmt.Unf.SF
+Total.Bsmt.SF         1  Total.Bsmt.SF
+Electrical            1     Electrical
+Garage.Cars           1    Garage.Cars
+Garage.Area           1    Garage.Area</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop columns that have very high number of NA values and those that are not related to the response variable (order and PID)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>drops <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Pool.QC"</span>, <span class="st">"Misc.Feature"</span>, <span class="st">"Alley"</span>,<span class="st">"Fence"</span>, <span class="st">"Fireplace.Qu"</span>, <span class="st">"Order"</span>, <span class="st">"PID"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ames_data.df <span class="ot">&lt;-</span> ames_data.df[ , <span class="sc">!</span>(<span class="fu">names</span>(ames_data.df) <span class="sc">%in%</span> drops)]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#for the rest of columns that have somewhat high NA values, we remove the NA rows and check the correlation between that column and the response variable</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">%notin%</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">Negate</span>(<span class="st">`</span><span class="at">%in%</span><span class="st">`</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span> na_count[na_count<span class="sc">$</span>name <span class="sc">%notin%</span> drops,]</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>na_count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               na_count           name
+Lot.Frontage        490   Lot.Frontage
+Garage.Yr.Blt       159  Garage.Yr.Blt
+Garage.Finish       159  Garage.Finish
+Garage.Qual         159    Garage.Qual
+Garage.Cond         159    Garage.Cond
+Garage.Type         157    Garage.Type
+Bsmt.Exposure        83  Bsmt.Exposure
+BsmtFin.Type.2       81 BsmtFin.Type.2
+Bsmt.Qual            80      Bsmt.Qual
+Bsmt.Cond            80      Bsmt.Cond
+BsmtFin.Type.1       80 BsmtFin.Type.1
+Mas.Vnr.Type         23   Mas.Vnr.Type
+Mas.Vnr.Area         23   Mas.Vnr.Area
+Bsmt.Full.Bath        2 Bsmt.Full.Bath
+Bsmt.Half.Bath        2 Bsmt.Half.Bath
+BsmtFin.SF.1          1   BsmtFin.SF.1
+BsmtFin.SF.2          1   BsmtFin.SF.2
+Bsmt.Unf.SF           1    Bsmt.Unf.SF
+Total.Bsmt.SF         1  Total.Bsmt.SF
+Electrical            1     Electrical
+Garage.Cars           1    Garage.Cars
+Garage.Area           1    Garage.Area</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lot.Frontage has 490 NA values</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Lot.Frontage_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ames_data<span class="sc">$</span>price,ames_data<span class="sc">$</span>Lot.Frontage)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>Lot.Frontage_df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(Lot.Frontage_df)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># low correlation between Lot.Frontage and SalePrice</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Lot.Frontage_df<span class="sc">$</span>ames_data.price,Lot.Frontage_df<span class="sc">$</span>ames_data.Lot.Frontage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3573179</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Garage.Yr.Blt, Garage.Finish , Garage.Qual, Garage.Cond and Garage.Type are all related to Garage and seem to have NA values for the same rows</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Garage_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ames_data<span class="sc">$</span>price, ames_data<span class="sc">$</span>Garage.Yr.Blt, ames_data<span class="sc">$</span>Garage.Finish, ames_data<span class="sc">$</span>Garage.Qual, ames_data<span class="sc">$</span>Garage.Cond, ames_data<span class="sc">$</span>Garage.Type)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>Garage_df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(Garage_df)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># no significant correlation is observed with the response variable</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Garage_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="CSCI_E_106_Group_Project_files/figure-html/Investigate%20and%20clean%20up%20data-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>drops <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Lot.Frontage"</span>,<span class="st">"Garage.Yr.Blt"</span>, <span class="st">"Garage.Finish"</span>, <span class="st">"Garage.Qual"</span>,<span class="st">"Garage.Cond"</span>, <span class="st">"Garage.Type"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ames_data.df <span class="ot">&lt;-</span> ames_data.df[ , <span class="sc">!</span>(<span class="fu">names</span>(ames_data.df) <span class="sc">%in%</span> drops)]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span> na_count[na_count<span class="sc">$</span>name <span class="sc">%notin%</span> drops,]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>na_count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               na_count           name
+Bsmt.Exposure        83  Bsmt.Exposure
+BsmtFin.Type.2       81 BsmtFin.Type.2
+Bsmt.Qual            80      Bsmt.Qual
+Bsmt.Cond            80      Bsmt.Cond
+BsmtFin.Type.1       80 BsmtFin.Type.1
+Mas.Vnr.Type         23   Mas.Vnr.Type
+Mas.Vnr.Area         23   Mas.Vnr.Area
+Bsmt.Full.Bath        2 Bsmt.Full.Bath
+Bsmt.Half.Bath        2 Bsmt.Half.Bath
+BsmtFin.SF.1          1   BsmtFin.SF.1
+BsmtFin.SF.2          1   BsmtFin.SF.2
+Bsmt.Unf.SF           1    Bsmt.Unf.SF
+Total.Bsmt.SF         1  Total.Bsmt.SF
+Electrical            1     Electrical
+Garage.Cars           1    Garage.Cars
+Garage.Area           1    Garage.Area</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the remaining columns that have any NA rows are low in number, so we will clean the data for those rows</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ames_data.df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(ames_data.df)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>final_drops <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Pool.QC"</span>, <span class="st">"Misc.Feature"</span>, <span class="st">"Alley"</span>,<span class="st">"Fence"</span>, <span class="st">"Fireplace.Qu"</span>, <span class="st">"Order"</span>, <span class="st">"PID"</span>,<span class="st">"Lot.Frontage"</span>,<span class="st">"Garage.Yr.Blt"</span>, <span class="st">"Garage.Finish"</span>, <span class="st">"Garage.Qual"</span>,<span class="st">"Garage.Cond"</span>, <span class="st">"Garage.Type"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>ames.train_data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ames.train_data)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ames.train_data.df <span class="ot">&lt;-</span> ames.train_data.df[ , <span class="sc">!</span>(<span class="fu">names</span>(ames.train_data.df) <span class="sc">%in%</span> final_drops)]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ames.train_data.df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(ames.train_data.df)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>ames.test_data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ames.test_data)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>ames.test_data.df <span class="ot">&lt;-</span> ames.test_data.df[ , <span class="sc">!</span>(<span class="fu">names</span>(ames.test_data.df) <span class="sc">%in%</span> final_drops)]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>ames.test_data.df <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(ames.test_data.df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ames.test_data.df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   849 obs. of  69 variables:
+ $ area           : num  1656 1604 1280 1616 1804 ...
+ $ price          : num  215000 195500 191500 236500 189000 ...
+ $ MS.SubClass    : num  20 60 120 120 60 60 20 50 20 60 ...
+ $ MS.Zoning      : chr  "RL" "RL" "RL" "RL" ...
+ $ Lot.Area       : num  31770 9978 5005 5389 7500 ...
+ $ Street         : chr  "Pave" "Pave" "Pave" "Pave" ...
+ $ Lot.Shape      : chr  "IR1" "IR1" "IR1" "IR1" ...
+ $ Land.Contour   : chr  "Lvl" "Lvl" "HLS" "Lvl" ...
+ $ Utilities      : chr  "AllPub" "AllPub" "AllPub" "AllPub" ...
+ $ Lot.Config     : chr  "Corner" "Inside" "Inside" "Inside" ...
+ $ Land.Slope     : chr  "Gtl" "Gtl" "Gtl" "Gtl" ...
+ $ Neighborhood   : chr  "NAmes" "Gilbert" "StoneBr" "StoneBr" ...
+ $ Condition.1    : chr  "Norm" "Norm" "Norm" "Norm" ...
+ $ Condition.2    : chr  "Norm" "Norm" "Norm" "Norm" ...
+ $ Bldg.Type      : chr  "1Fam" "1Fam" "TwnhsE" "TwnhsE" ...
+ $ House.Style    : chr  "1Story" "2Story" "1Story" "1Story" ...
+ $ Overall.Qual   : num  6 6 8 8 7 6 6 8 4 7 ...
+ $ Overall.Cond   : num  5 6 5 5 5 5 7 7 5 5 ...
+ $ Year.Built     : num  1960 1998 1992 1995 1999 ...
+ $ Year.Remod.Add : num  1960 1998 1992 1996 1999 ...
+ $ Roof.Style     : chr  "Hip" "Gable" "Gable" "Gable" ...
+ $ Roof.Matl      : chr  "CompShg" "CompShg" "CompShg" "CompShg" ...
+ $ Exterior.1st   : chr  "BrkFace" "VinylSd" "HdBoard" "CemntBd" ...
+ $ Exterior.2nd   : chr  "Plywood" "VinylSd" "HdBoard" "CmentBd" ...
+ $ Mas.Vnr.Type   : chr  "Stone" "BrkFace" "None" "None" ...
+ $ Mas.Vnr.Area   : num  112 20 0 0 0 0 0 0 0 0 ...
+ $ Exter.Qual     : chr  "TA" "TA" "Gd" "Gd" ...
+ $ Exter.Cond     : chr  "TA" "TA" "TA" "TA" ...
+ $ Foundation     : chr  "CBlock" "PConc" "PConc" "PConc" ...
+ $ Bsmt.Qual      : chr  "TA" "TA" "Gd" "Gd" ...
+ $ Bsmt.Cond      : chr  "Gd" "TA" "TA" "TA" ...
+ $ Bsmt.Exposure  : chr  "Gd" "No" "No" "No" ...
+ $ BsmtFin.Type.1 : chr  "BLQ" "GLQ" "ALQ" "GLQ" ...
+ $ BsmtFin.SF.1   : num  639 602 263 1180 0 0 935 427 120 533 ...
+ $ BsmtFin.Type.2 : chr  "Unf" "Unf" "Unf" "Unf" ...
+ $ BsmtFin.SF.2   : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Bsmt.Unf.SF    : num  441 324 1017 415 994 ...
+ $ Total.Bsmt.SF  : num  1080 926 1280 1595 994 ...
+ $ Heating        : chr  "GasA" "GasA" "GasA" "GasA" ...
+ $ Heating.QC     : chr  "Fa" "Ex" "Ex" "Ex" ...
+ $ Central.Air    : chr  "Y" "Y" "Y" "Y" ...
+ $ Electrical     : chr  "SBrkr" "SBrkr" "SBrkr" "SBrkr" ...
+ $ X1st.Flr.SF    : num  1656 926 1280 1616 1028 ...
+ $ X2nd.Flr.SF    : num  0 678 0 0 776 892 0 672 0 860 ...
+ $ Low.Qual.Fin.SF: num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Bsmt.Full.Bath : num  1 0 0 1 0 0 1 0 0 1 ...
+ $ Bsmt.Half.Bath : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Full.Bath      : num  1 2 2 2 2 2 2 2 1 2 ...
+ $ Half.Bath      : num  0 1 0 0 1 1 0 0 0 1 ...
+ $ Bedroom.AbvGr  : num  3 3 2 2 3 3 3 4 2 3 ...
+ $ Kitchen.AbvGr  : num  1 1 1 1 1 1 1 1 1 1 ...
+ $ Kitchen.Qual   : chr  "TA" "Gd" "Gd" "Gd" ...
+ $ TotRms.AbvGrd  : num  7 7 5 5 7 7 6 8 4 7 ...
+ $ Functional     : chr  "Typ" "Typ" "Typ" "Typ" ...
+ $ Fireplaces     : num  2 1 0 1 1 1 0 0 0 0 ...
+ $ Garage.Cars    : num  2 2 2 2 2 2 2 2 2 2 ...
+ $ Garage.Area    : num  528 470 506 608 442 440 420 492 400 663 ...
+ $ Paved.Drive    : chr  "P" "Y" "Y" "Y" ...
+ $ Wood.Deck.SF   : num  210 360 0 237 140 157 483 325 0 0 ...
+ $ Open.Porch.SF  : num  62 36 82 152 60 84 21 12 0 96 ...
+ $ Enclosed.Porch : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ X3Ssn.Porch    : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Screen.Porch   : num  0 0 144 0 0 0 0 0 0 0 ...
+ $ Pool.Area      : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Misc.Val       : num  0 0 0 0 0 0 500 0 0 0 ...
+ $ Mo.Sold        : num  5 6 1 3 6 4 3 6 6 1 ...
+ $ Yr.Sold        : num  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+ $ Sale.Type      : chr  "WD" "WD" "WD" "WD" ...
+ $ Sale.Condition : chr  "Normal" "Normal" "Normal" "Normal" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ames.train_data.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>.,<span class="at">data =</span> ames.train_data.df)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">max.print=</span><span class="dv">1000000</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ames.train_data.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = price ~ ., data = ames.train_data.df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-287442  -10291    -164    9350  162141 
+
+Coefficients: (4 not defined because of singularities)
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           -2.474e+05  9.221e+05  -0.268 0.788522    
+area                   3.584e+01  1.762e+01   2.034 0.042093 *  
+MS.SubClass           -1.451e+02  6.068e+01  -2.391 0.016888 *  
+MS.ZoningFV            1.500e+04  9.925e+03   1.512 0.130767    
+MS.ZoningRH            2.224e+04  1.012e+04   2.198 0.028091 *  
+MS.ZoningRL            1.396e+04  8.065e+03   1.730 0.083722 .  
+MS.ZoningRM            1.134e+04  7.553e+03   1.502 0.133305    
+Lot.Area               4.937e-01  1.251e-01   3.947 8.23e-05 ***
+StreetPave             4.383e+03  1.042e+04   0.421 0.674068    
+Lot.ShapeIR2           6.867e+03  3.914e+03   1.754 0.079529 .  
+Lot.ShapeIR3          -2.131e+03  8.952e+03  -0.238 0.811901    
+Lot.ShapeReg           5.095e+02  1.413e+03   0.361 0.718369    
+Land.ContourHLS        2.045e+04  4.534e+03   4.511 6.88e-06 ***
+Land.ContourLow        4.530e+02  5.901e+03   0.077 0.938808    
+Land.ContourLvl        1.376e+04  3.471e+03   3.964 7.66e-05 ***
+UtilitiesNoSeWa       -2.358e+04  2.588e+04  -0.911 0.362404    
+UtilitiesNoSewr       -1.179e+04  2.593e+04  -0.455 0.649233    
+Lot.ConfigCulDSac      8.524e+03  2.856e+03   2.984 0.002882 ** 
+Lot.ConfigFR2         -7.395e+03  3.667e+03  -2.017 0.043887 *  
+Lot.ConfigFR3         -2.045e+03  7.642e+03  -0.268 0.789022    
+Lot.ConfigInside       4.333e+02  1.584e+03   0.274 0.784442    
+Land.SlopeMod          8.866e+03  3.689e+03   2.403 0.016356 *  
+Land.SlopeSev         -1.980e+04  1.180e+04  -1.678 0.093596 .  
+NeighborhoodBlueste    1.194e+03  1.221e+04   0.098 0.922144    
+NeighborhoodBrDale     3.082e+03  1.008e+04   0.306 0.759733    
+NeighborhoodBrkSide   -7.192e+03  8.480e+03  -0.848 0.396452    
+NeighborhoodClearCr   -8.751e+03  9.134e+03  -0.958 0.338138    
+NeighborhoodCollgCr   -1.526e+04  6.855e+03  -2.226 0.026168 *  
+NeighborhoodCrawfor    9.249e+03  7.866e+03   1.176 0.239836    
+NeighborhoodEdwards   -2.612e+04  7.455e+03  -3.504 0.000469 ***
+NeighborhoodGilbert   -1.601e+04  7.212e+03  -2.220 0.026513 *  
+NeighborhoodGreens     8.259e+03  1.441e+04   0.573 0.566668    
+NeighborhoodGrnHill    1.268e+05  2.579e+04   4.919 9.53e-07 ***
+NeighborhoodIDOTRR    -1.391e+04  9.176e+03  -1.516 0.129815    
+NeighborhoodLandmrk   -1.553e+04  2.613e+04  -0.594 0.552333    
+NeighborhoodMeadowV   -5.239e+03  1.004e+04  -0.522 0.602041    
+NeighborhoodMitchel   -1.910e+04  7.506e+03  -2.545 0.011014 *  
+NeighborhoodNAmes     -1.879e+04  7.267e+03  -2.585 0.009808 ** 
+NeighborhoodNoRidge    2.353e+04  7.773e+03   3.028 0.002501 ** 
+NeighborhoodNPkVill    1.116e+04  1.346e+04   0.830 0.406924    
+NeighborhoodNridgHt    1.272e+04  7.003e+03   1.817 0.069379 .  
+NeighborhoodNWAmes    -2.020e+04  7.469e+03  -2.704 0.006908 ** 
+NeighborhoodOldTown   -1.889e+04  8.529e+03  -2.215 0.026863 *  
+NeighborhoodSawyer    -1.464e+04  7.518e+03  -1.947 0.051715 .  
+NeighborhoodSawyerW   -1.566e+04  7.261e+03  -2.157 0.031149 *  
+NeighborhoodSomerst    4.075e+03  8.461e+03   0.482 0.630134    
+NeighborhoodStoneBr    3.711e+04  7.804e+03   4.755 2.14e-06 ***
+NeighborhoodSWISU     -1.622e+04  9.126e+03  -1.777 0.075741 .  
+NeighborhoodTimber    -1.072e+04  7.557e+03  -1.419 0.156177    
+NeighborhoodVeenker   -2.433e+04  9.406e+03  -2.586 0.009777 ** 
+Condition.1Feedr       3.786e+03  4.364e+03   0.868 0.385770    
+Condition.1Norm        1.114e+04  3.502e+03   3.180 0.001498 ** 
+Condition.1PosA        9.543e+03  8.349e+03   1.143 0.253207    
+Condition.1PosN        1.935e+04  6.223e+03   3.110 0.001900 ** 
+Condition.1RRAe       -5.534e+03  7.175e+03  -0.771 0.440690    
+Condition.1RRAn        4.868e+03  5.716e+03   0.852 0.394572    
+Condition.1RRNe       -5.656e+03  1.116e+04  -0.507 0.612237    
+Condition.1RRNn       -5.566e+03  1.056e+04  -0.527 0.598018    
+Condition.2Feedr      -8.367e+03  1.525e+04  -0.549 0.583407    
+Condition.2Norm       -4.152e+03  1.301e+04  -0.319 0.749683    
+Condition.2PosA        7.013e+04  2.046e+04   3.428 0.000622 ***
+Condition.2PosN       -1.358e+05  2.016e+04  -6.737 2.18e-11 ***
+Condition.2RRAn       -2.717e+03  2.812e+04  -0.097 0.923043    
+Condition.2RRNn       -4.916e+03  2.208e+04  -0.223 0.823810    
+Bldg.Type2fmCon        3.283e+03  9.304e+03   0.353 0.724248    
+Bldg.TypeDuplex       -1.028e+04  6.325e+03  -1.626 0.104211    
+Bldg.TypeTwnhs        -1.815e+04  7.570e+03  -2.397 0.016622 *  
+Bldg.TypeTwnhsE       -1.280e+04  6.652e+03  -1.924 0.054454 .  
+House.Style1.5Unf      1.380e+04  7.885e+03   1.749 0.080382 .  
+House.Style1Story      7.068e+03  3.568e+03   1.981 0.047747 *  
+House.Style2.5Fin     -1.284e+04  1.403e+04  -0.915 0.360370    
+House.Style2.5Unf     -1.562e+03  7.315e+03  -0.214 0.830930    
+House.Style2Story     -2.877e+03  2.926e+03  -0.983 0.325523    
+House.StyleSFoyer      1.450e+04  5.238e+03   2.768 0.005703 ** 
+House.StyleSLvl        6.641e+03  4.420e+03   1.503 0.133136    
+Overall.Qual           8.192e+03  8.810e+02   9.298  &lt; 2e-16 ***
+Overall.Cond           5.206e+03  7.756e+02   6.713 2.57e-11 ***
+Year.Built             3.344e+02  6.634e+01   5.040 5.14e-07 ***
+Year.Remod.Add         8.514e+01  4.924e+01   1.729 0.083978 .  
+Roof.StyleGable        2.377e+04  1.304e+04   1.824 0.068348 .  
+Roof.StyleGambrel      2.407e+04  1.485e+04   1.621 0.105133    
+Roof.StyleHip          2.629e+04  1.313e+04   2.003 0.045359 *  
+Roof.StyleMansard      1.015e+04  1.582e+04   0.641 0.521342    
+Roof.StyleShed         3.485e+04  2.538e+04   1.373 0.169800    
+Roof.MatlCompShg       6.013e+05  3.165e+04  19.000  &lt; 2e-16 ***
+Roof.MatlRoll          6.034e+05  4.073e+04  14.816  &lt; 2e-16 ***
+Roof.MatlTar&amp;Grv       6.152e+05  3.353e+04  18.350  &lt; 2e-16 ***
+Roof.MatlWdShake       6.037e+05  3.322e+04  18.172  &lt; 2e-16 ***
+Roof.MatlWdShngl       7.033e+05  3.377e+04  20.828  &lt; 2e-16 ***
+Exterior.1stAsphShn    8.213e+03  3.606e+04   0.228 0.819857    
+Exterior.1stBrkComm    1.469e+04  2.237e+04   0.657 0.511341    
+Exterior.1stBrkFace    1.957e+04  1.474e+04   1.327 0.184550    
+Exterior.1stCemntBd   -8.231e+03  1.764e+04  -0.467 0.640787    
+Exterior.1stHdBoard   -8.283e+03  1.453e+04  -0.570 0.568652    
+Exterior.1stImStucc   -4.522e+04  2.912e+04  -1.553 0.120646    
+Exterior.1stMetalSd   -3.153e+03  1.567e+04  -0.201 0.840570    
+Exterior.1stPlywood   -2.970e+03  1.454e+04  -0.204 0.838234    
+Exterior.1stPreCast    8.650e+04  2.720e+04   3.181 0.001495 ** 
+Exterior.1stStone     -2.018e+04  2.622e+04  -0.770 0.441634    
+Exterior.1stStucco     2.936e+03  1.559e+04   0.188 0.850627    
+Exterior.1stVinylSd   -1.056e+04  1.454e+04  -0.726 0.467649    
+Exterior.1stWd Sdng    1.221e+03  1.396e+04   0.088 0.930262    
+Exterior.1stWdShing   -6.739e+03  1.465e+04  -0.460 0.645665    
+Exterior.2ndAsphShn    2.275e+04  2.344e+04   0.970 0.331947    
+Exterior.2ndBrk Cmn   -7.706e+03  1.917e+04  -0.402 0.687792    
+Exterior.2ndBrkFace   -9.679e+03  1.523e+04  -0.636 0.525170    
+Exterior.2ndCmentBd    5.078e+03  1.775e+04   0.286 0.774912    
+Exterior.2ndHdBoard    3.925e+03  1.449e+04   0.271 0.786478    
+Exterior.2ndImStucc    1.850e+04  1.613e+04   1.147 0.251484    
+Exterior.2ndMetalSd    5.481e+03  1.564e+04   0.350 0.726072    
+Exterior.2ndOther     -1.459e+04  2.863e+04  -0.509 0.610521    
+Exterior.2ndPlywood   -1.365e+03  1.435e+04  -0.095 0.924211    
+Exterior.2ndPreCast           NA         NA      NA       NA    
+Exterior.2ndStone             NA         NA      NA       NA    
+Exterior.2ndStucco    -5.334e+03  1.572e+04  -0.339 0.734423    
+Exterior.2ndVinylSd    9.470e+03  1.441e+04   0.657 0.511254    
+Exterior.2ndWd Sdng   -3.798e+03  1.398e+04  -0.272 0.785869    
+Exterior.2ndWd Shng    2.233e+03  1.426e+04   0.157 0.875605    
+Mas.Vnr.TypeBrkFace    5.879e+03  6.706e+03   0.877 0.380745    
+Mas.Vnr.TypeCBlock    -6.669e+04  3.529e+04  -1.890 0.058944 .  
+Mas.Vnr.TypeNone       8.711e+03  6.763e+03   1.288 0.197916    
+Mas.Vnr.TypeStone      1.164e+04  7.024e+03   1.658 0.097557 .  
+Mas.Vnr.Area           1.606e+01  5.080e+00   3.162 0.001594 ** 
+Exter.QualFa          -2.811e+04  9.108e+03  -3.086 0.002061 ** 
+Exter.QualGd          -2.505e+04  4.060e+03  -6.170 8.45e-10 ***
+Exter.QualTA          -2.623e+04  4.578e+03  -5.729 1.18e-08 ***
+Exter.CondFa           1.603e+02  1.051e+04   0.015 0.987828    
+Exter.CondGd           8.352e+03  8.962e+03   0.932 0.351496    
+Exter.CondPo          -9.227e+03  2.664e+04  -0.346 0.729123    
+Exter.CondTA           7.164e+03  8.935e+03   0.802 0.422796    
+FoundationCBlock       3.843e+02  2.706e+03   0.142 0.887105    
+FoundationPConc        2.754e+03  2.959e+03   0.931 0.352116    
+FoundationStone        1.294e+04  9.291e+03   1.393 0.163728    
+FoundationWood        -2.990e+03  1.475e+04  -0.203 0.839445    
+Bsmt.QualFa           -1.098e+04  5.094e+03  -2.155 0.031303 *  
+Bsmt.QualGd           -1.753e+04  2.888e+03  -6.071 1.55e-09 ***
+Bsmt.QualPo           -9.071e+03  1.982e+04  -0.458 0.647231    
+Bsmt.QualTA           -1.553e+04  3.650e+03  -4.255 2.20e-05 ***
+Bsmt.CondFa            2.135e+03  1.524e+04   0.140 0.888599    
+Bsmt.CondGd            4.946e+03  1.505e+04   0.329 0.742473    
+Bsmt.CondPo           -1.115e+04  2.939e+04  -0.379 0.704541    
+Bsmt.CondTA            4.446e+03  1.481e+04   0.300 0.764095    
+Bsmt.ExposureGd        7.367e+03  2.536e+03   2.905 0.003723 ** 
+Bsmt.ExposureMn       -4.907e+03  2.599e+03  -1.888 0.059163 .  
+Bsmt.ExposureNo       -6.222e+03  1.971e+03  -3.157 0.001620 ** 
+BsmtFin.Type.1BLQ     -1.154e+03  2.390e+03  -0.483 0.629295    
+BsmtFin.Type.1GLQ      1.592e+03  2.218e+03   0.718 0.472909    
+BsmtFin.Type.1LwQ     -5.649e+03  3.178e+03  -1.778 0.075654 .  
+BsmtFin.Type.1Rec     -5.583e+03  2.523e+03  -2.213 0.027009 *  
+BsmtFin.Type.1Unf      6.307e+02  2.520e+03   0.250 0.802363    
+BsmtFin.SF.1           3.473e+01  4.221e+00   8.227 3.71e-16 ***
+BsmtFin.Type.2BLQ     -9.631e+03  5.978e+03  -1.611 0.107337    
+BsmtFin.Type.2GLQ     -5.109e+02  7.432e+03  -0.069 0.945204    
+BsmtFin.Type.2LwQ     -1.425e+04  5.639e+03  -2.526 0.011609 *  
+BsmtFin.Type.2Rec     -1.109e+04  5.432e+03  -2.042 0.041345 *  
+BsmtFin.Type.2Unf     -5.993e+03  5.651e+03  -1.060 0.289082    
+BsmtFin.SF.2           2.518e+01  7.631e+00   3.300 0.000987 ***
+Bsmt.Unf.SF            1.502e+01  3.901e+00   3.849 0.000123 ***
+Total.Bsmt.SF                 NA         NA      NA       NA    
+HeatingGasW           -1.042e+03  6.955e+03  -0.150 0.880950    
+HeatingGrav           -5.291e+03  1.066e+04  -0.496 0.619706    
+HeatingOthW           -2.737e+04  2.646e+04  -1.034 0.301079    
+Heating.QCFa          -2.167e+03  4.245e+03  -0.510 0.609808    
+Heating.QCGd          -2.372e+03  1.804e+03  -1.315 0.188714    
+Heating.QCPo          -1.691e+04  2.700e+04  -0.626 0.531127    
+Heating.QCTA          -2.663e+03  1.791e+03  -1.487 0.137315    
+Central.AirY          -7.029e+03  3.260e+03  -2.156 0.031210 *  
+ElectricalFuseF       -3.570e+03  5.851e+03  -0.610 0.541819    
+ElectricalFuseP       -3.595e+03  1.241e+04  -0.290 0.772074    
+ElectricalMix          2.233e+04  3.732e+04   0.598 0.549695    
+ElectricalSBrkr       -2.772e+03  2.552e+03  -1.086 0.277459    
+X1st.Flr.SF            8.980e+00  1.779e+01   0.505 0.613700    
+X2nd.Flr.SF            2.510e+01  1.739e+01   1.443 0.149166    
+Low.Qual.Fin.SF               NA         NA      NA       NA    
+Bsmt.Full.Bath         1.788e+03  1.680e+03   1.065 0.287124    
+Bsmt.Half.Bath        -4.854e+03  2.574e+03  -1.886 0.059509 .  
+Full.Bath              5.764e+03  1.904e+03   3.027 0.002506 ** 
+Half.Bath              3.815e+03  1.813e+03   2.105 0.035444 *  
+Bedroom.AbvGr         -4.669e+02  1.176e+03  -0.397 0.691493    
+Kitchen.AbvGr         -5.823e+03  5.333e+03  -1.092 0.275079    
+Kitchen.QualFa        -2.862e+04  5.525e+03  -5.181 2.47e-07 ***
+Kitchen.QualGd        -2.399e+04  3.064e+03  -7.828 8.48e-15 ***
+Kitchen.QualTA        -2.388e+04  3.429e+03  -6.964 4.67e-12 ***
+TotRms.AbvGrd         -1.201e+03  8.175e+02  -1.468 0.142165    
+FunctionalMaj2        -1.510e+04  1.479e+04  -1.021 0.307214    
+FunctionalMin1         2.820e+03  1.028e+04   0.274 0.783757    
+FunctionalMin2         1.248e+03  1.031e+04   0.121 0.903636    
+FunctionalMod         -5.660e+03  1.114e+04  -0.508 0.611521    
+FunctionalSal          5.813e+03  2.764e+04   0.210 0.833409    
+FunctionalSev         -2.321e+04  2.075e+04  -1.118 0.263687    
+FunctionalTyp          9.288e+03  9.495e+03   0.978 0.328128    
+Fireplaces             3.882e+03  1.139e+03   3.409 0.000666 ***
+Garage.Cars            1.460e+03  1.904e+03   0.767 0.443156    
+Garage.Area            1.964e+01  6.440e+00   3.050 0.002322 ** 
+Paved.DriveP          -4.779e+03  4.799e+03  -0.996 0.319406    
+Paved.DriveY          -3.985e+03  2.986e+03  -1.334 0.182290    
+Wood.Deck.SF           7.993e+00  5.040e+00   1.586 0.112967    
+Open.Porch.SF         -1.162e+01  9.588e+00  -1.212 0.225824    
+Enclosed.Porch         7.981e+00  9.872e+00   0.809 0.418897    
+X3Ssn.Porch            1.812e+01  2.279e+01   0.795 0.426774    
+Screen.Porch           4.902e+01  1.035e+01   4.737 2.34e-06 ***
+Pool.Area              1.030e+02  1.791e+01   5.750 1.05e-08 ***
+Misc.Val              -9.079e+00  8.862e-01 -10.245  &lt; 2e-16 ***
+Mo.Sold               -2.555e+02  2.135e+02  -1.196 0.231702    
+Yr.Sold               -5.940e+02  4.524e+02  -1.313 0.189365    
+Sale.TypeCon           2.301e+04  1.332e+04   1.728 0.084186 .  
+Sale.TypeConLD         1.098e+04  7.844e+03   1.400 0.161743    
+Sale.TypeConLI         5.894e+03  1.169e+04   0.504 0.614247    
+Sale.TypeConLw         7.981e+03  1.097e+04   0.727 0.467195    
+Sale.TypeCWD           1.084e+04  9.076e+03   1.195 0.232289    
+Sale.TypeNew          -3.541e+03  1.585e+04  -0.223 0.823246    
+Sale.TypeOth           7.716e+03  9.935e+03   0.777 0.437500    
+Sale.TypeVWD           6.523e+03  2.536e+04   0.257 0.797043    
+Sale.TypeWD            6.798e+03  3.537e+03   1.922 0.054785 .  
+Sale.ConditionAdjLand  1.847e+04  1.035e+04   1.784 0.074634 .  
+Sale.ConditionAlloca   3.667e+03  8.374e+03   0.438 0.661554    
+Sale.ConditionFamily  -2.418e+02  5.182e+03  -0.047 0.962780    
+Sale.ConditionNormal   4.765e+03  2.643e+03   1.803 0.071584 .  
+Sale.ConditionPartial  2.403e+04  1.559e+04   1.541 0.123460    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 23870 on 1757 degrees of freedom
+Multiple R-squared:  0.9242,    Adjusted R-squared:  0.915 
+F-statistic: 100.1 on 214 and 1757 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from the summary a bunch of variables appear to be non-significant</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="1">
+<li>Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.</li>
+</ol>
+</section>
+<section id="build-linear-models-on-training-data-using-stepwise-selection" class="level1">
+<h1>Build Linear Models on Training Data Using Stepwise Selection</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model Fitting</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build full model with all predictors</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>fm <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span>., <span class="at">data =</span> ames.train_data.df)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build null model with no predictors</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>nm <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> ames.train_data.df)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Stepwise selection using backward and forward </span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>sm_both <span class="ot">&lt;-</span> <span class="fu">stepAIC</span>(fm, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> nm, <span class="at">upper =</span> fm), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Stepwise selection using only backward</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>sm_backward <span class="ot">&lt;-</span> <span class="fu">stepAIC</span>(fm, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> nm, <span class="at">upper =</span> fm), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Stepwise selection using only forward</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>sm_forward <span class="ot">&lt;-</span> <span class="fu">stepAIC</span>(fm, <span class="at">direction =</span> <span class="st">"forward"</span>, <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> nm, <span class="at">upper =</span> fm), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Summary of Stepwise models</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model using both backward and forward stepwise selection</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Summary of Stepwise Model (Both Directions):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Summary of Stepwise Model (Both Directions):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sm_both)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = price ~ area + MS.SubClass + Lot.Area + Land.Contour + 
+    Lot.Config + Land.Slope + Neighborhood + Condition.1 + Condition.2 + 
+    Bldg.Type + House.Style + Overall.Qual + Overall.Cond + Year.Built + 
+    Year.Remod.Add + Roof.Matl + Exterior.1st + Mas.Vnr.Type + 
+    Mas.Vnr.Area + Exter.Qual + Bsmt.Qual + Bsmt.Exposure + BsmtFin.Type.1 + 
+    BsmtFin.SF.1 + BsmtFin.Type.2 + BsmtFin.SF.2 + Bsmt.Unf.SF + 
+    Central.Air + X2nd.Flr.SF + Bsmt.Half.Bath + Full.Bath + 
+    Half.Bath + Kitchen.Qual + TotRms.AbvGrd + Functional + Fireplaces + 
+    Garage.Area + Screen.Porch + Pool.Area + Misc.Val + Yr.Sold + 
+    Sale.Condition, data = ames.train_data.df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-294667  -10501    -451    9670  161521 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           -2.261e+05  8.854e+05  -0.255 0.798463    
+area                   4.278e+01  4.245e+00  10.076  &lt; 2e-16 ***
+MS.SubClass           -1.378e+02  5.844e+01  -2.358 0.018457 *  
+Lot.Area               5.412e-01  1.104e-01   4.903 1.03e-06 ***
+Land.ContourHLS        1.910e+04  4.374e+03   4.366 1.33e-05 ***
+Land.ContourLow       -1.897e+03  5.625e+03  -0.337 0.735977    
+Land.ContourLvl        1.302e+04  3.285e+03   3.962 7.72e-05 ***
+Lot.ConfigCulDSac      8.537e+03  2.688e+03   3.176 0.001520 ** 
+Lot.ConfigFR2         -6.290e+03  3.523e+03  -1.785 0.074355 .  
+Lot.ConfigFR3         -2.219e+03  7.578e+03  -0.293 0.769712    
+Lot.ConfigInside       3.376e+02  1.532e+03   0.220 0.825563    
+Land.SlopeMod          9.813e+03  3.564e+03   2.754 0.005950 ** 
+Land.SlopeSev         -1.623e+04  1.011e+04  -1.605 0.108686    
+NeighborhoodBlueste   -8.143e+03  1.151e+04  -0.708 0.479220    
+NeighborhoodBrDale    -1.174e+03  9.304e+03  -0.126 0.899564    
+NeighborhoodBrkSide   -1.079e+04  7.799e+03  -1.383 0.166859    
+NeighborhoodClearCr   -9.987e+03  8.702e+03  -1.148 0.251295    
+NeighborhoodCollgCr   -1.735e+04  6.666e+03  -2.602 0.009338 ** 
+NeighborhoodCrawfor    7.026e+03  7.600e+03   0.924 0.355381    
+NeighborhoodEdwards   -2.815e+04  7.215e+03  -3.902 9.88e-05 ***
+NeighborhoodGilbert   -1.800e+04  6.994e+03  -2.573 0.010154 *  
+NeighborhoodGreens     1.904e+02  1.401e+04   0.014 0.989159    
+NeighborhoodGrnHill    1.170e+05  2.537e+04   4.611 4.28e-06 ***
+NeighborhoodIDOTRR    -2.195e+04  7.883e+03  -2.784 0.005421 ** 
+NeighborhoodLandmrk   -8.815e+03  2.509e+04  -0.351 0.725410    
+NeighborhoodMeadowV   -1.063e+04  9.371e+03  -1.135 0.256685    
+NeighborhoodMitchel   -2.125e+04  7.293e+03  -2.915 0.003606 ** 
+NeighborhoodNAmes     -2.158e+04  7.007e+03  -3.079 0.002106 ** 
+NeighborhoodNoRidge    2.417e+04  7.595e+03   3.182 0.001489 ** 
+NeighborhoodNPkVill    1.382e+03  9.267e+03   0.149 0.881472    
+NeighborhoodNridgHt    9.992e+03  6.854e+03   1.458 0.145097    
+NeighborhoodNWAmes    -2.420e+04  7.251e+03  -3.338 0.000862 ***
+NeighborhoodOldTown   -2.295e+04  7.526e+03  -3.050 0.002322 ** 
+NeighborhoodSawyer    -1.694e+04  7.299e+03  -2.321 0.020400 *  
+NeighborhoodSawyerW   -1.657e+04  7.088e+03  -2.338 0.019516 *  
+NeighborhoodSomerst    1.814e+03  6.780e+03   0.267 0.789139    
+NeighborhoodStoneBr    3.441e+04  7.610e+03   4.522 6.52e-06 ***
+NeighborhoodSWISU     -1.593e+04  8.659e+03  -1.839 0.066038 .  
+NeighborhoodTimber    -1.353e+04  7.374e+03  -1.835 0.066667 .  
+NeighborhoodVeenker   -3.131e+04  9.015e+03  -3.473 0.000526 ***
+Condition.1Feedr       3.881e+03  4.251e+03   0.913 0.361418    
+Condition.1Norm        1.109e+04  3.401e+03   3.260 0.001136 ** 
+Condition.1PosA        1.128e+04  8.147e+03   1.385 0.166291    
+Condition.1PosN        2.109e+04  6.097e+03   3.458 0.000556 ***
+Condition.1RRAe       -8.327e+03  6.882e+03  -1.210 0.226460    
+Condition.1RRAn        5.809e+03  5.541e+03   1.048 0.294600    
+Condition.1RRNe       -1.823e+03  1.069e+04  -0.171 0.864594    
+Condition.1RRNn       -3.526e+03  1.016e+04  -0.347 0.728589    
+Condition.2Feedr      -9.371e+03  1.502e+04  -0.624 0.532824    
+Condition.2Norm       -1.061e+03  1.279e+04  -0.083 0.933910    
+Condition.2PosA        6.729e+04  2.001e+04   3.362 0.000789 ***
+Condition.2PosN       -1.389e+05  1.987e+04  -6.988 3.88e-12 ***
+Condition.2RRAn       -1.393e+03  2.773e+04  -0.050 0.959944    
+Condition.2RRNn       -3.700e+03  2.169e+04  -0.171 0.864555    
+Bldg.Type2fmCon        1.543e+03  8.829e+03   0.175 0.861322    
+Bldg.TypeDuplex       -1.509e+04  4.827e+03  -3.126 0.001801 ** 
+Bldg.TypeTwnhs        -1.953e+04  7.258e+03  -2.691 0.007189 ** 
+Bldg.TypeTwnhsE       -1.316e+04  6.349e+03  -2.072 0.038365 *  
+House.Style1.5Unf      1.187e+04  7.228e+03   1.643 0.100601    
+House.Style1Story      7.581e+03  3.341e+03   2.269 0.023356 *  
+House.Style2.5Fin     -1.743e+04  1.191e+04  -1.464 0.143384    
+House.Style2.5Unf     -4.327e+03  6.969e+03  -0.621 0.534692    
+House.Style2Story     -2.657e+03  2.829e+03  -0.939 0.347657    
+House.StyleSFoyer      1.410e+04  5.019e+03   2.809 0.005021 ** 
+House.StyleSLvl        7.063e+03  4.231e+03   1.669 0.095242 .  
+Overall.Qual           8.497e+03  8.544e+02   9.945  &lt; 2e-16 ***
+Overall.Cond           5.591e+03  6.943e+02   8.053 1.45e-15 ***
+Year.Built             3.528e+02  5.716e+01   6.173 8.26e-10 ***
+Year.Remod.Add         1.220e+02  4.650e+01   2.624 0.008759 ** 
+Roof.MatlCompShg       6.226e+05  2.957e+04  21.054  &lt; 2e-16 ***
+Roof.MatlRoll          6.274e+05  3.882e+04  16.160  &lt; 2e-16 ***
+Roof.MatlTar&amp;Grv       6.214e+05  3.055e+04  20.336  &lt; 2e-16 ***
+Roof.MatlWdShake       6.198e+05  3.113e+04  19.908  &lt; 2e-16 ***
+Roof.MatlWdShngl       7.268e+05  3.159e+04  23.004  &lt; 2e-16 ***
+Exterior.1stAsphShn    3.217e+04  2.560e+04   1.257 0.209074    
+Exterior.1stBrkComm    3.103e+03  1.499e+04   0.207 0.835958    
+Exterior.1stBrkFace    1.410e+04  6.104e+03   2.310 0.020987 *  
+Exterior.1stCemntBd   -3.793e+03  6.178e+03  -0.614 0.539286    
+Exterior.1stHdBoard   -5.466e+03  5.294e+03  -1.032 0.302005    
+Exterior.1stImStucc   -3.056e+04  2.482e+04  -1.231 0.218428    
+Exterior.1stMetalSd    2.938e+03  5.151e+03   0.571 0.568401    
+Exterior.1stPlywood   -4.406e+03  5.656e+03  -0.779 0.436101    
+Exterior.1stPreCast    7.741e+04  2.621e+04   2.953 0.003187 ** 
+Exterior.1stStone     -2.147e+04  2.573e+04  -0.835 0.404027    
+Exterior.1stStucco     7.853e+00  6.712e+03   0.001 0.999067    
+Exterior.1stVinylSd   -1.056e+03  5.246e+03  -0.201 0.840519    
+Exterior.1stWd Sdng   -1.065e+03  5.120e+03  -0.208 0.835179    
+Exterior.1stWdShing   -5.760e+03  6.421e+03  -0.897 0.369865    
+Mas.Vnr.TypeBrkFace    5.988e+03  6.607e+03   0.906 0.364861    
+Mas.Vnr.TypeCBlock    -6.275e+04  2.545e+04  -2.465 0.013777 *  
+Mas.Vnr.TypeNone       9.187e+03  6.652e+03   1.381 0.167387    
+Mas.Vnr.TypeStone      1.196e+04  6.902e+03   1.733 0.083181 .  
+Mas.Vnr.Area           1.687e+01  4.927e+00   3.425 0.000629 ***
+Exter.QualFa          -2.840e+04  8.250e+03  -3.442 0.000591 ***
+Exter.QualGd          -2.598e+04  3.981e+03  -6.528 8.63e-11 ***
+Exter.QualTA          -2.762e+04  4.451e+03  -6.206 6.70e-10 ***
+Bsmt.QualFa           -1.263e+04  4.902e+03  -2.577 0.010054 *  
+Bsmt.QualGd           -1.837e+04  2.798e+03  -6.563 6.85e-11 ***
+Bsmt.QualPo           -8.392e+03  1.812e+04  -0.463 0.643253    
+Bsmt.QualTA           -1.710e+04  3.503e+03  -4.882 1.14e-06 ***
+Bsmt.ExposureGd        7.751e+03  2.478e+03   3.128 0.001788 ** 
+Bsmt.ExposureMn       -5.025e+03  2.547e+03  -1.973 0.048615 *  
+Bsmt.ExposureNo       -6.299e+03  1.919e+03  -3.283 0.001047 ** 
+BsmtFin.Type.1BLQ     -1.412e+03  2.324e+03  -0.607 0.543631    
+BsmtFin.Type.1GLQ      1.648e+03  2.157e+03   0.764 0.445011    
+BsmtFin.Type.1LwQ     -5.694e+03  3.083e+03  -1.847 0.064928 .  
+BsmtFin.Type.1Rec     -6.718e+03  2.448e+03  -2.744 0.006121 ** 
+BsmtFin.Type.1Unf      9.171e+02  2.439e+03   0.376 0.706969    
+BsmtFin.SF.1           3.821e+01  3.952e+00   9.669  &lt; 2e-16 ***
+BsmtFin.Type.2BLQ     -1.040e+04  5.765e+03  -1.805 0.071276 .  
+BsmtFin.Type.2GLQ      3.751e+03  7.195e+03   0.521 0.602190    
+BsmtFin.Type.2LwQ     -1.539e+04  5.481e+03  -2.807 0.005051 ** 
+BsmtFin.Type.2Rec     -1.092e+04  5.243e+03  -2.083 0.037413 *  
+BsmtFin.Type.2Unf     -7.450e+03  5.458e+03  -1.365 0.172415    
+BsmtFin.SF.2           2.542e+01  7.359e+00   3.454 0.000564 ***
+Bsmt.Unf.SF            1.644e+01  3.722e+00   4.417 1.06e-05 ***
+Central.AirY          -5.212e+03  2.896e+03  -1.800 0.072022 .  
+X2nd.Flr.SF            1.843e+01  5.276e+00   3.493 0.000488 ***
+Bsmt.Half.Bath        -6.273e+03  2.353e+03  -2.665 0.007758 ** 
+Full.Bath              5.034e+03  1.781e+03   2.827 0.004748 ** 
+Half.Bath              3.120e+03  1.749e+03   1.783 0.074705 .  
+Kitchen.QualFa        -2.927e+04  5.258e+03  -5.568 2.96e-08 ***
+Kitchen.QualGd        -2.428e+04  3.016e+03  -8.052 1.46e-15 ***
+Kitchen.QualTA        -2.492e+04  3.360e+03  -7.415 1.84e-13 ***
+TotRms.AbvGrd         -1.424e+03  7.207e+02  -1.976 0.048276 *  
+FunctionalMaj2        -1.347e+04  1.358e+04  -0.992 0.321477    
+FunctionalMin1         5.106e+03  9.916e+03   0.515 0.606677    
+FunctionalMin2         2.187e+03  9.815e+03   0.223 0.823687    
+FunctionalMod         -5.170e+03  1.070e+04  -0.483 0.629005    
+FunctionalSal         -4.359e+03  2.671e+04  -0.163 0.870377    
+FunctionalSev         -2.805e+04  2.009e+04  -1.396 0.162967    
+FunctionalTyp          1.076e+04  9.124e+03   1.180 0.238335    
+Fireplaces             4.053e+03  1.096e+03   3.697 0.000225 ***
+Garage.Area            2.331e+01  3.673e+00   6.346 2.78e-10 ***
+Screen.Porch           4.407e+01  9.933e+00   4.436 9.70e-06 ***
+Pool.Area              1.043e+02  1.695e+01   6.153 9.33e-10 ***
+Misc.Val              -9.074e+00  8.686e-01 -10.447  &lt; 2e-16 ***
+Yr.Sold               -6.471e+02  4.345e+02  -1.489 0.136564    
+Sale.ConditionAdjLand  2.090e+04  9.564e+03   2.185 0.029018 *  
+Sale.ConditionAlloca   5.141e+03  7.889e+03   0.652 0.514684    
+Sale.ConditionFamily   1.577e+03  5.005e+03   0.315 0.752744    
+Sale.ConditionNormal   5.966e+03  2.374e+03   2.512 0.012074 *  
+Sale.ConditionPartial  1.429e+04  3.317e+03   4.309 1.73e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 23830 on 1829 degrees of freedom
+Multiple R-squared:  0.9214,    Adjusted R-squared:  0.9153 
+F-statistic: 150.9 on 142 and 1829 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC of Model (Both Directions):"</span>, <span class="fu">AIC</span>(sm_both), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AIC of Model (Both Directions): 45486.25 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model using only backward stepwise selection</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Summary of Stepwise Model (Backward Only):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Summary of Stepwise Model (Backward Only):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sm_backward)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = price ~ area + MS.SubClass + Lot.Area + Land.Contour + 
+    Lot.Config + Land.Slope + Neighborhood + Condition.1 + Condition.2 + 
+    Bldg.Type + House.Style + Overall.Qual + Overall.Cond + Year.Built + 
+    Year.Remod.Add + Roof.Matl + Exterior.1st + Mas.Vnr.Type + 
+    Mas.Vnr.Area + Exter.Qual + Bsmt.Qual + Bsmt.Exposure + BsmtFin.Type.1 + 
+    BsmtFin.SF.1 + BsmtFin.Type.2 + BsmtFin.SF.2 + Bsmt.Unf.SF + 
+    Central.Air + X2nd.Flr.SF + Bsmt.Half.Bath + Full.Bath + 
+    Half.Bath + Kitchen.Qual + TotRms.AbvGrd + Functional + Fireplaces + 
+    Garage.Area + Screen.Porch + Pool.Area + Misc.Val + Yr.Sold + 
+    Sale.Condition, data = ames.train_data.df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-294667  -10501    -451    9670  161521 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           -2.261e+05  8.854e+05  -0.255 0.798463    
+area                   4.278e+01  4.245e+00  10.076  &lt; 2e-16 ***
+MS.SubClass           -1.378e+02  5.844e+01  -2.358 0.018457 *  
+Lot.Area               5.412e-01  1.104e-01   4.903 1.03e-06 ***
+Land.ContourHLS        1.910e+04  4.374e+03   4.366 1.33e-05 ***
+Land.ContourLow       -1.897e+03  5.625e+03  -0.337 0.735977    
+Land.ContourLvl        1.302e+04  3.285e+03   3.962 7.72e-05 ***
+Lot.ConfigCulDSac      8.537e+03  2.688e+03   3.176 0.001520 ** 
+Lot.ConfigFR2         -6.290e+03  3.523e+03  -1.785 0.074355 .  
+Lot.ConfigFR3         -2.219e+03  7.578e+03  -0.293 0.769712    
+Lot.ConfigInside       3.376e+02  1.532e+03   0.220 0.825563    
+Land.SlopeMod          9.813e+03  3.564e+03   2.754 0.005950 ** 
+Land.SlopeSev         -1.623e+04  1.011e+04  -1.605 0.108686    
+NeighborhoodBlueste   -8.143e+03  1.151e+04  -0.708 0.479220    
+NeighborhoodBrDale    -1.174e+03  9.304e+03  -0.126 0.899564    
+NeighborhoodBrkSide   -1.079e+04  7.799e+03  -1.383 0.166859    
+NeighborhoodClearCr   -9.987e+03  8.702e+03  -1.148 0.251295    
+NeighborhoodCollgCr   -1.735e+04  6.666e+03  -2.602 0.009338 ** 
+NeighborhoodCrawfor    7.026e+03  7.600e+03   0.924 0.355381    
+NeighborhoodEdwards   -2.815e+04  7.215e+03  -3.902 9.88e-05 ***
+NeighborhoodGilbert   -1.800e+04  6.994e+03  -2.573 0.010154 *  
+NeighborhoodGreens     1.904e+02  1.401e+04   0.014 0.989159    
+NeighborhoodGrnHill    1.170e+05  2.537e+04   4.611 4.28e-06 ***
+NeighborhoodIDOTRR    -2.195e+04  7.883e+03  -2.784 0.005421 ** 
+NeighborhoodLandmrk   -8.815e+03  2.509e+04  -0.351 0.725410    
+NeighborhoodMeadowV   -1.063e+04  9.371e+03  -1.135 0.256685    
+NeighborhoodMitchel   -2.125e+04  7.293e+03  -2.915 0.003606 ** 
+NeighborhoodNAmes     -2.158e+04  7.007e+03  -3.079 0.002106 ** 
+NeighborhoodNoRidge    2.417e+04  7.595e+03   3.182 0.001489 ** 
+NeighborhoodNPkVill    1.382e+03  9.267e+03   0.149 0.881472    
+NeighborhoodNridgHt    9.992e+03  6.854e+03   1.458 0.145097    
+NeighborhoodNWAmes    -2.420e+04  7.251e+03  -3.338 0.000862 ***
+NeighborhoodOldTown   -2.295e+04  7.526e+03  -3.050 0.002322 ** 
+NeighborhoodSawyer    -1.694e+04  7.299e+03  -2.321 0.020400 *  
+NeighborhoodSawyerW   -1.657e+04  7.088e+03  -2.338 0.019516 *  
+NeighborhoodSomerst    1.814e+03  6.780e+03   0.267 0.789139    
+NeighborhoodStoneBr    3.441e+04  7.610e+03   4.522 6.52e-06 ***
+NeighborhoodSWISU     -1.593e+04  8.659e+03  -1.839 0.066038 .  
+NeighborhoodTimber    -1.353e+04  7.374e+03  -1.835 0.066667 .  
+NeighborhoodVeenker   -3.131e+04  9.015e+03  -3.473 0.000526 ***
+Condition.1Feedr       3.881e+03  4.251e+03   0.913 0.361418    
+Condition.1Norm        1.109e+04  3.401e+03   3.260 0.001136 ** 
+Condition.1PosA        1.128e+04  8.147e+03   1.385 0.166291    
+Condition.1PosN        2.109e+04  6.097e+03   3.458 0.000556 ***
+Condition.1RRAe       -8.327e+03  6.882e+03  -1.210 0.226460    
+Condition.1RRAn        5.809e+03  5.541e+03   1.048 0.294600    
+Condition.1RRNe       -1.823e+03  1.069e+04  -0.171 0.864594    
+Condition.1RRNn       -3.526e+03  1.016e+04  -0.347 0.728589    
+Condition.2Feedr      -9.371e+03  1.502e+04  -0.624 0.532824    
+Condition.2Norm       -1.061e+03  1.279e+04  -0.083 0.933910    
+Condition.2PosA        6.729e+04  2.001e+04   3.362 0.000789 ***
+Condition.2PosN       -1.389e+05  1.987e+04  -6.988 3.88e-12 ***
+Condition.2RRAn       -1.393e+03  2.773e+04  -0.050 0.959944    
+Condition.2RRNn       -3.700e+03  2.169e+04  -0.171 0.864555    
+Bldg.Type2fmCon        1.543e+03  8.829e+03   0.175 0.861322    
+Bldg.TypeDuplex       -1.509e+04  4.827e+03  -3.126 0.001801 ** 
+Bldg.TypeTwnhs        -1.953e+04  7.258e+03  -2.691 0.007189 ** 
+Bldg.TypeTwnhsE       -1.316e+04  6.349e+03  -2.072 0.038365 *  
+House.Style1.5Unf      1.187e+04  7.228e+03   1.643 0.100601    
+House.Style1Story      7.581e+03  3.341e+03   2.269 0.023356 *  
+House.Style2.5Fin     -1.743e+04  1.191e+04  -1.464 0.143384    
+House.Style2.5Unf     -4.327e+03  6.969e+03  -0.621 0.534692    
+House.Style2Story     -2.657e+03  2.829e+03  -0.939 0.347657    
+House.StyleSFoyer      1.410e+04  5.019e+03   2.809 0.005021 ** 
+House.StyleSLvl        7.063e+03  4.231e+03   1.669 0.095242 .  
+Overall.Qual           8.497e+03  8.544e+02   9.945  &lt; 2e-16 ***
+Overall.Cond           5.591e+03  6.943e+02   8.053 1.45e-15 ***
+Year.Built             3.528e+02  5.716e+01   6.173 8.26e-10 ***
+Year.Remod.Add         1.220e+02  4.650e+01   2.624 0.008759 ** 
+Roof.MatlCompShg       6.226e+05  2.957e+04  21.054  &lt; 2e-16 ***
+Roof.MatlRoll          6.274e+05  3.882e+04  16.160  &lt; 2e-16 ***
+Roof.MatlTar&amp;Grv       6.214e+05  3.055e+04  20.336  &lt; 2e-16 ***
+Roof.MatlWdShake       6.198e+05  3.113e+04  19.908  &lt; 2e-16 ***
+Roof.MatlWdShngl       7.268e+05  3.159e+04  23.004  &lt; 2e-16 ***
+Exterior.1stAsphShn    3.217e+04  2.560e+04   1.257 0.209074    
+Exterior.1stBrkComm    3.103e+03  1.499e+04   0.207 0.835958    
+Exterior.1stBrkFace    1.410e+04  6.104e+03   2.310 0.020987 *  
+Exterior.1stCemntBd   -3.793e+03  6.178e+03  -0.614 0.539286    
+Exterior.1stHdBoard   -5.466e+03  5.294e+03  -1.032 0.302005    
+Exterior.1stImStucc   -3.056e+04  2.482e+04  -1.231 0.218428    
+Exterior.1stMetalSd    2.938e+03  5.151e+03   0.571 0.568401    
+Exterior.1stPlywood   -4.406e+03  5.656e+03  -0.779 0.436101    
+Exterior.1stPreCast    7.741e+04  2.621e+04   2.953 0.003187 ** 
+Exterior.1stStone     -2.147e+04  2.573e+04  -0.835 0.404027    
+Exterior.1stStucco     7.853e+00  6.712e+03   0.001 0.999067    
+Exterior.1stVinylSd   -1.056e+03  5.246e+03  -0.201 0.840519    
+Exterior.1stWd Sdng   -1.065e+03  5.120e+03  -0.208 0.835179    
+Exterior.1stWdShing   -5.760e+03  6.421e+03  -0.897 0.369865    
+Mas.Vnr.TypeBrkFace    5.988e+03  6.607e+03   0.906 0.364861    
+Mas.Vnr.TypeCBlock    -6.275e+04  2.545e+04  -2.465 0.013777 *  
+Mas.Vnr.TypeNone       9.187e+03  6.652e+03   1.381 0.167387    
+Mas.Vnr.TypeStone      1.196e+04  6.902e+03   1.733 0.083181 .  
+Mas.Vnr.Area           1.687e+01  4.927e+00   3.425 0.000629 ***
+Exter.QualFa          -2.840e+04  8.250e+03  -3.442 0.000591 ***
+Exter.QualGd          -2.598e+04  3.981e+03  -6.528 8.63e-11 ***
+Exter.QualTA          -2.762e+04  4.451e+03  -6.206 6.70e-10 ***
+Bsmt.QualFa           -1.263e+04  4.902e+03  -2.577 0.010054 *  
+Bsmt.QualGd           -1.837e+04  2.798e+03  -6.563 6.85e-11 ***
+Bsmt.QualPo           -8.392e+03  1.812e+04  -0.463 0.643253    
+Bsmt.QualTA           -1.710e+04  3.503e+03  -4.882 1.14e-06 ***
+Bsmt.ExposureGd        7.751e+03  2.478e+03   3.128 0.001788 ** 
+Bsmt.ExposureMn       -5.025e+03  2.547e+03  -1.973 0.048615 *  
+Bsmt.ExposureNo       -6.299e+03  1.919e+03  -3.283 0.001047 ** 
+BsmtFin.Type.1BLQ     -1.412e+03  2.324e+03  -0.607 0.543631    
+BsmtFin.Type.1GLQ      1.648e+03  2.157e+03   0.764 0.445011    
+BsmtFin.Type.1LwQ     -5.694e+03  3.083e+03  -1.847 0.064928 .  
+BsmtFin.Type.1Rec     -6.718e+03  2.448e+03  -2.744 0.006121 ** 
+BsmtFin.Type.1Unf      9.171e+02  2.439e+03   0.376 0.706969    
+BsmtFin.SF.1           3.821e+01  3.952e+00   9.669  &lt; 2e-16 ***
+BsmtFin.Type.2BLQ     -1.040e+04  5.765e+03  -1.805 0.071276 .  
+BsmtFin.Type.2GLQ      3.751e+03  7.195e+03   0.521 0.602190    
+BsmtFin.Type.2LwQ     -1.539e+04  5.481e+03  -2.807 0.005051 ** 
+BsmtFin.Type.2Rec     -1.092e+04  5.243e+03  -2.083 0.037413 *  
+BsmtFin.Type.2Unf     -7.450e+03  5.458e+03  -1.365 0.172415    
+BsmtFin.SF.2           2.542e+01  7.359e+00   3.454 0.000564 ***
+Bsmt.Unf.SF            1.644e+01  3.722e+00   4.417 1.06e-05 ***
+Central.AirY          -5.212e+03  2.896e+03  -1.800 0.072022 .  
+X2nd.Flr.SF            1.843e+01  5.276e+00   3.493 0.000488 ***
+Bsmt.Half.Bath        -6.273e+03  2.353e+03  -2.665 0.007758 ** 
+Full.Bath              5.034e+03  1.781e+03   2.827 0.004748 ** 
+Half.Bath              3.120e+03  1.749e+03   1.783 0.074705 .  
+Kitchen.QualFa        -2.927e+04  5.258e+03  -5.568 2.96e-08 ***
+Kitchen.QualGd        -2.428e+04  3.016e+03  -8.052 1.46e-15 ***
+Kitchen.QualTA        -2.492e+04  3.360e+03  -7.415 1.84e-13 ***
+TotRms.AbvGrd         -1.424e+03  7.207e+02  -1.976 0.048276 *  
+FunctionalMaj2        -1.347e+04  1.358e+04  -0.992 0.321477    
+FunctionalMin1         5.106e+03  9.916e+03   0.515 0.606677    
+FunctionalMin2         2.187e+03  9.815e+03   0.223 0.823687    
+FunctionalMod         -5.170e+03  1.070e+04  -0.483 0.629005    
+FunctionalSal         -4.359e+03  2.671e+04  -0.163 0.870377    
+FunctionalSev         -2.805e+04  2.009e+04  -1.396 0.162967    
+FunctionalTyp          1.076e+04  9.124e+03   1.180 0.238335    
+Fireplaces             4.053e+03  1.096e+03   3.697 0.000225 ***
+Garage.Area            2.331e+01  3.673e+00   6.346 2.78e-10 ***
+Screen.Porch           4.407e+01  9.933e+00   4.436 9.70e-06 ***
+Pool.Area              1.043e+02  1.695e+01   6.153 9.33e-10 ***
+Misc.Val              -9.074e+00  8.686e-01 -10.447  &lt; 2e-16 ***
+Yr.Sold               -6.471e+02  4.345e+02  -1.489 0.136564    
+Sale.ConditionAdjLand  2.090e+04  9.564e+03   2.185 0.029018 *  
+Sale.ConditionAlloca   5.141e+03  7.889e+03   0.652 0.514684    
+Sale.ConditionFamily   1.577e+03  5.005e+03   0.315 0.752744    
+Sale.ConditionNormal   5.966e+03  2.374e+03   2.512 0.012074 *  
+Sale.ConditionPartial  1.429e+04  3.317e+03   4.309 1.73e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 23830 on 1829 degrees of freedom
+Multiple R-squared:  0.9214,    Adjusted R-squared:  0.9153 
+F-statistic: 150.9 on 142 and 1829 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC of Model (Backward Only):"</span>, <span class="fu">AIC</span>(sm_backward), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AIC of Model (Backward Only): 45486.25 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the model using only forward stepwise selection</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Summary of Stepwise Model (Forward Only):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Summary of Stepwise Model (Forward Only):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sm_forward)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = price ~ area + MS.SubClass + MS.Zoning + Lot.Area + 
+    Street + Lot.Shape + Land.Contour + Utilities + Lot.Config + 
+    Land.Slope + Neighborhood + Condition.1 + Condition.2 + Bldg.Type + 
+    House.Style + Overall.Qual + Overall.Cond + Year.Built + 
+    Year.Remod.Add + Roof.Style + Roof.Matl + Exterior.1st + 
+    Exterior.2nd + Mas.Vnr.Type + Mas.Vnr.Area + Exter.Qual + 
+    Exter.Cond + Foundation + Bsmt.Qual + Bsmt.Cond + Bsmt.Exposure + 
+    BsmtFin.Type.1 + BsmtFin.SF.1 + BsmtFin.Type.2 + BsmtFin.SF.2 + 
+    Bsmt.Unf.SF + Total.Bsmt.SF + Heating + Heating.QC + Central.Air + 
+    Electrical + X1st.Flr.SF + X2nd.Flr.SF + Low.Qual.Fin.SF + 
+    Bsmt.Full.Bath + Bsmt.Half.Bath + Full.Bath + Half.Bath + 
+    Bedroom.AbvGr + Kitchen.AbvGr + Kitchen.Qual + TotRms.AbvGrd + 
+    Functional + Fireplaces + Garage.Cars + Garage.Area + Paved.Drive + 
+    Wood.Deck.SF + Open.Porch.SF + Enclosed.Porch + X3Ssn.Porch + 
+    Screen.Porch + Pool.Area + Misc.Val + Mo.Sold + Yr.Sold + 
+    Sale.Type + Sale.Condition, data = ames.train_data.df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-287442  -10291    -164    9350  162141 
+
+Coefficients: (4 not defined because of singularities)
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           -2.474e+05  9.221e+05  -0.268 0.788522    
+area                   3.584e+01  1.762e+01   2.034 0.042093 *  
+MS.SubClass           -1.451e+02  6.068e+01  -2.391 0.016888 *  
+MS.ZoningFV            1.500e+04  9.925e+03   1.512 0.130767    
+MS.ZoningRH            2.224e+04  1.012e+04   2.198 0.028091 *  
+MS.ZoningRL            1.396e+04  8.065e+03   1.730 0.083722 .  
+MS.ZoningRM            1.134e+04  7.553e+03   1.502 0.133305    
+Lot.Area               4.937e-01  1.251e-01   3.947 8.23e-05 ***
+StreetPave             4.383e+03  1.042e+04   0.421 0.674068    
+Lot.ShapeIR2           6.867e+03  3.914e+03   1.754 0.079529 .  
+Lot.ShapeIR3          -2.131e+03  8.952e+03  -0.238 0.811901    
+Lot.ShapeReg           5.095e+02  1.413e+03   0.361 0.718369    
+Land.ContourHLS        2.045e+04  4.534e+03   4.511 6.88e-06 ***
+Land.ContourLow        4.530e+02  5.901e+03   0.077 0.938808    
+Land.ContourLvl        1.376e+04  3.471e+03   3.964 7.66e-05 ***
+UtilitiesNoSeWa       -2.358e+04  2.588e+04  -0.911 0.362404    
+UtilitiesNoSewr       -1.179e+04  2.593e+04  -0.455 0.649233    
+Lot.ConfigCulDSac      8.524e+03  2.856e+03   2.984 0.002882 ** 
+Lot.ConfigFR2         -7.395e+03  3.667e+03  -2.017 0.043887 *  
+Lot.ConfigFR3         -2.045e+03  7.642e+03  -0.268 0.789022    
+Lot.ConfigInside       4.333e+02  1.584e+03   0.274 0.784442    
+Land.SlopeMod          8.866e+03  3.689e+03   2.403 0.016356 *  
+Land.SlopeSev         -1.980e+04  1.180e+04  -1.678 0.093596 .  
+NeighborhoodBlueste    1.194e+03  1.221e+04   0.098 0.922144    
+NeighborhoodBrDale     3.082e+03  1.008e+04   0.306 0.759733    
+NeighborhoodBrkSide   -7.192e+03  8.480e+03  -0.848 0.396452    
+NeighborhoodClearCr   -8.751e+03  9.134e+03  -0.958 0.338138    
+NeighborhoodCollgCr   -1.526e+04  6.855e+03  -2.226 0.026168 *  
+NeighborhoodCrawfor    9.249e+03  7.866e+03   1.176 0.239836    
+NeighborhoodEdwards   -2.612e+04  7.455e+03  -3.504 0.000469 ***
+NeighborhoodGilbert   -1.601e+04  7.212e+03  -2.220 0.026513 *  
+NeighborhoodGreens     8.259e+03  1.441e+04   0.573 0.566668    
+NeighborhoodGrnHill    1.268e+05  2.579e+04   4.919 9.53e-07 ***
+NeighborhoodIDOTRR    -1.391e+04  9.176e+03  -1.516 0.129815    
+NeighborhoodLandmrk   -1.553e+04  2.613e+04  -0.594 0.552333    
+NeighborhoodMeadowV   -5.239e+03  1.004e+04  -0.522 0.602041    
+NeighborhoodMitchel   -1.910e+04  7.506e+03  -2.545 0.011014 *  
+NeighborhoodNAmes     -1.879e+04  7.267e+03  -2.585 0.009808 ** 
+NeighborhoodNoRidge    2.353e+04  7.773e+03   3.028 0.002501 ** 
+NeighborhoodNPkVill    1.116e+04  1.346e+04   0.830 0.406924    
+NeighborhoodNridgHt    1.272e+04  7.003e+03   1.817 0.069379 .  
+NeighborhoodNWAmes    -2.020e+04  7.469e+03  -2.704 0.006908 ** 
+NeighborhoodOldTown   -1.889e+04  8.529e+03  -2.215 0.026863 *  
+NeighborhoodSawyer    -1.464e+04  7.518e+03  -1.947 0.051715 .  
+NeighborhoodSawyerW   -1.566e+04  7.261e+03  -2.157 0.031149 *  
+NeighborhoodSomerst    4.075e+03  8.461e+03   0.482 0.630134    
+NeighborhoodStoneBr    3.711e+04  7.804e+03   4.755 2.14e-06 ***
+NeighborhoodSWISU     -1.622e+04  9.126e+03  -1.777 0.075741 .  
+NeighborhoodTimber    -1.072e+04  7.557e+03  -1.419 0.156177    
+NeighborhoodVeenker   -2.433e+04  9.406e+03  -2.586 0.009777 ** 
+Condition.1Feedr       3.786e+03  4.364e+03   0.868 0.385770    
+Condition.1Norm        1.114e+04  3.502e+03   3.180 0.001498 ** 
+Condition.1PosA        9.543e+03  8.349e+03   1.143 0.253207    
+Condition.1PosN        1.935e+04  6.223e+03   3.110 0.001900 ** 
+Condition.1RRAe       -5.534e+03  7.175e+03  -0.771 0.440690    
+Condition.1RRAn        4.868e+03  5.716e+03   0.852 0.394572    
+Condition.1RRNe       -5.656e+03  1.116e+04  -0.507 0.612237    
+Condition.1RRNn       -5.566e+03  1.056e+04  -0.527 0.598018    
+Condition.2Feedr      -8.367e+03  1.525e+04  -0.549 0.583407    
+Condition.2Norm       -4.152e+03  1.301e+04  -0.319 0.749683    
+Condition.2PosA        7.013e+04  2.046e+04   3.428 0.000622 ***
+Condition.2PosN       -1.358e+05  2.016e+04  -6.737 2.18e-11 ***
+Condition.2RRAn       -2.717e+03  2.812e+04  -0.097 0.923043    
+Condition.2RRNn       -4.916e+03  2.208e+04  -0.223 0.823810    
+Bldg.Type2fmCon        3.283e+03  9.304e+03   0.353 0.724248    
+Bldg.TypeDuplex       -1.028e+04  6.325e+03  -1.626 0.104211    
+Bldg.TypeTwnhs        -1.815e+04  7.570e+03  -2.397 0.016622 *  
+Bldg.TypeTwnhsE       -1.280e+04  6.652e+03  -1.924 0.054454 .  
+House.Style1.5Unf      1.380e+04  7.885e+03   1.749 0.080382 .  
+House.Style1Story      7.068e+03  3.568e+03   1.981 0.047747 *  
+House.Style2.5Fin     -1.284e+04  1.403e+04  -0.915 0.360370    
+House.Style2.5Unf     -1.562e+03  7.315e+03  -0.214 0.830930    
+House.Style2Story     -2.877e+03  2.926e+03  -0.983 0.325523    
+House.StyleSFoyer      1.450e+04  5.238e+03   2.768 0.005703 ** 
+House.StyleSLvl        6.641e+03  4.420e+03   1.503 0.133136    
+Overall.Qual           8.192e+03  8.810e+02   9.298  &lt; 2e-16 ***
+Overall.Cond           5.206e+03  7.756e+02   6.713 2.57e-11 ***
+Year.Built             3.344e+02  6.634e+01   5.040 5.14e-07 ***
+Year.Remod.Add         8.514e+01  4.924e+01   1.729 0.083978 .  
+Roof.StyleGable        2.377e+04  1.304e+04   1.824 0.068348 .  
+Roof.StyleGambrel      2.407e+04  1.485e+04   1.621 0.105133    
+Roof.StyleHip          2.629e+04  1.313e+04   2.003 0.045359 *  
+Roof.StyleMansard      1.015e+04  1.582e+04   0.641 0.521342    
+Roof.StyleShed         3.485e+04  2.538e+04   1.373 0.169800    
+Roof.MatlCompShg       6.013e+05  3.165e+04  19.000  &lt; 2e-16 ***
+Roof.MatlRoll          6.034e+05  4.073e+04  14.816  &lt; 2e-16 ***
+Roof.MatlTar&amp;Grv       6.152e+05  3.353e+04  18.350  &lt; 2e-16 ***
+Roof.MatlWdShake       6.037e+05  3.322e+04  18.172  &lt; 2e-16 ***
+Roof.MatlWdShngl       7.033e+05  3.377e+04  20.828  &lt; 2e-16 ***
+Exterior.1stAsphShn    8.213e+03  3.606e+04   0.228 0.819857    
+Exterior.1stBrkComm    1.469e+04  2.237e+04   0.657 0.511341    
+Exterior.1stBrkFace    1.957e+04  1.474e+04   1.327 0.184550    
+Exterior.1stCemntBd   -8.231e+03  1.764e+04  -0.467 0.640787    
+Exterior.1stHdBoard   -8.283e+03  1.453e+04  -0.570 0.568652    
+Exterior.1stImStucc   -4.522e+04  2.912e+04  -1.553 0.120646    
+Exterior.1stMetalSd   -3.153e+03  1.567e+04  -0.201 0.840570    
+Exterior.1stPlywood   -2.970e+03  1.454e+04  -0.204 0.838234    
+Exterior.1stPreCast    8.650e+04  2.720e+04   3.181 0.001495 ** 
+Exterior.1stStone     -2.018e+04  2.622e+04  -0.770 0.441634    
+Exterior.1stStucco     2.936e+03  1.559e+04   0.188 0.850627    
+Exterior.1stVinylSd   -1.056e+04  1.454e+04  -0.726 0.467649    
+Exterior.1stWd Sdng    1.221e+03  1.396e+04   0.088 0.930262    
+Exterior.1stWdShing   -6.739e+03  1.465e+04  -0.460 0.645665    
+Exterior.2ndAsphShn    2.275e+04  2.344e+04   0.970 0.331947    
+Exterior.2ndBrk Cmn   -7.706e+03  1.917e+04  -0.402 0.687792    
+Exterior.2ndBrkFace   -9.679e+03  1.523e+04  -0.636 0.525170    
+Exterior.2ndCmentBd    5.078e+03  1.775e+04   0.286 0.774912    
+Exterior.2ndHdBoard    3.925e+03  1.449e+04   0.271 0.786478    
+Exterior.2ndImStucc    1.850e+04  1.613e+04   1.147 0.251484    
+Exterior.2ndMetalSd    5.481e+03  1.564e+04   0.350 0.726072    
+Exterior.2ndOther     -1.459e+04  2.863e+04  -0.509 0.610521    
+Exterior.2ndPlywood   -1.365e+03  1.435e+04  -0.095 0.924211    
+Exterior.2ndPreCast           NA         NA      NA       NA    
+Exterior.2ndStone             NA         NA      NA       NA    
+Exterior.2ndStucco    -5.334e+03  1.572e+04  -0.339 0.734423    
+Exterior.2ndVinylSd    9.470e+03  1.441e+04   0.657 0.511254    
+Exterior.2ndWd Sdng   -3.798e+03  1.398e+04  -0.272 0.785869    
+Exterior.2ndWd Shng    2.233e+03  1.426e+04   0.157 0.875605    
+Mas.Vnr.TypeBrkFace    5.879e+03  6.706e+03   0.877 0.380745    
+Mas.Vnr.TypeCBlock    -6.669e+04  3.529e+04  -1.890 0.058944 .  
+Mas.Vnr.TypeNone       8.711e+03  6.763e+03   1.288 0.197916    
+Mas.Vnr.TypeStone      1.164e+04  7.024e+03   1.658 0.097557 .  
+Mas.Vnr.Area           1.606e+01  5.080e+00   3.162 0.001594 ** 
+Exter.QualFa          -2.811e+04  9.108e+03  -3.086 0.002061 ** 
+Exter.QualGd          -2.505e+04  4.060e+03  -6.170 8.45e-10 ***
+Exter.QualTA          -2.623e+04  4.578e+03  -5.729 1.18e-08 ***
+Exter.CondFa           1.603e+02  1.051e+04   0.015 0.987828    
+Exter.CondGd           8.352e+03  8.962e+03   0.932 0.351496    
+Exter.CondPo          -9.227e+03  2.664e+04  -0.346 0.729123    
+Exter.CondTA           7.164e+03  8.935e+03   0.802 0.422796    
+FoundationCBlock       3.843e+02  2.706e+03   0.142 0.887105    
+FoundationPConc        2.754e+03  2.959e+03   0.931 0.352116    
+FoundationStone        1.294e+04  9.291e+03   1.393 0.163728    
+FoundationWood        -2.990e+03  1.475e+04  -0.203 0.839445    
+Bsmt.QualFa           -1.098e+04  5.094e+03  -2.155 0.031303 *  
+Bsmt.QualGd           -1.753e+04  2.888e+03  -6.071 1.55e-09 ***
+Bsmt.QualPo           -9.071e+03  1.982e+04  -0.458 0.647231    
+Bsmt.QualTA           -1.553e+04  3.650e+03  -4.255 2.20e-05 ***
+Bsmt.CondFa            2.135e+03  1.524e+04   0.140 0.888599    
+Bsmt.CondGd            4.946e+03  1.505e+04   0.329 0.742473    
+Bsmt.CondPo           -1.115e+04  2.939e+04  -0.379 0.704541    
+Bsmt.CondTA            4.446e+03  1.481e+04   0.300 0.764095    
+Bsmt.ExposureGd        7.367e+03  2.536e+03   2.905 0.003723 ** 
+Bsmt.ExposureMn       -4.907e+03  2.599e+03  -1.888 0.059163 .  
+Bsmt.ExposureNo       -6.222e+03  1.971e+03  -3.157 0.001620 ** 
+BsmtFin.Type.1BLQ     -1.154e+03  2.390e+03  -0.483 0.629295    
+BsmtFin.Type.1GLQ      1.592e+03  2.218e+03   0.718 0.472909    
+BsmtFin.Type.1LwQ     -5.649e+03  3.178e+03  -1.778 0.075654 .  
+BsmtFin.Type.1Rec     -5.583e+03  2.523e+03  -2.213 0.027009 *  
+BsmtFin.Type.1Unf      6.307e+02  2.520e+03   0.250 0.802363    
+BsmtFin.SF.1           3.473e+01  4.221e+00   8.227 3.71e-16 ***
+BsmtFin.Type.2BLQ     -9.631e+03  5.978e+03  -1.611 0.107337    
+BsmtFin.Type.2GLQ     -5.109e+02  7.432e+03  -0.069 0.945204    
+BsmtFin.Type.2LwQ     -1.425e+04  5.639e+03  -2.526 0.011609 *  
+BsmtFin.Type.2Rec     -1.109e+04  5.432e+03  -2.042 0.041345 *  
+BsmtFin.Type.2Unf     -5.993e+03  5.651e+03  -1.060 0.289082    
+BsmtFin.SF.2           2.518e+01  7.631e+00   3.300 0.000987 ***
+Bsmt.Unf.SF            1.502e+01  3.901e+00   3.849 0.000123 ***
+Total.Bsmt.SF                 NA         NA      NA       NA    
+HeatingGasW           -1.042e+03  6.955e+03  -0.150 0.880950    
+HeatingGrav           -5.291e+03  1.066e+04  -0.496 0.619706    
+HeatingOthW           -2.737e+04  2.646e+04  -1.034 0.301079    
+Heating.QCFa          -2.167e+03  4.245e+03  -0.510 0.609808    
+Heating.QCGd          -2.372e+03  1.804e+03  -1.315 0.188714    
+Heating.QCPo          -1.691e+04  2.700e+04  -0.626 0.531127    
+Heating.QCTA          -2.663e+03  1.791e+03  -1.487 0.137315    
+Central.AirY          -7.029e+03  3.260e+03  -2.156 0.031210 *  
+ElectricalFuseF       -3.570e+03  5.851e+03  -0.610 0.541819    
+ElectricalFuseP       -3.595e+03  1.241e+04  -0.290 0.772074    
+ElectricalMix          2.233e+04  3.732e+04   0.598 0.549695    
+ElectricalSBrkr       -2.772e+03  2.552e+03  -1.086 0.277459    
+X1st.Flr.SF            8.980e+00  1.779e+01   0.505 0.613700    
+X2nd.Flr.SF            2.510e+01  1.739e+01   1.443 0.149166    
+Low.Qual.Fin.SF               NA         NA      NA       NA    
+Bsmt.Full.Bath         1.788e+03  1.680e+03   1.065 0.287124    
+Bsmt.Half.Bath        -4.854e+03  2.574e+03  -1.886 0.059509 .  
+Full.Bath              5.764e+03  1.904e+03   3.027 0.002506 ** 
+Half.Bath              3.815e+03  1.813e+03   2.105 0.035444 *  
+Bedroom.AbvGr         -4.669e+02  1.176e+03  -0.397 0.691493    
+Kitchen.AbvGr         -5.823e+03  5.333e+03  -1.092 0.275079    
+Kitchen.QualFa        -2.862e+04  5.525e+03  -5.181 2.47e-07 ***
+Kitchen.QualGd        -2.399e+04  3.064e+03  -7.828 8.48e-15 ***
+Kitchen.QualTA        -2.388e+04  3.429e+03  -6.964 4.67e-12 ***
+TotRms.AbvGrd         -1.201e+03  8.175e+02  -1.468 0.142165    
+FunctionalMaj2        -1.510e+04  1.479e+04  -1.021 0.307214    
+FunctionalMin1         2.820e+03  1.028e+04   0.274 0.783757    
+FunctionalMin2         1.248e+03  1.031e+04   0.121 0.903636    
+FunctionalMod         -5.660e+03  1.114e+04  -0.508 0.611521    
+FunctionalSal          5.813e+03  2.764e+04   0.210 0.833409    
+FunctionalSev         -2.321e+04  2.075e+04  -1.118 0.263687    
+FunctionalTyp          9.288e+03  9.495e+03   0.978 0.328128    
+Fireplaces             3.882e+03  1.139e+03   3.409 0.000666 ***
+Garage.Cars            1.460e+03  1.904e+03   0.767 0.443156    
+Garage.Area            1.964e+01  6.440e+00   3.050 0.002322 ** 
+Paved.DriveP          -4.779e+03  4.799e+03  -0.996 0.319406    
+Paved.DriveY          -3.985e+03  2.986e+03  -1.334 0.182290    
+Wood.Deck.SF           7.993e+00  5.040e+00   1.586 0.112967    
+Open.Porch.SF         -1.162e+01  9.588e+00  -1.212 0.225824    
+Enclosed.Porch         7.981e+00  9.872e+00   0.809 0.418897    
+X3Ssn.Porch            1.812e+01  2.279e+01   0.795 0.426774    
+Screen.Porch           4.902e+01  1.035e+01   4.737 2.34e-06 ***
+Pool.Area              1.030e+02  1.791e+01   5.750 1.05e-08 ***
+Misc.Val              -9.079e+00  8.862e-01 -10.245  &lt; 2e-16 ***
+Mo.Sold               -2.555e+02  2.135e+02  -1.196 0.231702    
+Yr.Sold               -5.940e+02  4.524e+02  -1.313 0.189365    
+Sale.TypeCon           2.301e+04  1.332e+04   1.728 0.084186 .  
+Sale.TypeConLD         1.098e+04  7.844e+03   1.400 0.161743    
+Sale.TypeConLI         5.894e+03  1.169e+04   0.504 0.614247    
+Sale.TypeConLw         7.981e+03  1.097e+04   0.727 0.467195    
+Sale.TypeCWD           1.084e+04  9.076e+03   1.195 0.232289    
+Sale.TypeNew          -3.541e+03  1.585e+04  -0.223 0.823246    
+Sale.TypeOth           7.716e+03  9.935e+03   0.777 0.437500    
+Sale.TypeVWD           6.523e+03  2.536e+04   0.257 0.797043    
+Sale.TypeWD            6.798e+03  3.537e+03   1.922 0.054785 .  
+Sale.ConditionAdjLand  1.847e+04  1.035e+04   1.784 0.074634 .  
+Sale.ConditionAlloca   3.667e+03  8.374e+03   0.438 0.661554    
+Sale.ConditionFamily  -2.418e+02  5.182e+03  -0.047 0.962780    
+Sale.ConditionNormal   4.765e+03  2.643e+03   1.803 0.071584 .  
+Sale.ConditionPartial  2.403e+04  1.559e+04   1.541 0.123460    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 23870 on 1757 degrees of freedom
+Multiple R-squared:  0.9242,    Adjusted R-squared:  0.915 
+F-statistic: 100.1 on 214 and 1757 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC of Model (Forward Only):"</span>, <span class="fu">AIC</span>(sm_forward), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AIC of Model (Forward Only): 45558.17 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate metrics for each model</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">"Full Model"</span>, <span class="st">"Null Model"</span>, <span class="st">"Both Directions"</span>, <span class="st">"Backward Only"</span>, <span class="st">"Forward Only"</span>),</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">AIC =</span> <span class="fu">c</span>(<span class="fu">AIC</span>(fm), <span class="fu">AIC</span>(nm), <span class="fu">AIC</span>(sm_both), <span class="fu">AIC</span>(sm_backward), <span class="fu">AIC</span>(sm_forward)),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">BIC =</span> <span class="fu">c</span>(<span class="fu">BIC</span>(fm), <span class="fu">BIC</span>(nm), <span class="fu">BIC</span>(sm_both), <span class="fu">BIC</span>(sm_backward), <span class="fu">BIC</span>(sm_forward)),</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">R_Squared =</span> <span class="fu">c</span>(<span class="fu">summary</span>(fm)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(nm)<span class="sc">$</span>r.squared, </span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">summary</span>(sm_both)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(sm_backward)<span class="sc">$</span>r.squared, </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">summary</span>(sm_forward)<span class="sc">$</span>r.squared),</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Adj_R_Squared =</span> <span class="fu">c</span>(<span class="fu">summary</span>(fm)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(nm)<span class="sc">$</span>adj.r.squared, </span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">summary</span>(sm_both)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(sm_backward)<span class="sc">$</span>adj.r.squared, </span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">summary</span>(sm_forward)<span class="sc">$</span>adj.r.squared),</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Num_Predictors =</span> <span class="fu">c</span>(<span class="fu">length</span>(<span class="fu">coefficients</span>(fm)), <span class="fu">length</span>(<span class="fu">coefficients</span>(nm)),</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">length</span>(<span class="fu">coefficients</span>(sm_both)), <span class="fu">length</span>(<span class="fu">coefficients</span>(sm_backward)),</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">length</span>(<span class="fu">coefficients</span>(sm_forward)))</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the table</span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Model      AIC      BIC R_Squared Adj_R_Squared Num_Predictors
+1      Full Model 45558.17 46764.92 0.9241936     0.9149605            219
+2      Null Model 50217.09 50228.27 0.0000000     0.0000000              1
+3 Both Directions 45486.25 46290.74 0.9213719     0.9152673            143
+4   Backward Only 45486.25 46290.74 0.9213719     0.9152673            143
+5    Forward Only 45558.17 46764.92 0.9241936     0.9149605            219</code></pre>
+</div>
+</div>
+<ol start="7" type="1">
+<li><p>Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.</p></li>
+<li><p>Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).</p></li>
+<li><p>Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.</p></li>
+<li><p>Use the test data set to assess the model performances from above.</p></li>
+<li><p>Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.</p></li>
+<li><p>Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.</p></li>
+<li><p>Each student must submit the files on Canvas to get the full credit.</p></li>
+</ol>
 <p>This data was taken from the Kaggle competition please click on the link below for details: <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/rules" class="uri">https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/rules</a></p>
 <table class="table">
 <caption><strong><em>Executive Summary</em></strong></caption>
@@ -414,7 +1568,6 @@ dbl (39): Order, PID, area, price, MS.SubClass, Lot.Frontage, Lot.Area, Over...
 </tr>
 </tbody>
 </table>
-</section>
 <section id="i.-introduction-5-points" class="level2">
 <h2 class="anchored" data-anchor-id="i.-introduction-5-points">I. Introduction (5 points)</h2>
 <p><em>This section needs to introduce the reader to the problem to be resolved, the purpose, and the scope of the statistical testing applied. What you are doing with your prediction? What is the purpose of the model? What methods were trained on the data, how large is the test sample, and how did you build the model?</em></p>
@@ -450,12 +1603,14 @@ dbl (39): Order, PID, area, price, MS.SubClass, Lot.Frontage, Lot.Area, Over...
 <section id="bibliography-7-points" class="level2">
 <h2 class="anchored" data-anchor-id="bibliography-7-points">Bibliography (7 points)</h2>
 <p><em>Please include all references, articles and papers in this section.</em></p>
+<p>https://stackoverflow.com/questions/24027605/determine-the-number-of-na-values-in-a-column https://stackoverflow.com/questions/75084373/how-to-remove-rows-by-condition-in-r</p>
 <p>One can fin our preferred bibliography format at the below:</p>
 <p><a href="https://librarydevelopment.group.shef.ac.uk/referencing/harvard.html">Harvard referencing (shef.ac.uk)</a></p>
 </section>
 <section id="appendix-3-points" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-3-points">Appendix (3 points)</h2>
 <p><em>Please add any additional supporting graphs, plots and data analysis.</em></p>
+</section>
 </section>
 
 </main>

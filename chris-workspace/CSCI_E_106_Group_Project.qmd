@@ -2,8 +2,8 @@
 title: "HARVARD EXTENSION SCHOOL"
 subtitle: "EXT CSCI E-106 Model Data Class Special Project Template"
 author:
-- Author One
-- Author Two
+- Nilay Sundarkar
+- Christopher Craddock
 - Author Three
 - Author Four
 
@@ -28,11 +28,14 @@ Refer to the **Housing prices in Ames, Iowa**
 2930 observations, 82 variables
 ```
 
-```{r}
+```{r Load Libraries, load and and check ames dataset}
 #Step 0: Data Preparations
 #install.packages("visdat")
 library(readr)
 library(visdat)
+library(tidyr)
+library(MASS)
+
 # Checking for NA, or missing data using graphics 
 ames_data <- read_csv("ames.csv")
 vis_miss(ames_data)
@@ -58,21 +61,21 @@ variable) is the response variable.
 
 ## **Instructions:**
 
-|     |     |                                                                                                                                                                                                                                                            |
-|--------|--------|--------------------------------------------------------|
-| 1   |     | Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle\@g.harvard.edu the name of the team members and their emails.                    |
-| 2   |     | Review the dataset named "ames'csv, report on preliminary findings (missing data, type of variables, distributions).                                                                                                                                       |
-| 3   |     | Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.                                                                                                                            |
-| 4   |     | Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.                                                               |
-| 5   |     | Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.                                                                                                         |
-| 6   |     | Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.                                                                                                                       |
-| 7   |     | Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.                                                                                          |
-| 8   |     | Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).                                                                                                                          |
-| 9   |     | Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.                                                                                      |
-| 10  |     | Use the test data set to assess the model performances from above.                                                                                                                                                                                         |
-| 11  |     | Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.                                                                                               |
-| 12  |     | Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.  |
-| 13  |     | Each student must submit the files on Canvas to get the full credit.                                                                                                                                                                                       |
+|     |     |                                                                                                                                                                                                                                                           |
+|-------------------|-------------------|----------------------------------|
+| 1   |     | Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle\@g.harvard.edu the name of the team members and their emails.                   |
+| 2   |     | Review the dataset named "ames'csv, report on preliminary findings (missing data, type of variables, distributions).                                                                                                                                      |
+| 3   |     | Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.                                                                                                                           |
+| 4   |     | Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.                                                              |
+| 5   |     | Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.                                                                                                        |
+| 6   |     | Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.                                                                                                                      |
+| 7   |     | Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.                                                                                         |
+| 8   |     | Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).                                                                                                                         |
+| 9   |     | Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.                                                                                     |
+| 10  |     | Use the test data set to assess the model performances from above.                                                                                                                                                                                        |
+| 11  |     | Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.                                                                                              |
+| 12  |     | Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template. |
+| 13  |     | Each student must submit the files on Canvas to get the full credit.                                                                                                                                                                                      |
 
 **Notes:** **No typographical errors, grammar mistakes, or misspelled
 words, use English language** **All tables need to be numbered and
@@ -83,6 +86,177 @@ fully understand their purpose and impact** **Submit both the RMD
 markdown file and PDF with the sections with appropriate explanations. A
 more formal document in Word can be used in place of the pdf file but
 must include all appropriate explanations.**
+
+1.  Send email details - done by Simon
+
+2.  Review the dataset named "ames'csv, report on preliminary findings
+    (missing data, type of variables, distributions).
+
+    Data set contains information from the Ames Assessor’s Office used
+    in computing assessed values for individual residential properties
+    sold in Ames, IA from 2006 to 2010.
+
+    The data has 82 columns which include 23 nominal, 23 ordinal, 14
+    discrete, and 20 continuous variables (and 2 additional observation
+    identifiers).
+
+3.  Create the train data set which contains 70% of the data and use
+    set.seed (1023). The remaining 30% will be your test data set.
+
+```{r Split data into training and test datasets}
+# Determine training dataset size (70% of total observations)
+ames.smp_size <- floor(0.70 * nrow(ames_data))
+
+#Set seed of 1023 for reproducability
+set.seed(1023)
+
+# Sample indices for training dataset
+ames.train_index <- sample(seq_len(nrow(ames_data)), size = ames.smp_size)
+
+# Split data into training and test datasets (70%/30%)
+ames.train_data <- ames_data[ames.train_index, ]
+ames.test_data <- ames_data[-ames.train_index, ]
+```
+
+4.  Investigate the data and combine the level of categorical variables
+    if needed and drop variables as needed. For example, you may drop
+    id, variables with too many missing observations, etc.
+
+Dropping Order, PID as they are just an identifier for the observations.
+
+Dropping "Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type" as they have high number of missing values.
+
+Cleaning NA rows for the rest of the data.
+
+```{r Investigate and clean up data}
+ames_data.df <- data.frame(ames_data)
+# check which columns have NA values and how many per column
+na_count <-sapply(ames_data.df, function(y) sum(length(which(is.na(y)))))
+na_count <- data.frame(na_count)
+na_count$name<-rownames(na_count)
+na_count <- na_count[na_count$na_count>0,]
+na_count <- data.frame(na_count)
+na_count <- na_count[order(na_count$na_count, decreasing = TRUE), ]
+na_count
+# drop columns that have very high number of NA values and those that are not related to the response variable (order and PID)
+drops <- c("Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Order", "PID")
+ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% drops)]
+#for the rest of columns that have somewhat high NA values, we remove the NA rows and check the correlation between that column and the response variable
+`%notin%` <- Negate(`%in%`)
+na_count <- na_count[na_count$name %notin% drops,]
+na_count
+# Lot.Frontage has 490 NA values
+Lot.Frontage_df <- data.frame(ames_data$price,ames_data$Lot.Frontage)
+Lot.Frontage_df <- drop_na(Lot.Frontage_df)
+# low correlation between Lot.Frontage and SalePrice
+cor(Lot.Frontage_df$ames_data.price,Lot.Frontage_df$ames_data.Lot.Frontage)
+# Garage.Yr.Blt, Garage.Finish , Garage.Qual, Garage.Cond and Garage.Type are all related to Garage and seem to have NA values for the same rows
+Garage_df <- data.frame(ames_data$price, ames_data$Garage.Yr.Blt, ames_data$Garage.Finish, ames_data$Garage.Qual, ames_data$Garage.Cond, ames_data$Garage.Type)
+Garage_df <- drop_na(Garage_df)
+# no significant correlation is observed with the response variable
+plot(Garage_df)
+drops <- c("Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type")
+ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% drops)]
+na_count <- na_count[na_count$name %notin% drops,]
+na_count
+# the remaining columns that have any NA rows are low in number, so we will clean the data for those rows
+ames_data.df <- drop_na(ames_data.df)
+final_drops <- c("Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Order", "PID","Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type")
+ames.train_data.df <- data.frame(ames.train_data)
+ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% final_drops)]
+ames.train_data.df <- drop_na(ames.train_data.df)
+ames.test_data.df <- data.frame(ames.test_data)
+ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% final_drops)]
+ames.test_data.df <- drop_na(ames.test_data.df)
+```
+
+5.  Create scatter plots and a correlation matrix for the train data
+    set. Interpret the possible relationship between the response and
+    the covariates.
+
+```{r}
+str(ames.test_data.df)
+ames.train_data.model <- lm(price~.,data = ames.train_data.df)
+options(max.print=1000000)
+summary(ames.train_data.model)
+# from the summary a bunch of variables appear to be non-significant
+
+```
+
+6. Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.
+
+# Build Linear Models on Training Data Using Stepwise Selection
+```{r Build linear models on training data using stepwise selection}
+# Model Fitting
+# Build full model with all predictors
+fm <- lm(price ~., data = ames.train_data.df)
+
+# Build null model with no predictors
+nm <- lm(price ~ 1, data = ames.train_data.df)
+
+# Stepwise selection using backward and forward 
+sm_both <- stepAIC(fm, direction = "both", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Stepwise selection using only backward
+sm_backward <- stepAIC(fm, direction = "backward", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Stepwise selection using only forward
+sm_forward <- stepAIC(fm, direction = "forward", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Display Summary of Stepwise models
+# Summary of the model using both backward and forward stepwise selection
+cat("Summary of Stepwise Model (Both Directions):\n")
+summary(sm_both)
+cat("AIC of Model (Both Directions):", AIC(sm_both), "\n\n")
+
+# Summary of the model using only backward stepwise selection
+cat("Summary of Stepwise Model (Backward Only):\n")
+summary(sm_backward)
+cat("AIC of Model (Backward Only):", AIC(sm_backward), "\n")
+
+# Summary of the model using only forward stepwise selection
+cat("Summary of Stepwise Model (Forward Only):\n")
+summary(sm_forward)
+cat("AIC of Model (Forward Only):", AIC(sm_forward), "\n")
+```
+
+```{r Calculate and display metrics from models}
+# Calculate metrics for each model
+metrics <- data.frame(
+  Model = c("Full Model", "Null Model", "Both Directions", "Backward Only", "Forward Only"),
+  AIC = c(AIC(fm), AIC(nm), AIC(sm_both), AIC(sm_backward), AIC(sm_forward)),
+  BIC = c(BIC(fm), BIC(nm), BIC(sm_both), BIC(sm_backward), BIC(sm_forward)),
+  R_Squared = c(summary(fm)$r.squared, summary(nm)$r.squared, 
+                summary(sm_both)$r.squared, summary(sm_backward)$r.squared, 
+                summary(sm_forward)$r.squared),
+  Adj_R_Squared = c(summary(fm)$adj.r.squared, summary(nm)$adj.r.squared, 
+                    summary(sm_both)$adj.r.squared, summary(sm_backward)$adj.r.squared, 
+                    summary(sm_forward)$adj.r.squared),
+  Num_Predictors = c(length(coefficients(fm)), length(coefficients(nm)),
+                     length(coefficients(sm_both)), length(coefficients(sm_backward)),
+                     length(coefficients(sm_forward)))
+)
+
+# Print the table
+print(metrics)
+
+```
+
+# Both Directions and Backward Stepwise converged on a similar model with identical metrics. With reduced model complexity (lower number of predictors with limited drop in R2 values) while still having good explanatory power they are the best models.
+
+7. Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.
+
+8. Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.). 
+
+9. Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.
+
+10. Use the test data set to assess the model performances from above.
+
+11. Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model. 
+
+12. Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.
+
+13. Each student must submit the files on Canvas to get the full credit. 
 
 This data was taken from the Kaggle competition please click on the link
 below for details:
@@ -166,6 +340,9 @@ why?*
 ## Bibliography (7 points)
 
 *Please include all references, articles and papers in this section.*
+
+https://stackoverflow.com/questions/24027605/determine-the-number-of-na-values-in-a-column
+https://stackoverflow.com/questions/75084373/how-to-remove-rows-by-condition-in-r
 
 One can fin our preferred bibliography format at the below:
 
