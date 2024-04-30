@@ -215,10 +215,9 @@ insignificantCategoricalColumns <- insignificantCategoricalColumns[insignificant
 insignificantCategoricalColumns
 
 # cleaning data for insignificant categorical columns
-ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% insignificantCategoricalColumns)]
-ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% insignificantCategoricalColumns)] 
-ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insignificantCategoricalColumns)]
-
+ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% insignificantCategoricalColumns$`Column Name`)]
+ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% insignificantCategoricalColumns$`Column Name`)] 
+ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insignificantCategoricalColumns$`Column Name`)]
 ```
 
 
