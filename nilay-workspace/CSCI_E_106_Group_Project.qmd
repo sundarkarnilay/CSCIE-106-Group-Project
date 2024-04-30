@@ -121,6 +121,20 @@ Cleaning NA rows for the rest of the data.
 
 ```{r}
 ames_data.df <- data.frame(ames_data)
+# Domain analysis to clean up data
+# We rely on descriptions/comments provided at https://jse.amstat.org/v19n3/decock/DataDocumentation.txt, statistical tests and our own intuition to determine if there are any columns that need to be removed
+# The document mentions below for outliers - 
+#SPECIAL NOTES:
+#There are 5 observations that an instructor may wish to remove from the data set before giving it to students (a plot of SALE PRICE versus GR LIV AREA will indicate them #quickly). Three of them are true outliers (Partial Sales that likely don’t represent actual market values) and two of them are simply unusual sales (very large houses priced #relatively appropriately). I would recommend removing any houses with more than 4000 square feet from the data set (which eliminates these 5 unusual observations) before #assigning it to students.
+ames.known_outliers <- ames_data.df[ames_data.df$area > 4000,]
+ames_data.df <- ames_data.df[!(ames_data.df$PID %in% ames.known_outliers$PID),]
+ames.train_data.df <- data.frame(ames.train_data)
+ames.train_data.df <- ames.train_data.df[!(ames.train_data.df$PID %in% ames.known_outliers$PID),]
+ames.test_data.df <- data.frame(ames.test_data)
+ames.test_data.df <- ames.test_data.df[!(ames.test_data.df$PID %in% ames.known_outliers$PID),]
+```
+
+```{r}
 # check which columns have NA values and how many per column
 na_count <-sapply(ames_data.df, function(y) sum(length(which(is.na(y)))))
 na_count <- data.frame(na_count)
@@ -130,8 +144,12 @@ na_count <- data.frame(na_count)
 na_count <- na_count[order(na_count$na_count, decreasing = TRUE), ]
 na_count
 # drop columns that have very high number of NA values and those that are not related to the response variable (order and PID)
-drops <- c("Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Order", "PID")
+# Misc.Feature is directly associated with Misc.Val - so dropping Misc.Val
+drops <- c("Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Order", "PID", "Misc.Val")
 ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% drops)]
+```
+
+```{r}
 #for the rest of columns that have somewhat high NA values, we remove the NA rows and check the correlation between that column and the response variable
 `%notin%` <- Negate(`%in%`)
 na_count <- na_count[na_count$name %notin% drops,]
@@ -146,35 +164,78 @@ Garage_df <- data.frame(ames_data$price, ames_data$Garage.Yr.Blt, ames_data$Gara
 Garage_df <- drop_na(Garage_df)
 # no significant correlation is observed with the response variable
 plot(Garage_df)
-drops <- c("Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type")
+drops <- c(drops, "Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type")
 ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% drops)]
+ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% drops)] 
+ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% drops)]
+```
+
+```{r}
 na_count <- na_count[na_count$name %notin% drops,]
 na_count
 # the remaining columns that have any NA rows are low in number, so we will clean the data for those rows
 ames_data.df <- drop_na(ames_data.df)
-final_drops <- c("Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Order", "PID","Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type")
-ames.train_data.df <- data.frame(ames.train_data)
-ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% final_drops)]
 ames.train_data.df <- drop_na(ames.train_data.df)
-ames.test_data.df <- data.frame(ames.test_data)
-ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% final_drops)]
 ames.test_data.df <- drop_na(ames.test_data.df)
 ```
+
+```{r}
+# check for significance of categorical variables remaining
+categoricalVarsColumnNames <- c("MS.SubClass", "MS.Zoning", "Street", "Lot.Shape", "Land.Contour", "Utilities", "Lot.Config", "Land.Slope", "Neighborhood", "Condition.1", "Condition.2", "Bldg.Type", "House.Style", "Overall.Qual", "Overall.Cond", "Year.Built", "Year.Remod.Add", "Roof.Style", "Roof.Matl", "Exterior.1st", "Exterior.2nd", "Mas.Vnr.Type", "Exter.Qual", "Exter.Cond", "Foundation", "Bsmt.Qual", "Bsmt.Cond", "Bsmt.Exposure", "BsmtFin.Type.1", "BsmtFin.Type.2", "Heating", "Heating.QC", "Central.Air", "Electrical","Bsmt.Full.Bath", "Bsmt.Half.Bath", "Full.Bath", "Half.Bath", "Bedroom.AbvGr", "Kitchen.AbvGr", "Kitchen.Qual", "TotRms.AbvGrd","Functional", "Fireplaces", "Garage.Cars", "Paved.Drive", "Mo.Sold" , "Yr.Sold", "Sale.Type", "Sale.Condition")
+
+# generic function to test chi square test for a categorical variable
+# here we calculate anova for a model with the categorical variable and another model without it
+modelWithAllColumns <- glm(price~., data = ames.train_data.df)
+chiTest <- function(columnName) {
+  options(scipen = 999)
+  ames.train_data.withoutColumnPassed <- ames.train_data.df[ , !(names(ames.train_data.df) %in% c(columnName))]
+  modelWithoutColumnPassed <- glm(price~.,data = ames.train_data.withoutColumnPassed)
+  aqq <- anova(modelWithAllColumns,modelWithoutColumnPassed,test="Chisq")
+  return (aqq$`Pr(>Chi)`[2])
+}
+
+# data frame to hold results for each categorical variable
+chiTestResults <- data.frame(matrix(ncol = 2, nrow = 0))
+x <- c("Column Name", "ChiValue")
+colnames(chiTestResults) <- x
+
+# pass each categorical variable in the function
+for (i in categoricalVarsColumnNames){
+  chiResult <- chiTest(i)
+  chiTestResults[nrow(chiTestResults) + 1,] = c(i,chiResult)
+}
+chiTestResults 
+insignificantCategoricalColumns <- chiTestResults[chiTestResults$ChiValue > 0.05,]
+insignificantCategoricalColumns
+
+# Now looking at the insignificant categorical columns to see if we want to keep any that seem to be relevant or those that have a score close to 0.05
+# retaining Year.Remod.Add, Roof.Style, Full.Bath, Kitchen.AbvGr, Yr.Sold, Sale.Condition
+
+insignificantCategoricalColumns <- insignificantCategoricalColumns[insignificantCategoricalColumns$`Column Name` %notin% c("Year.Remod.Add", "Roof.Style", "Full.Bath", "Kitchen.AbvGr", "Yr.Sold", "Sale.Condition"),]
+insignificantCategoricalColumns
+
+# cleaning data for insignificant categorical columns
+ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% insignificantCategoricalColumns)]
+ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% insignificantCategoricalColumns)] 
+ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insignificantCategoricalColumns)]
+
+```
+
 
 5.  Create scatter plots and a correlation matrix for the train data
     set. Interpret the possible relationship between the response and
     the covariates.
 
 ```{r}
-str(ames.test_data.df)
-ames.train_data.model <- lm(price~.,data = ames.train_data.df)
-options(max.print=1000000)
-summary(ames.train_data.model)
-# from the summary a bunch of variables appear to be non-significant
+
 
 ```
 
 6. Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.
+
+```{r}
+
+```
 
 7. Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.
 
@@ -273,8 +334,16 @@ why?*
 
 *Please include all references, articles and papers in this section.*
 
+https://www.openintro.org/data/index.php?data=ames
+https://jse.amstat.org/v19n3/decock/DataDocumentation.txt
 https://stackoverflow.com/questions/24027605/determine-the-number-of-na-values-in-a-column
 https://stackoverflow.com/questions/75084373/how-to-remove-rows-by-condition-in-r
+https://stackoverflow.com/questions/72083993/how-to-list-the-unique-categorical-values-of-a-data-frame-column
+https://uc-r.github.io/descriptives_categorical
+https://bookdown.org/rwnahhas/IntroToR/summarizing-categorical-data.html
+https://stackoverflow.com/questions/19410108/cleaning-up-factor-levels-collapsing-multiple-levels-labels
+
+
 
 One can fin our preferred bibliography format at the below:
 
