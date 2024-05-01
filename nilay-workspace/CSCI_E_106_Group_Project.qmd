@@ -226,15 +226,43 @@ ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insign
     the covariates.
 
 ```{r}
+categoricalVarsColumnNames.df<- data.frame(categoricalVarsColumnNames)
+categoricalVarsColumnNames.df <- categoricalVarsColumnNames.df[categoricalVarsColumnNames.df$categoricalVarsColumnNames %notin% insignificantCategoricalColumns$`Column Name`,]
+for(name in categoricalVarsColumnNames.df){
+  c <- unique(ames.train_data.df[name])
+  levels <- c[,1]
+  labels <- c()
+  for (i in 1:nrow(c)) {
+    labels <- append(labels, i)
+  }
+  ames.train_data.df[,name] <- factor(ames.train_data.df[,name],
+                       levels = levels,
+                       labels = labels)
+}
+```
 
 
+```{r}
+drops <- c("price")
+predictorVars <- ames.train_data.df[ ,!(names(ames.train_data.df) %in% c("price"))]
+par(mfrow=c(1,2))
+for (i in 1:ncol(predictorVars)) {
+  columnName <- colnames(predictorVars[i])
+  mainText <- paste("Sale Price vs", columnName, sep=" ")
+  plot(ames.train_data.df$price, predictorVars[,i],xlab = columnName, ylab = "Sale Price", main = mainText)
+}
+
+```
+```{r}
+# working on correlation matrix
+#library(Hmisc)
+#ccs <- as.matrix(ames.train_data.df)
+#matrix <- rcorr(ccs, type="pearson")
+#library(corrr)
+#corrr::correlate(ames.train_data.df, method = "pearson")
 ```
 
 6. Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.
-
-```{r}
-
-```
 
 7. Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.
 
