@@ -228,16 +228,23 @@ ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insign
 ```{r}
 categoricalVarsColumnNames.df<- data.frame(categoricalVarsColumnNames)
 categoricalVarsColumnNames.df <- categoricalVarsColumnNames.df[categoricalVarsColumnNames.df$categoricalVarsColumnNames %notin% insignificantCategoricalColumns$`Column Name`,]
-for(name in categoricalVarsColumnNames.df){
-  c <- unique(ames.train_data.df[name])
+
+# function to factor numeric values for categorical variables
+factorCatVars <- function(df) {
+  c <- unique(df[name])
   levels <- c[,1]
   labels <- c()
   for (i in 1:nrow(c)) {
     labels <- append(labels, i)
   }
-  ames.train_data.df[,name] <- factor(ames.train_data.df[,name],
-                       levels = levels,
-                       labels = labels)
+  df[,name] <- factor(df[,name],levels = levels,labels = labels)
+  return (df)
+}
+
+
+for(name in categoricalVarsColumnNames.df){
+  ames.train_data.df = factorCatVars(ames.train_data.df)
+  ames.test_data.df = factorCatVars(ames.test_data.df)
 }
 
 predictorVars <- ames.train_data.df[ ,!(names(ames.train_data.df) %in% c("price"))]
@@ -253,7 +260,9 @@ for (i in 1:ncol(predictorVars)) {
 library(ggplot2)
 library(reshape2)
 temp.df <- ames.train_data.df
-#temp.df[,name] <- as.numeric(temp.df[,name])
+for(name in categoricalVarsColumnNames.df){
+  temp.df[,name] <- as.numeric(temp.df[,name])  
+}
 totalColumns <- ncol(temp.df)
 step_size <- 10
 startIndex <- 1
@@ -261,11 +270,7 @@ endIndex <- step_size
 
 # function that will be called multiple times to print correlation matrices
 printCorrelationMatrix <- function(start,end) {
-  print(paste(start,end,sep = " "))
   temp1.df <- data.frame(temp.df[start:end])
-  str(temp1.df)
-  temp1.df[,name] <- as.numeric(temp1.df[,name])
-  str(temp1.df)
   tempColumnNames <- colnames(temp1.df)
   if("price" %notin% tempColumnNames){
     temp1.df$price <- temp.df$price
