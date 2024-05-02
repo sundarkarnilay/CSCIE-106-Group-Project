@@ -34,6 +34,7 @@ Refer to the **Housing prices in Ames, Iowa**
 library(readr)
 library(visdat)
 library(tidyr)
+library(MASS)
 # Checking for NA, or missing data using graphics 
 ames_data <- read_csv("ames.csv")
 vis_miss(ames_data)
@@ -101,7 +102,7 @@ must include all appropriate explanations.**
 3.  Create the train data set which contains 70% of the data and use
     set.seed (1023). The remaining 30% will be your test data set.
 
-```{r}
+```{r, problem 3 - prep data}
 ames.smp_size <- floor(0.70 * nrow(ames_data))
 set.seed(1023)
 ames.train_index <- sample(seq_len(nrow(ames_data)), size = ames.smp_size)
@@ -119,7 +120,7 @@ Dropping "Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Lot.Fronta
 
 Cleaning NA rows for the rest of the data.
 
-```{r}
+```{r, problem 4 - clean data}
 ames_data.df <- data.frame(ames_data)
 # Domain analysis to clean up data
 # We rely on descriptions/comments provided at https://jse.amstat.org/v19n3/decock/DataDocumentation.txt, statistical tests and our own intuition to determine if there are any columns that need to be removed
@@ -132,9 +133,7 @@ ames.train_data.df <- data.frame(ames.train_data)
 ames.train_data.df <- ames.train_data.df[!(ames.train_data.df$PID %in% ames.known_outliers$PID),]
 ames.test_data.df <- data.frame(ames.test_data)
 ames.test_data.df <- ames.test_data.df[!(ames.test_data.df$PID %in% ames.known_outliers$PID),]
-```
 
-```{r}
 # check which columns have NA values and how many per column
 na_count <-sapply(ames_data.df, function(y) sum(length(which(is.na(y)))))
 na_count <- data.frame(na_count)
@@ -149,7 +148,7 @@ drops <- c("Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Order", 
 ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% drops)]
 ```
 
-```{r}
+```{r, problem 4 - clean data, cont.1}
 #for the rest of columns that have somewhat high NA values, we remove the NA rows and check the correlation between that column and the response variable
 `%notin%` <- Negate(`%in%`)
 na_count <- na_count[na_count$name %notin% drops,]
@@ -170,7 +169,7 @@ ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% dro
 ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% drops)]
 ```
 
-```{r}
+```{r, problem 4 - clean data, cont.2}
 na_count <- na_count[na_count$name %notin% drops,]
 na_count
 # the remaining columns that have any NA rows are low in number, so we will clean the data for those rows
@@ -179,7 +178,7 @@ ames.train_data.df <- drop_na(ames.train_data.df)
 ames.test_data.df <- drop_na(ames.test_data.df)
 ```
 
-```{r}
+```{r, problem 4 - clean data - categorical vars}
 # check for significance of categorical variables remaining
 categoricalVarsColumnNames <- c("MS.SubClass", "MS.Zoning", "Street", "Lot.Shape", "Land.Contour", "Utilities", "Lot.Config", "Land.Slope", "Neighborhood", "Condition.1", "Condition.2", "Bldg.Type", "House.Style", "Overall.Qual", "Overall.Cond", "Year.Built", "Year.Remod.Add", "Roof.Style", "Roof.Matl", "Exterior.1st", "Exterior.2nd", "Mas.Vnr.Type", "Exter.Qual", "Exter.Cond", "Foundation", "Bsmt.Qual", "Bsmt.Cond", "Bsmt.Exposure", "BsmtFin.Type.1", "BsmtFin.Type.2", "Heating", "Heating.QC", "Central.Air", "Electrical","Bsmt.Full.Bath", "Bsmt.Half.Bath", "Full.Bath", "Half.Bath", "Bedroom.AbvGr", "Kitchen.AbvGr", "Kitchen.Qual", "TotRms.AbvGrd","Functional", "Fireplaces", "Garage.Cars", "Paved.Drive", "Mo.Sold" , "Yr.Sold", "Sale.Type", "Sale.Condition")
 
@@ -219,13 +218,7 @@ ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% insignificantCategori
 ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% insignificantCategoricalColumns$`Column Name`)] 
 ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insignificantCategoricalColumns$`Column Name`)]
 ```
-
-
-5.  Create scatter plots and a correlation matrix for the train data
-    set. Interpret the possible relationship between the response and
-    the covariates.
-
-```{r}
+```{r, problem 4 - clean data - categorical vars, cont.1}
 categoricalVarsColumnNames.df<- data.frame(categoricalVarsColumnNames)
 categoricalVarsColumnNames.df <- categoricalVarsColumnNames.df[categoricalVarsColumnNames.df$categoricalVarsColumnNames %notin% insignificantCategoricalColumns$`Column Name`,]
 
@@ -234,19 +227,30 @@ factorCatVars <- function(df) {
   c <- unique(df[name])
   levels <- c[,1]
   labels <- c()
-  for (i in 1:nrow(c)) {
+  numberOfUniqueValues <- nrow(c)
+  for (i in 0:(numberOfUniqueValues-1)) {
     labels <- append(labels, i)
   }
   df[,name] <- factor(df[,name],levels = levels,labels = labels)
+  if(length(c[,name])>5){
+    df[,name] <- as.numeric(df[,name])
+  }
   return (df)
 }
-
 
 for(name in categoricalVarsColumnNames.df){
   ames.train_data.df = factorCatVars(ames.train_data.df)
   ames.test_data.df = factorCatVars(ames.test_data.df)
 }
+str(ames.train_data.df)
+```
 
+
+5.  Create scatter plots and a correlation matrix for the train data
+    set. Interpret the possible relationship between the response and
+    the covariates.
+
+```{r, problem 5 scatter plots}
 predictorVars <- ames.train_data.df[ ,!(names(ames.train_data.df) %in% c("price"))]
 par(mfrow=c(1,2))
 for (i in 1:ncol(predictorVars)) {
@@ -256,7 +260,7 @@ for (i in 1:ncol(predictorVars)) {
 }
 
 ```
-```{r}
+```{r, problem 5 correlation matrices}
 library(ggplot2)
 library(reshape2)
 temp.df <- ames.train_data.df
@@ -296,6 +300,40 @@ while(endIndex <= totalColumns){
 ```
 
 6. Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.
+
+```{r Build linear models on training data using stepwise selection}
+# Model Fitting
+# Build full model with all predictors
+fm <- lm(price ~., data = ames.train_data.df)
+
+# Build null model with no predictors
+nm <- lm(price ~ 1, data = ames.train_data.df)
+
+# Stepwise selection using backward and forward 
+sm_both <- stepAIC(fm, direction = "both", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Stepwise selection using only backward
+sm_backward <- stepAIC(fm, direction = "backward", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Stepwise selection using only forward
+sm_forward <- stepAIC(fm, direction = "forward", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Display Summary of Stepwise models
+# Summary of the model using both backward and forward stepwise selection
+cat("Summary of Stepwise Model (Both Directions):\n")
+summary(sm_both)
+cat("AIC of Model (Both Directions):", AIC(sm_both), "\n\n")
+
+# Summary of the model using only backward stepwise selection
+cat("Summary of Stepwise Model (Backward Only):\n")
+summary(sm_backward)
+cat("AIC of Model (Backward Only):", AIC(sm_backward), "\n")
+
+# Summary of the model using only forward stepwise selection
+cat("Summary of Stepwise Model (Forward Only):\n")
+summary(sm_forward)
+cat("AIC of Model (Forward Only):", AIC(sm_forward), "\n")
+```
 
 7. Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.
 
