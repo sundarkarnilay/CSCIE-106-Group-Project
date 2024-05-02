@@ -252,7 +252,7 @@ par(mfrow=c(1,2))
 for (i in 1:ncol(predictorVars)) {
   columnName <- colnames(predictorVars[i])
   mainText <- paste("Sale Price vs", columnName, sep=" ")
-  plot(ames.train_data.df$price, predictorVars[,i],xlab = columnName, ylab = "Sale Price", main = mainText)
+  plot(predictorVars[,i],xlab = columnName, ames.train_data.df$price, ylab = "Sale Price", main = mainText)
 }
 
 ```
