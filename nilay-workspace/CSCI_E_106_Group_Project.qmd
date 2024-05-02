@@ -239,10 +239,7 @@ for(name in categoricalVarsColumnNames.df){
                        levels = levels,
                        labels = labels)
 }
-```
 
-
-```{r}
 predictorVars <- ames.train_data.df[ ,!(names(ames.train_data.df) %in% c("price"))]
 par(mfrow=c(1,2))
 for (i in 1:ncol(predictorVars)) {
@@ -256,7 +253,7 @@ for (i in 1:ncol(predictorVars)) {
 library(ggplot2)
 library(reshape2)
 temp.df <- ames.train_data.df
-temp.df[,name] <- as.numeric(temp.df[,name])
+#temp.df[,name] <- as.numeric(temp.df[,name])
 totalColumns <- ncol(temp.df)
 step_size <- 10
 startIndex <- 1
@@ -264,7 +261,11 @@ endIndex <- step_size
 
 # function that will be called multiple times to print correlation matrices
 printCorrelationMatrix <- function(start,end) {
+  print(paste(start,end,sep = " "))
   temp1.df <- data.frame(temp.df[start:end])
+  str(temp1.df)
+  temp1.df[,name] <- as.numeric(temp1.df[,name])
+  str(temp1.df)
   tempColumnNames <- colnames(temp1.df)
   if("price" %notin% tempColumnNames){
     temp1.df$price <- temp.df$price
