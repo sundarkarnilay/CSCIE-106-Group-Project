@@ -116,7 +116,10 @@ ames.test_data <- ames_data[-ames.train_index, ]
 
 Dropping Order, PID as they are just an identifier for the observations.
 
-Dropping "Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type" as they have high number of missing values.
+Dropping "Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu",
+"Lot.Frontage","Garage.Yr.Blt", "Garage.Finish",
+"Garage.Qual","Garage.Cond", "Garage.Type" as they have high number of
+missing values.
 
 Cleaning NA rows for the rest of the data.
 
@@ -218,6 +221,7 @@ ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% insignificantCategori
 ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% insignificantCategoricalColumns$`Column Name`)] 
 ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insignificantCategoricalColumns$`Column Name`)]
 ```
+
 ```{r, problem 4 - clean data - categorical vars, cont.1}
 categoricalVarsColumnNames.df<- data.frame(categoricalVarsColumnNames)
 categoricalVarsColumnNames.df <- categoricalVarsColumnNames.df[categoricalVarsColumnNames.df$categoricalVarsColumnNames %notin% insignificantCategoricalColumns$`Column Name`,]
@@ -245,7 +249,6 @@ for(name in categoricalVarsColumnNames.df){
 str(ames.train_data.df)
 ```
 
-
 5.  Create scatter plots and a correlation matrix for the train data
     set. Interpret the possible relationship between the response and
     the covariates.
@@ -260,6 +263,7 @@ for (i in 1:ncol(predictorVars)) {
 }
 
 ```
+
 ```{r, problem 5 correlation matrices}
 library(ggplot2)
 library(reshape2)
@@ -299,7 +303,8 @@ while(endIndex <= totalColumns){
 }
 ```
 
-6. Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.
+6.  Build several multiple linear models by using the stepwise selection
+    methods. Compare the performance of the best two linear models.
 
 ```{r Build linear models on training data using stepwise selection}
 # Model Fitting
@@ -335,19 +340,29 @@ summary(sm_forward)
 cat("AIC of Model (Forward Only):", AIC(sm_forward), "\n")
 ```
 
-7. Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.
+7.  Make sure that model assumption(s) are checked for the final model.
+    Apply remedy measures (transformation, etc.) that helps satisfy the
+    linear model assumptions.
 
-8. Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.). 
+8.  Investigate unequal variances and multicollinearity. If necessary,
+    apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).
 
-9. Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.
+9.  Build an alternative model based on one of the following approaches
+    to predict price: regression tree, NN, or SVM. Then check again the
+    applicable model assumptions.
 
 10. Use the test data set to assess the model performances from above.
 
-11. Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model. 
+11. Based on the performances on both train and test data sets,
+    determine your primary (champion) model and the other model which
+    would be your benchmark model.
 
-12. Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.
+12. Create a model development document that describes the model
+    following this template, input the name of the authors, Harvard IDs,
+    the name of the Group, all of your code and calculations, etc.: be
+    sure you populate all the sections of this template.
 
-13. Each student must submit the files on Canvas to get the full credit. 
+13. Each student must submit the files on Canvas to get the full credit.
 
 This data was taken from the Kaggle competition please click on the link
 below for details:
@@ -367,6 +382,15 @@ What you are doing with your prediction? What is the purpose of the
 model? What methods were trained on the data, how large is the test
 sample, and how did you build the model?*
 
+Based on the ames housing dataset provided, we have to build a model
+that can predict housing prices based on 79 explanotory variables. The
+scope of our testing is limited to the dataset provided. The test sample
+is about 879 observations whereas the training model is about 2050
+observations.
+
+The model is trained on various regression methods such as stepwise
+regression and \<<insert method used for challenger model here>\>
+
 ## I. Description of the data and quality (15 points)
 
 *Here you need to include your review of data, the statistical test
@@ -374,6 +398,21 @@ applied to understand the predictors and the response and how are they
 correlated. Extensive graph analysis is recommended. Is the data
 continuous, or categorical, do any transformation needed? Do you need
 dummies?*
+
+The data contains 43 categorical variables and 36 continuous variables.
+Some columns also have missing values. Our first data cleaning task was
+to figure out which columns had a lot of missing values. We dropped
+those columns. We then cleaned data for the columns that have very few
+missing values. We also looked at categorical columns that have more
+than 5 unique values. We treat such columns as continuous variables. The
+other categorical variables (that have less than or equal to 5 unique
+values) are marked as factors so that the model training algorithms
+process them as categorical variables. We also removed rows that had
+houses with more than 4000 square feet based on the recommendation
+provided on the official website for the dataset. A chi-squared test to
+estimate the significance of each categorical variable (post missing
+values removal) with respect to the response variable was done to
+eliminate some more categorical columns from the data.
 
 ## III. Model Development Process (15 points)
 
@@ -440,8 +479,6 @@ https://stackoverflow.com/questions/72083993/how-to-list-the-unique-categorical-
 https://uc-r.github.io/descriptives_categorical
 https://bookdown.org/rwnahhas/IntroToR/summarizing-categorical-data.html
 https://stackoverflow.com/questions/19410108/cleaning-up-factor-levels-collapsing-multiple-levels-labels
-
-
 
 One can fin our preferred bibliography format at the below:
 
