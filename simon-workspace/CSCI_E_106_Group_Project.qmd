@@ -2,10 +2,10 @@
 title: "HARVARD EXTENSION SCHOOL"
 subtitle: "EXT CSCI E-106 Model Data Class Special Project Template"
 author:
-- Author One
-- Author Two
-- Author Three
-- Author Four
+- Nilay Sundarkar
+- Christopher Craddock
+- Seraphim Eilken
+- Simon Carandang
 
 date: "`r format(Sys.time(), '%d %B %Y')`"
 geometry: margin=1.3cm
@@ -28,11 +28,14 @@ Refer to the **Housing prices in Ames, Iowa**
 2930 observations, 82 variables
 ```
 
-```{r}
+```{r Load Libraries, load and and check ames dataset}
 #Step 0: Data Preparations
 #install.packages("visdat")
 library(readr)
 library(visdat)
+library(tidyr)
+library(MASS)
+
 # Checking for NA, or missing data using graphics 
 ames_data <- read_csv("ames.csv")
 vis_miss(ames_data)
@@ -58,21 +61,21 @@ variable) is the response variable.
 
 ## **Instructions:**
 
-|     |     |                                                                                                                                                                                                                                                            |
-|--------|--------|--------------------------------------------------------|
-| 1   |     | Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle\@g.harvard.edu the name of the team members and their emails.                    |
-| 2   |     | Review the dataset named "ames'csv, report on preliminary findings (missing data, type of variables, distributions).                                                                                                                                       |
-| 3   |     | Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.                                                                                                                            |
-| 4   |     | Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.                                                               |
-| 5   |     | Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.                                                                                                         |
-| 6   |     | Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.                                                                                                                       |
-| 7   |     | Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.                                                                                          |
-| 8   |     | Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).                                                                                                                          |
-| 9   |     | Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.                                                                                      |
-| 10  |     | Use the test data set to assess the model performances from above.                                                                                                                                                                                         |
-| 11  |     | Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.                                                                                               |
-| 12  |     | Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.  |
-| 13  |     | Each student must submit the files on Canvas to get the full credit.                                                                                                                                                                                       |
+|     |     |                                                                                                                                                                                                                                                           |
+|-------------------|-------------------|----------------------------------|
+| 1   |     | Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle\@g.harvard.edu the name of the team members and their emails.                   |
+| 2   |     | Review the dataset named "ames'csv, report on preliminary findings (missing data, type of variables, distributions).                                                                                                                                      |
+| 3   |     | Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.                                                                                                                           |
+| 4   |     | Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.                                                              |
+| 5   |     | Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.                                                                                                        |
+| 6   |     | Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.                                                                                                                      |
+| 7   |     | Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.                                                                                         |
+| 8   |     | Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).                                                                                                                         |
+| 9   |     | Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.                                                                                     |
+| 10  |     | Use the test data set to assess the model performances from above.                                                                                                                                                                                        |
+| 11  |     | Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.                                                                                              |
+| 12  |     | Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template. |
+| 13  |     | Each student must submit the files on Canvas to get the full credit.                                                                                                                                                                                      |
 
 **Notes:** **No typographical errors, grammar mistakes, or misspelled
 words, use English language** **All tables need to be numbered and
@@ -83,6 +86,338 @@ fully understand their purpose and impact** **Submit both the RMD
 markdown file and PDF with the sections with appropriate explanations. A
 more formal document in Word can be used in place of the pdf file but
 must include all appropriate explanations.**
+
+1.  Send email details - done by Simon
+
+2.  Review the dataset named "ames'csv, report on preliminary findings
+    (missing data, type of variables, distributions).
+
+    Data set contains information from the Ames Assessor’s Office used
+    in computing assessed values for individual residential properties
+    sold in Ames, IA from 2006 to 2010.
+
+    The data has 82 columns which include 23 nominal, 23 ordinal, 14
+    discrete, and 20 continuous variables (and 2 additional observation
+    identifiers).
+
+3.  Create the train data set which contains 70% of the data and use
+    set.seed (1023). The remaining 30% will be your test data set.
+
+```{r Split data into training and test datasets}
+# Determine training dataset size (70% of total observations)
+ames.smp_size <- floor(0.70 * nrow(ames_data))
+
+#Set seed of 1023 for reproducability
+set.seed(1023)
+
+# Sample indices for training dataset
+ames.train_index <- sample(seq_len(nrow(ames_data)), size = ames.smp_size)
+
+# Split data into training and test datasets (70%/30%)
+ames.train_data <- ames_data[ames.train_index, ]
+ames.test_data <- ames_data[-ames.train_index, ]
+```
+
+4.  Investigate the data and combine the level of categorical variables
+    if needed and drop variables as needed. For example, you may drop
+    id, variables with too many missing observations, etc.
+
+Dropping Order, PID as they are just an identifier for the observations.
+
+Dropping "Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type" as they have high number of missing values.
+
+Cleaning NA rows for the rest of the data.
+
+```{r, problem 4 - clean data}
+ames_data.df <- data.frame(ames_data)
+# Domain analysis to clean up data
+# We rely on descriptions/comments provided at https://jse.amstat.org/v19n3/decock/DataDocumentation.txt, statistical tests and our own intuition to determine if there are any columns that need to be removed
+# The document mentions below for outliers - 
+#SPECIAL NOTES:
+#There are 5 observations that an instructor may wish to remove from the data set before giving it to students (a plot of SALE PRICE versus GR LIV AREA will indicate them #quickly). Three of them are true outliers (Partial Sales that likely don’t represent actual market values) and two of them are simply unusual sales (very large houses priced #relatively appropriately). I would recommend removing any houses with more than 4000 square feet from the data set (which eliminates these 5 unusual observations) before #assigning it to students.
+ames.known_outliers <- ames_data.df[ames_data.df$area > 4000,]
+ames_data.df <- ames_data.df[!(ames_data.df$PID %in% ames.known_outliers$PID),]
+ames.train_data.df <- data.frame(ames.train_data)
+ames.train_data.df <- ames.train_data.df[!(ames.train_data.df$PID %in% ames.known_outliers$PID),]
+ames.test_data.df <- data.frame(ames.test_data)
+ames.test_data.df <- ames.test_data.df[!(ames.test_data.df$PID %in% ames.known_outliers$PID),]
+
+# check which columns have NA values and how many per column
+na_count <-sapply(ames_data.df, function(y) sum(length(which(is.na(y)))))
+na_count <- data.frame(na_count)
+na_count$name<-rownames(na_count)
+na_count <- na_count[na_count$na_count>0,]
+na_count <- data.frame(na_count)
+na_count <- na_count[order(na_count$na_count, decreasing = TRUE), ]
+na_count
+# drop columns that have very high number of NA values and those that are not related to the response variable (order and PID)
+# Misc.Feature is directly associated with Misc.Val - so dropping Misc.Val
+drops <- c("Pool.QC", "Misc.Feature", "Alley","Fence", "Fireplace.Qu", "Order", "PID", "Misc.Val")
+ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% drops)]
+```
+
+```{r, problem 4 - clean data, cont.1}
+#for the rest of columns that have somewhat high NA values, we remove the NA rows and check the correlation between that column and the response variable
+`%notin%` <- Negate(`%in%`)
+na_count <- na_count[na_count$name %notin% drops,]
+na_count
+# Lot.Frontage has 490 NA values
+Lot.Frontage_df <- data.frame(ames_data$price,ames_data$Lot.Frontage)
+Lot.Frontage_df <- drop_na(Lot.Frontage_df)
+# low correlation between Lot.Frontage and SalePrice
+cor(Lot.Frontage_df$ames_data.price,Lot.Frontage_df$ames_data.Lot.Frontage)
+# Garage.Yr.Blt, Garage.Finish , Garage.Qual, Garage.Cond and Garage.Type are all related to Garage and seem to have NA values for the same rows
+Garage_df <- data.frame(ames_data$price, ames_data$Garage.Yr.Blt, ames_data$Garage.Finish, ames_data$Garage.Qual, ames_data$Garage.Cond, ames_data$Garage.Type)
+Garage_df <- drop_na(Garage_df)
+# no significant correlation is observed with the response variable
+plot(Garage_df)
+drops <- c(drops, "Lot.Frontage","Garage.Yr.Blt", "Garage.Finish", "Garage.Qual","Garage.Cond", "Garage.Type")
+ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% drops)]
+ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% drops)] 
+ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% drops)]
+```
+
+```{r, problem 4 - clean data, cont.2}
+na_count <- na_count[na_count$name %notin% drops,]
+na_count
+# the remaining columns that have any NA rows are low in number, so we will clean the data for those rows
+ames_data.df <- drop_na(ames_data.df)
+ames.train_data.df <- drop_na(ames.train_data.df)
+ames.test_data.df <- drop_na(ames.test_data.df)
+```
+
+```{r, problem 4 - clean data - categorical vars}
+# check for significance of categorical variables remaining
+categoricalVarsColumnNames <- c("MS.SubClass", "MS.Zoning", "Street", "Lot.Shape", "Land.Contour", "Utilities", "Lot.Config", "Land.Slope", "Neighborhood", "Condition.1", "Condition.2", "Bldg.Type", "House.Style", "Overall.Qual", "Overall.Cond", "Year.Built", "Year.Remod.Add", "Roof.Style", "Roof.Matl", "Exterior.1st", "Exterior.2nd", "Mas.Vnr.Type", "Exter.Qual", "Exter.Cond", "Foundation", "Bsmt.Qual", "Bsmt.Cond", "Bsmt.Exposure", "BsmtFin.Type.1", "BsmtFin.Type.2", "Heating", "Heating.QC", "Central.Air", "Electrical","Bsmt.Full.Bath", "Bsmt.Half.Bath", "Full.Bath", "Half.Bath", "Bedroom.AbvGr", "Kitchen.AbvGr", "Kitchen.Qual", "TotRms.AbvGrd","Functional", "Fireplaces", "Garage.Cars", "Paved.Drive", "Mo.Sold" , "Yr.Sold", "Sale.Type", "Sale.Condition")
+
+# generic function to test chi square test for a categorical variable
+# here we calculate anova for a model with the categorical variable and another model without it
+modelWithAllColumns <- glm(price~., data = ames.train_data.df)
+chiTest <- function(columnName) {
+  options(scipen = 999)
+  ames.train_data.withoutColumnPassed <- ames.train_data.df[ , !(names(ames.train_data.df) %in% c(columnName))]
+  modelWithoutColumnPassed <- glm(price~.,data = ames.train_data.withoutColumnPassed)
+  aqq <- anova(modelWithAllColumns,modelWithoutColumnPassed,test="Chisq")
+  return (aqq$`Pr(>Chi)`[2])
+}
+
+# data frame to hold results for each categorical variable
+chiTestResults <- data.frame(matrix(ncol = 2, nrow = 0))
+x <- c("Column Name", "ChiValue")
+colnames(chiTestResults) <- x
+
+# pass each categorical variable in the function
+for (i in categoricalVarsColumnNames){
+  chiResult <- chiTest(i)
+  chiTestResults[nrow(chiTestResults) + 1,] = c(i,chiResult)
+}
+chiTestResults 
+insignificantCategoricalColumns <- chiTestResults[chiTestResults$ChiValue > 0.05,]
+insignificantCategoricalColumns
+
+# Now looking at the insignificant categorical columns to see if we want to keep any that seem to be relevant or those that have a score close to 0.05
+# retaining Year.Remod.Add, Roof.Style, Full.Bath, Kitchen.AbvGr, Yr.Sold, Sale.Condition
+
+insignificantCategoricalColumns <- insignificantCategoricalColumns[insignificantCategoricalColumns$`Column Name` %notin% c("Year.Remod.Add", "Roof.Style", "Full.Bath", "Kitchen.AbvGr", "Yr.Sold", "Sale.Condition"),]
+insignificantCategoricalColumns
+
+# cleaning data for insignificant categorical columns
+ames_data.df <- ames_data.df[ , !(names(ames_data.df) %in% insignificantCategoricalColumns$`Column Name`)]
+ames.train_data.df <- ames.train_data.df[ , !(names(ames.train_data.df) %in% insignificantCategoricalColumns$`Column Name`)] 
+ames.test_data.df <- ames.test_data.df[ , !(names(ames.test_data.df) %in% insignificantCategoricalColumns$`Column Name`)]
+```
+```{r, problem 4 - clean data - categorical vars, cont.1}
+categoricalVarsColumnNames.df<- data.frame(categoricalVarsColumnNames)
+categoricalVarsColumnNames.df <- categoricalVarsColumnNames.df[categoricalVarsColumnNames.df$categoricalVarsColumnNames %notin% insignificantCategoricalColumns$`Column Name`,]
+
+# function to factor numeric values for categorical variables
+factorCatVars <- function(df) {
+  c <- unique(df[name])
+  levels <- c[,1]
+  labels <- c()
+  numberOfUniqueValues <- nrow(c)
+  for (i in 0:(numberOfUniqueValues-1)) {
+    labels <- append(labels, i)
+  }
+  df[,name] <- factor(df[,name],levels = levels,labels = labels)
+  if(length(c[,name])>5){
+    df[,name] <- as.numeric(df[,name])
+  }
+  return (df)
+}
+
+for(name in categoricalVarsColumnNames.df){
+  ames.train_data.df = factorCatVars(ames.train_data.df)
+  ames.test_data.df = factorCatVars(ames.test_data.df)
+}
+str(ames.train_data.df)
+```
+
+
+5.  Create scatter plots and a correlation matrix for the train data
+    set. Interpret the possible relationship between the response and
+    the covariates.
+
+```{r, problem 5 scatter plots}
+predictorVars <- ames.train_data.df[ ,!(names(ames.train_data.df) %in% c("price"))]
+par(mfrow=c(1,2))
+for (i in 1:ncol(predictorVars)) {
+  columnName <- colnames(predictorVars[i])
+  mainText <- paste("Sale Price vs", columnName, sep=" ")
+  plot(predictorVars[,i],xlab = columnName, ames.train_data.df$price, ylab = "Sale Price", main = mainText)
+}
+
+```
+```{r, problem 5 correlation matrices}
+library(ggplot2)
+library(reshape2)
+temp.df <- ames.train_data.df
+for(name in categoricalVarsColumnNames.df){
+  temp.df[,name] <- as.numeric(temp.df[,name])  
+}
+totalColumns <- ncol(temp.df)
+step_size <- 10
+startIndex <- 1
+endIndex <- step_size
+
+# function that will be called multiple times to print correlation matrices
+printCorrelationMatrix <- function(start,end) {
+  temp1.df <- data.frame(temp.df[start:end])
+  tempColumnNames <- colnames(temp1.df)
+  if("price" %notin% tempColumnNames){
+    temp1.df$price <- temp.df$price
+  }
+  Correlations<-round(cor(temp1.df),2) 
+  melted_cormat <- melt(Correlations)
+  print(ggplot(data = melted_cormat, aes(x = Var1, y = Var2, fill = value)) +
+    geom_tile() +
+    geom_text(aes(Var2, Var1, label = value), size = 2) +
+    scale_fill_gradient2(low = "blue", high = "red", limit = c(-1, 1), name = "Correlation") +
+    theme(axis.title.x = element_text(), axis.title.y = element_blank(), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), panel.background = element_blank()))
+}
+# end function
+
+while(endIndex <= totalColumns){
+  printCorrelationMatrix(startIndex,endIndex)
+  startIndex <- startIndex + step_size
+  endIndex <- endIndex + step_size
+  if(endIndex > totalColumns & startIndex < totalColumns){
+    printCorrelationMatrix(startIndex,totalColumns)
+  }
+}
+```
+
+6. Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.
+
+```{r Build linear models on training data using stepwise selection}
+# Model Fitting
+# Build full model with all predictors
+fm <- lm(price ~., data = ames.train_data.df)
+
+# Build null model with no predictors
+nm <- lm(price ~ 1, data = ames.train_data.df)
+
+# Stepwise selection using backward and forward 
+sm_both <- stepAIC(fm, direction = "both", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Stepwise selection using only backward
+sm_backward <- stepAIC(fm, direction = "backward", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Stepwise selection using only forward
+sm_forward <- stepAIC(fm, direction = "forward", scope = list(lower = nm, upper = fm), trace = FALSE)
+
+# Display Summary of Stepwise models
+# Summary of the model using both backward and forward stepwise selection
+cat("Summary of Stepwise Model (Both Directions):\n")
+summary(sm_both)
+cat("AIC of Model (Both Directions):", AIC(sm_both), "\n\n")
+
+# Summary of the model using only backward stepwise selection
+cat("Summary of Stepwise Model (Backward Only):\n")
+summary(sm_backward)
+cat("AIC of Model (Backward Only):", AIC(sm_backward), "\n")
+
+# Summary of the model using only forward stepwise selection
+cat("Summary of Stepwise Model (Forward Only):\n")
+summary(sm_forward)
+cat("AIC of Model (Forward Only):", AIC(sm_forward), "\n")
+```
+
+Should use Backward Step
+
+```{r, echo=TRUE}
+cat("Summary of Stepwise Model (Backward Only):\n")
+summary(sm_backward)
+cat("AIC of Model (Backward Only):", AIC(sm_backward), "\n")
+```
+
+```{r, echo=TRUE}
+plot(sm_backward,1)
+plot(sm_backward,2)
+plot(sm_backward,3)
+plot(sm_backward,4)
+plot(sm_backward,5)
+```
+
+7. Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.
+
+
+8. Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.). 
+
+
+9. Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.
+
+```{r, echo=TRUE}
+min(x)
+```
+
+```{r, echo=TRUE}
+set.seed(567)
+library(neuralnet)
+
+# Normalization formula
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))  
+}
+
+# Apply normalization function to each numeric column of ames_data.df
+q1_norm <- as.data.frame(lapply(ames_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
+
+# Apply normalization to training and test datasets
+q1_norm_train <- as.data.frame(lapply(ames.train_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
+q1_norm_test <- as.data.frame(lapply(ames.test_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
+
+# Convert non-numeric variables to numeric
+q1_norm_train <- lapply(q1_norm_train, as.numeric)
+q1_norm_test <- lapply(q1_norm_test, as.numeric)
+
+# Handle missing values (if any)
+q1_norm_train <- na.omit(q1_norm_train)
+q1_norm_test <- na.omit(q1_norm_test)
+
+# Train neural network
+q1_nn <- neuralnet(price ~ ., q1_norm_train, hidden=c(6,4))
+
+# Plot neural network
+plot(q1_nn)
+```
+```{r,echo=TRUE}
+print(str(q1_norm_train[-1]))
+```
+
+```{r, echo=TRUE}
+set.seed(567)
+model_results <- compute(q1_nn, q1_norm_train[-1])
+predicted_y <- model_results$net.result
+```
+
+10. Use the test data set to assess the model performances from above.
+
+11. Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model. 
+
+12. Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.
+
+13. Each student must submit the files on Canvas to get the full credit. 
 
 This data was taken from the Kaggle competition please click on the link
 below for details:
@@ -166,6 +501,9 @@ why?*
 ## Bibliography (7 points)
 
 *Please include all references, articles and papers in this section.*
+
+https://stackoverflow.com/questions/24027605/determine-the-number-of-na-values-in-a-column
+https://stackoverflow.com/questions/75084373/how-to-remove-rows-by-condition-in-r
 
 One can fin our preferred bibliography format at the below:
 
