@@ -58,21 +58,21 @@ variable) is the response variable.
 
 ## **Instructions:**
 
-|     |     |                                                                                                                                                                                                                                                            |
-|--------|--------|--------------------------------------------------------|
-| 1   |     | Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle\@g.harvard.edu the name of the team members and their emails.                    |
-| 2   |     | Review the dataset named "ames'csv, report on preliminary findings (missing data, type of variables, distributions).                                                                                                                                       |
-| 3   |     | Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.                                                                                                                            |
-| 4   |     | Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.                                                               |
-| 5   |     | Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.                                                                                                         |
-| 6   |     | Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.                                                                                                                       |
-| 7   |     | Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.                                                                                          |
-| 8   |     | Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).                                                                                                                          |
-| 9   |     | Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.                                                                                      |
-| 10  |     | Use the test data set to assess the model performances from above.                                                                                                                                                                                         |
-| 11  |     | Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.                                                                                               |
-| 12  |     | Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template.  |
-| 13  |     | Each student must submit the files on Canvas to get the full credit.                                                                                                                                                                                       |
+|     |     |                                                                                                                                                                                                                                                           |
+|------------|------------|------------------------------------------------|
+| 1   |     | Join a team with your fellow students with appropriate size (at most four students total). You may post an advertising in ED. Once you are set, send to rafael_gomeztagle\@g.harvard.edu the name of the team members and their emails.                   |
+| 2   |     | Review the dataset named "ames'csv, report on preliminary findings (missing data, type of variables, distributions).                                                                                                                                      |
+| 3   |     | Create the train data set which contains 70% of the data and use set.seed (1023). The remaining 30% will be your test data set.                                                                                                                           |
+| 4   |     | Investigate the data and combine the level of categorical variables if needed and drop variables as needed. For example, you may drop id, variables with too many missing observations, etc.                                                              |
+| 5   |     | Create scatter plots and a correlation matrix for the train data set. Interpret the possible relationship between the response and the covariates.                                                                                                        |
+| 6   |     | Build several multiple linear models by using the stepwise selection methods. Compare the performance of the best two linear models.                                                                                                                      |
+| 7   |     | Make sure that model assumption(s) are checked for the final model. Apply remedy measures (transformation, etc.) that helps satisfy the linear model assumptions.                                                                                         |
+| 8   |     | Investigate unequal variances and multicollinearity. If necessary, apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).                                                                                                                         |
+| 9   |     | Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.                                                                                     |
+| 10  |     | Use the test data set to assess the model performances from above.                                                                                                                                                                                        |
+| 11  |     | Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model.                                                                                              |
+| 12  |     | Create a model development document that describes the model following this template, input the name of the authors, Harvard IDs, the name of the Group, all of your code and calculations, etc.: be sure you populate all the sections of this template. |
+| 13  |     | Each student must submit the files on Canvas to get the full credit.                                                                                                                                                                                      |
 
 **Notes:** **No typographical errors, grammar mistakes, or misspelled
 words, use English language** **All tables need to be numbered and
@@ -304,7 +304,7 @@ while(endIndex <= totalColumns){
 6.  Build several multiple linear models by using the stepwise selection
     methods. Compare the performance of the best two linear models.
 
-```{r Build linear models on training data using stepwise selection}
+```{r}
 # Model Fitting
 # Build full model with all predictors
 fm <- lm(price ~., data = ames.train_data.df)
@@ -312,42 +312,298 @@ fm <- lm(price ~., data = ames.train_data.df)
 # Build null model with no predictors
 nm <- lm(price ~ 1, data = ames.train_data.df)
 
-# Stepwise selection using backward and forward 
-sm_both <- stepAIC(fm, direction = "both", scope = list(lower = nm, upper = fm), trace = FALSE)
+# Stepwise selection using both AIC and BIC
+sm_both_aic <- step(fm, direction = "both", scope = list(lower = nm, upper = fm), trace = FALSE, k = 2)
+sm_both_bic <- step(fm, direction = "both", scope = list(lower = nm, upper = fm), trace = FALSE, k = log(nrow(ames.train_data.df)))
 
-# Stepwise selection using only backward
-sm_backward <- stepAIC(fm, direction = "backward", scope = list(lower = nm, upper = fm), trace = FALSE)
-
-# Stepwise selection using only forward
-sm_forward <- stepAIC(fm, direction = "forward", scope = list(lower = nm, upper = fm), trace = FALSE)
+library(olsrr)
+# Stepwise selection using p-value significance level
+sm_both_p <- ols_step_both_p(fm, p_enter = 0.05, p_remove = 0.05, details = FALSE)
 
 # Display Summary of Stepwise models
-# Summary of the model using both backward and forward stepwise selection
-cat("Summary of Stepwise Model (Both Directions):\n")
-summary(sm_both)
-cat("AIC of Model (Both Directions):", AIC(sm_both), "\n\n")
+# Summary of the model using both AIC
+cat("Summary of Stepwise Model (Both Directions - AIC):\n")
+summary(sm_both_aic)
+cat("AIC of Model (Both Directions - AIC):", AIC(sm_both_aic), "\n\n")
 
-# Summary of the model using only backward stepwise selection
-cat("Summary of Stepwise Model (Backward Only):\n")
-summary(sm_backward)
-cat("AIC of Model (Backward Only):", AIC(sm_backward), "\n")
+# Summary of the model using both BIC
+cat("Summary of Stepwise Model (Both Directions - BIC):\n")
+summary(sm_both_bic)
+cat("AIC of Model (Both Directions - BIC):", AIC(sm_both_bic), "\n")
 
-# Summary of the model using only forward stepwise selection
-cat("Summary of Stepwise Model (Forward Only):\n")
-summary(sm_forward)
-cat("AIC of Model (Forward Only):", AIC(sm_forward), "\n")
+sm_both_p = lm(price ~ area + Total.Bsmt.SF + Overall.Qual + BsmtFin.SF.1 + Garage.Area + Exter.Qual + Functional + Neighborhood + Bsmt.Qual + Lot.Area + Kitchen.Qual + Central.Air + Screen.Porch + Mas.Vnr.Area + Bsmt.Exposure + Overall.Cond + Half.Bath + Bedroom.AbvGr + Full.Bath + Bldg.Type + MS.Zoning + Mas.Vnr.Type + Land.Contour + Wood.Deck.SF + Year.Built + Fireplaces + Lot.Config + Kitchen.AbvGr + Low.Qual.Fin.SF + Roof.Matl + Land.Slope, data = ames.train_data.df)
+
+# Summary of the model using p-value significance level
+cat("Summary of Stepwise Model (Both Directions - p-value):\n")
+summary(sm_both_p)
+cat("AIC of Model (Both Directions - p-value):", AIC(sm_both_p), "\n")
+
+
+```
+
+```{r}
+#RMSE,Rsquared,MAE show that sm_both_aic model performs best on train data
+library(caret)
+# Predictions for sm_both_aic
+y_hat_both_aic <- predict(sm_both_aic, newdata = ames.train_data.df)
+Model.pred_both_aic <- data.frame(obs = ames.train_data.df$price, pred = y_hat_both_aic)
+both_aic <- defaultSummary(Model.pred_both_aic)
+
+# Predictions for sm_both_bic
+y_hat_both_bic <- predict(sm_both_bic, newdata = ames.train_data.df)
+Model.pred_both_bic <- data.frame(obs = ames.train_data.df$price, pred = y_hat_both_bic)
+both_bic <- defaultSummary(Model.pred_both_bic)
+
+# Predictions for sm_both_p
+y_hat_both_p <- predict(sm_both_p, newdata = ames.train_data.df)
+Model.pred_both_p <- data.frame(obs = ames.train_data.df$price, pred = y_hat_both_p)
+both_p <- defaultSummary(Model.pred_both_p)
+
+#default summary for model performance
+out<-rbind(both_aic,both_bic,both_p)
+dimnames(out)[[1]]<-c("both_aic","both_bic","both_p")
+out
 ```
 
 7.  Make sure that model assumption(s) are checked for the final model.
     Apply remedy measures (transformation, etc.) that helps satisfy the
     linear model assumptions.
 
+```{r}
+#Constancy of the Error Variance
+#Residuals vs Fitted and breusch pagan test show that Error Variance is 
+#not constant
+plot(sm_both_aic, which = 1)
+library(olsrr)
+ols_test_breusch_pagan(sm_both_aic)
+
+#QQ Plot for Normality
+#Normality plot and Shapiro test show that residuals 
+#do not fulfill normality assumption
+plot(sm_both_aic, which = 2)
+#Shapiro Test
+shapiro.test(sm_both_aic$residuals)
+
+
+#Presence of outliers. 
+#Boxplot of residuals for potential outliers
+boxplot(sm_both_aic$residuals,horizontal=TRUE,staplewex=0.5,col=3,xlab="Residuals")
+
+#Cooks distance plot
+plot(sm_both_aic,which=4)
+#Leverage vs standardized residuals
+plot(sm_both_aic, which = 5)
+```
+
+```{r}
+#Transforming sm_both_aic
+library(MASS)
+# Perform Box-Cox transformation
+boxcox_model = boxcox(sm_both_aic,lambda=seq(0.2,0.6, by=.1))
+
+#lamda calculation
+lambda = boxcox_model$x[which.max(boxcox_model$y)]
+lambda
+summary(sm_both_aic)
+# Transformed model
+transformed_model = lm(price^(lambda) ~ MS.Zoning + Lot.Area + Land.Contour + Lot.Config + 
+    Land.Slope + Neighborhood + Condition.1 + Bldg.Type + Overall.Qual + 
+    Overall.Cond + Year.Built + Year.Remod.Add + Roof.Matl + 
+    Mas.Vnr.Type + Mas.Vnr.Area + Exter.Qual + Bsmt.Qual + Bsmt.Exposure + 
+    BsmtFin.SF.1 + BsmtFin.Type.2 + BsmtFin.SF.2 + Bsmt.Unf.SF + 
+    Central.Air + X1st.Flr.SF + X2nd.Flr.SF + Full.Bath + Half.Bath + 
+    Bedroom.AbvGr + Kitchen.AbvGr + Kitchen.Qual + Functional + 
+    Fireplaces + Garage.Area + Wood.Deck.SF + Screen.Porch + 
+    Sale.Condition, data = ames.train_data.df)
+summary(transformed_model)
+
+#Constancy of the Error Variance
+#Residuals vs Fitted and breusch pagan test show that Error Variance is constant
+plot(transformed_model, which=1)
+library(olsrr)
+ols_test_breusch_pagan(transformed_model)
+
+#QQ Plot for Normality
+#Normality plot and Shapiro test show that residuals 
+#do not fulfill normality assumption
+plot(transformed_model, which = 2)
+#Shapiro Test
+shapiro.test(transformed_model$residuals)
+
+```
+
+```{r, remove outliers}
+# copy transformed model and data to temp var - this will be changed recursively
+temp_model <- transformed_model
+temp_data <- ames.train_data.df
+
+# function to get transformed model from filtered dataset
+getRevisedModel <- function(filteredData) {
+  revisedModel <- lm(price^(lambda) ~ MS.Zoning + Lot.Area + Land.Contour + Lot.Config + 
+    Land.Slope + Neighborhood + Condition.1 + Bldg.Type + Overall.Qual + 
+    Overall.Cond + Year.Built + Year.Remod.Add + Roof.Matl + 
+    Mas.Vnr.Type + Mas.Vnr.Area + Exter.Qual + Bsmt.Qual + Bsmt.Exposure + 
+    BsmtFin.SF.1 + BsmtFin.Type.2 + BsmtFin.SF.2 + Bsmt.Unf.SF + 
+    Central.Air + X1st.Flr.SF + X2nd.Flr.SF + Full.Bath + Half.Bath + 
+    Bedroom.AbvGr + Kitchen.AbvGr + Kitchen.Qual + Functional + 
+    Fireplaces + Garage.Area + Wood.Deck.SF + Screen.Porch + 
+    Sale.Condition, data = filteredData)
+  return (revisedModel)
+}
+
+# function to recursively remove influential outliers
+removeInfluentials <- function(model,temp_data){
+  print(paste("Number of Observations ", nrow(temp_data), sep=""))
+  a <- ols_plot_resid_lev(model)
+  influentials <- a$data[a$data$fct_color=="outlier & leverage",]
+  influentials <- drop_na(influentials)
+  numInfluentials <- nrow(influentials)
+  print(paste("Number of influentials -", numInfluentials,sep = " "))
+  if(numInfluentials >0){
+    temp_data <- temp_data[ -c(influentials$obs), ]
+    temp_model <- getRevisedModel(temp_data)
+    removeInfluentials(temp_model,temp_data)
+  }else{
+    return (temp_data)  
+  }
+}
+
+# use train data without influentials
+ames.train_data.df <- temp_data
+transformed_model <- getRevisedModel(ames.train_data.df)
+
+
+### The below is just an exercise to see how the plots look like when we get rid of all outliers
+# although the model fits well after outlier removal, removing about 400 observations seemed like a case of overfitting
+# the function below is not changing any data or model that is used in teh subsequent sections
+
+# function to recursively remove outliers
+removeOutliers <- function(model,temp_data){
+  print(paste("Number of Observations ", nrow(temp_data), sep=""))
+  a <- ols_plot_cooksd_bar(model)
+  outliers <- a$data[a$data$fct_color=="outlier",]
+  outliers <- drop_na(outliers)
+  numOutliers <- nrow(outliers)
+  print(paste("Number of outliers -", numOutliers,sep = " "))
+  if(numOutliers >0){
+    temp_data <- temp_data[ -c(outliers$obs), ]
+    temp_model <- getRevisedModel(temp_data)
+    removeOutliers(temp_model,temp_data)
+  }else{
+    return (temp_data)  
+  }
+}
+
+print(paste("Number of rows before removing influentials -",nrow(temp_data)))
+temp_data <- removeInfluentials(temp_model,temp_data)
+print(paste("Number of rows after removing influentials -",nrow(temp_data)))
+temp_model <- getRevisedModel(temp_data)
+# this should show no influential obs
+ols_plot_resid_lev(temp_model)
+# checking tails
+plot(temp_model, which = 2)
+#temp_data <- removeOutliers(temp_model,temp_data)
+#print(paste("Number of rows after removing outliers -",nrow(temp_data)))
+#temp_model <- getRevisedModel(temp_data)
+# this should show no outlier obs
+#ols_plot_cooksd_bar(temp_model)
+# checking tails
+#plot(temp_model, which = 2)
+```
+
+```{r}
+#Huber Robust Method on transformed model
+huber_lm <- rlm(price^(lambda) ~ MS.Zoning + Lot.Area + Land.Contour + Lot.Config + 
+    Land.Slope + Neighborhood + Condition.1 + Bldg.Type + Overall.Qual + 
+    Overall.Cond + Year.Built + Year.Remod.Add + Roof.Matl + 
+    Mas.Vnr.Type + Mas.Vnr.Area + Exter.Qual + Bsmt.Qual + Bsmt.Exposure + 
+    BsmtFin.SF.1 + BsmtFin.Type.2 + BsmtFin.SF.2 + Bsmt.Unf.SF + 
+    Central.Air + X1st.Flr.SF + X2nd.Flr.SF + Full.Bath + Half.Bath + 
+    Bedroom.AbvGr + Kitchen.AbvGr + Kitchen.Qual + Functional + 
+    Fireplaces + Garage.Area + Wood.Deck.SF + Screen.Porch + 
+    Sale.Condition, data = ames.train_data.df, psi = psi.huber)
+summary(huber_lm)
+huber_lm$coefficients
+
+#Constancy of the Error Variance
+#Residuals vs Fitted and breusch pagan test show that Error Variance is 
+#not constant
+plot(huber_lm, which=1)
+library(olsrr)
+ols_test_breusch_pagan(huber_lm)
+
+#QQ Plot for Normality
+#Normality plot and Shapiro test show that residuals 
+#do not fulfill normality assumption
+plot(huber_lm, which = 2)
+#Shapiro Test
+shapiro.test(huber_lm$residuals)
+```
+
 8.  Investigate unequal variances and multicollinearity. If necessary,
     apply remedial methods (WLS, Ridge, Elastic Net, Lasso, etc.).
+
+These are on the high end of VIFs. None are greater than 10. remedial
+methods are not necessary. BsmtFin.SF.1: 7.887440 Bsmt.Unf.SF: 7.267218
+Bldg.Type: 7.749723 X1st.Flr.SF: 6.223949 Exter.Qual: 6.279509
+
+```{r}
+#According to VIF there seems to be multicollinearity issues
+#since there are many VIFs greater than 10.
+
+library(car)
+vif(transformed_model)
+
+```
 
 9.  Build an alternative model based on one of the following approaches
     to predict price: regression tree, NN, or SVM. Then check again the
     applicable model assumptions.
+
+```{r, echo=TRUE}
+min(x)
+```
+
+```{r, echo=TRUE}
+set.seed(567)
+library(neuralnet)
+
+# Normalization formula
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))  
+}
+
+# Apply normalization function to each numeric column of ames_data.df
+q1_norm <- as.data.frame(lapply(ames_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
+
+# Apply normalization to training and test datasets
+q1_norm_train <- as.data.frame(lapply(ames.train_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
+q1_norm_test <- as.data.frame(lapply(ames.test_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
+
+# Convert non-numeric variables to numeric
+q1_norm_train <- lapply(q1_norm_train, as.numeric)
+q1_norm_test <- lapply(q1_norm_test, as.numeric)
+
+# Handle missing values (if any)
+q1_norm_train <- na.omit(q1_norm_train)
+q1_norm_test <- na.omit(q1_norm_test)
+
+# Train neural network
+q1_nn <- neuralnet(price ~ ., q1_norm_train, hidden=c(6,4))
+
+# Plot neural network
+plot(q1_nn)
+```
+
+```{r,echo=TRUE}
+print(str(q1_norm_train[-1]))
+```
+
+```{r, echo=TRUE}
+set.seed(567)
+model_results <- compute(q1_nn, q1_norm_train[-1])
+predicted_y <- model_results$net.result
+```
 
 10. Use the test data set to assess the model performances from above.
 
@@ -361,7 +617,6 @@ cat("AIC of Model (Forward Only):", AIC(sm_forward), "\n")
     sure you populate all the sections of this template.
 
 13. Each student must submit the files on Canvas to get the full credit.
-
 
 This data was taken from the Kaggle competition please click on the link
 below for details:
@@ -381,6 +636,15 @@ What you are doing with your prediction? What is the purpose of the
 model? What methods were trained on the data, how large is the test
 sample, and how did you build the model?*
 
+Based on the ames housing dataset provided, we have to build a model
+that can predict housing prices based on 79 explanotory variables. The
+scope of our testing is limited to the dataset provided. The test sample
+is about 879 observations whereas the training model is about 2050
+observations.
+
+The model is trained on various regression methods such as stepwise
+regression and \<<insert method used for challenger model here>\>
+
 ## I. Description of the data and quality (15 points)
 
 *Here you need to include your review of data, the statistical test
@@ -388,6 +652,21 @@ applied to understand the predictors and the response and how are they
 correlated. Extensive graph analysis is recommended. Is the data
 continuous, or categorical, do any transformation needed? Do you need
 dummies?*
+
+The data contains 43 categorical variables and 36 continuous variables.
+Some columns also have missing values. Our first data cleaning task was
+to figure out which columns had a lot of missing values. We dropped
+those columns. We then cleaned data for the columns that have very few
+missing values. We also looked at categorical columns that have more
+than 5 unique values. We treat such columns as continuous variables. The
+other categorical variables (that have less than or equal to 5 unique
+values) are marked as factors so that the model training algorithms
+process them as categorical variables. We also removed rows that had
+houses with more than 4000 square feet based on the recommendation
+provided on the official website for the dataset. A chi-squared test to
+estimate the significance of each categorical variable (post missing
+values removal) with respect to the response variable was done to
+eliminate some more categorical columns from the data.
 
 ## III. Model Development Process (15 points)
 
