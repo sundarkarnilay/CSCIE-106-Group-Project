@@ -466,29 +466,55 @@ getRevisedModel <- function(filteredData) {
   return (revisedModel)
 }
 
-# function to recursively remove influential outliers outliers
-removeOutliers <- function(model){
+# function to recursively remove influential outliers
+removeInfluentials <- function(model,temp_data){
+  print(paste("Number of Observations ", nrow(temp_data), sep=""))
   a <- ols_plot_resid_lev(model)
+  influentials <- a$data[a$data$fct_color=="outlier & leverage",]
+  influentials <- drop_na(influentials)
+  numInfluentials <- nrow(influentials)
+  print(paste("Number of influentials -", numInfluentials,sep = " "))
+  if(numInfluentials >0){
+    temp_data <- temp_data[ -c(influentials$obs), ]
+    temp_model <- getRevisedModel(temp_data)
+    removeInfluentials(temp_model,temp_data)
+  }else{
+    return (temp_data)  
+  }
+}
+
+# function to recursively remove outliers
+removeOutliers <- function(model,temp_data){
+  print(paste("Number of Observations ", nrow(temp_data), sep=""))
+  a <- ols_plot_cooksd_bar(model)
   outliers <- a$data[a$data$fct_color=="outlier",]
   outliers <- drop_na(outliers)
   numOutliers <- nrow(outliers)
   print(paste("Number of outliers -", numOutliers,sep = " "))
-  outliers
-  temp_data <- temp_data[ -c(outliers$obs), ]
-  temp_model <- getRevisedModel(temp_data)
-  if(numOutliers>0){
-    removeOutliers(temp_model)
+  if(numOutliers >0){
+    temp_data <- temp_data[ -c(outliers$obs), ]
+    temp_model <- getRevisedModel(temp_data)
+    removeOutliers(temp_model,temp_data)
+  }else{
+    return (temp_data)  
   }
 }
 
-removeOutliers(temp_model)
-
-#a <- ols_plot_cooksd_bar(temp_model)
-#outliers <- a$data[a$data$fct_color=="outlier",]
-#outliers <- drop_na(outliers)
-#nrow(outliers)
-#outliers
-#temp_data <- temp_data[ -c(outliers$obs), ]
+print(paste("Number of rows before removing influentials -",nrow(temp_data)))
+temp_data <- removeInfluentials(temp_model,temp_data)
+print(paste("Number of rows after removing influentials -",nrow(temp_data)))
+temp_model <- getRevisedModel(temp_data)
+# this should show no influential obs
+ols_plot_resid_lev(temp_model)
+# checking tails
+plot(temp_model, which = 2)
+#temp_data <- removeOutliers(temp_model,temp_data)
+#print(paste("Number of rows after removing outliers -",nrow(temp_data)))
+#temp_model <- getRevisedModel(temp_data)
+# this should show no outlier obs
+#ols_plot_cooksd_bar(temp_model)
+# checking tails
+#plot(temp_model, which = 2)
 ```
 
 
