@@ -556,60 +556,97 @@ vif(transformed_model)
 
 ```
 
-9.  Build an alternative model based on one of the following approaches
-    to predict price: regression tree, NN, or SVM. Then check again the
-    applicable model assumptions.
-
-```{r, echo=TRUE}
-min(x)
-```
-
-```{r, echo=TRUE}
-set.seed(567)
-library(neuralnet)
-
-# Normalization formula
-normalize <- function(x) {
-  return((x - min(x)) / (max(x) - min(x)))  
-}
-
-# Apply normalization function to each numeric column of ames_data.df
-q1_norm <- as.data.frame(lapply(ames_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
-
-# Apply normalization to training and test datasets
-q1_norm_train <- as.data.frame(lapply(ames.train_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
-q1_norm_test <- as.data.frame(lapply(ames.test_data.df, function(x) if(is.numeric(x)) normalize(x) else x))
-
-# Convert non-numeric variables to numeric
-q1_norm_train <- lapply(q1_norm_train, as.numeric)
-q1_norm_test <- lapply(q1_norm_test, as.numeric)
-
-# Handle missing values (if any)
-q1_norm_train <- na.omit(q1_norm_train)
-q1_norm_test <- na.omit(q1_norm_test)
-
-# Train neural network
-q1_nn <- neuralnet(price ~ ., q1_norm_train, hidden=c(6,4))
-
-# Plot neural network
-plot(q1_nn)
-```
+9. Build an alternative model based on one of the following approaches to predict price: regression tree, NN, or SVM. Then check again the applicable model assumptions.
 
 ```{r,echo=TRUE}
-print(str(q1_norm_train[-1]))
+set.seed(567)
+par(mfrow=c(1,1))
+library(rpart)
+ames.tree <- rpart(price ~ ., ames.train_data.df)
+library(rpart.plot)
+rpart.plot(ames.tree, digits=3)
+rpart.plot(ames.tree, digits=4, fallen.leaves=TRUE, type=3, extra=101)
+ames.tree
 ```
 
 ```{r, echo=TRUE}
+ames.tree$cptable
+plotcp(ames.tree)
+```
+
+```{r, echo=TRUE}
+library(caret)
 set.seed(567)
-model_results <- compute(q1_nn, q1_norm_train[-1])
-predicted_y <- model_results$net.result
+PredictedTest <- predict(ames.tree,ames.train_data.df)
+ModelTest2 <- data.frame(obs = ames.train_data.df$price, pred=PredictedTest)
+defaultSummary(ModelTest2)
 ```
 
 10. Use the test data set to assess the model performances from above.
 
-11. Based on the performances on both train and test data sets,
-    determine your primary (champion) model and the other model which
-    would be your benchmark model.
+```{r,echo=TRUE}
+set.seed(567)
+par(mfrow=c(1,1))
+library(rpart)
+ames.tree <- rpart(price ~ ., ames.test_data.df)
+library(rpart.plot)
+rpart.plot(ames.tree, digits=3)
+rpart.plot(ames.tree, digits=4, fallen.leaves=TRUE, type=3, extra=101)
+ames.tree
+```
+
+```{r, echo=TRUE}
+ames.tree$cptable
+plotcp(ames.tree)
+```
+
+```{r, echo=TRUE}
+library(caret)
+set.seed(567)
+PredictedTest2 <- predict(ames.tree,ames.test_data.df)
+ModelTest2.2 <- data.frame(obs = ames.test_data.df$price, pred=PredictedTest2)
+defaultSummary(ModelTest2.2)
+```
+
+11. Based on the performances on both train and test data sets, determine your primary (champion) model and the other model which would be your benchmark model. 
+
+Transformed Model result using test set
+
+```{r, echo=TRUE}
+# Summary for transformed linear model using train set
+PredictedTest1 <- predict(transformed_model,ames.train_data.df)
+ModelTest1 <- data.frame(obs = ames.train_data.df$price, pred=PredictedTest1)
+defaultSummary(ModelTest1)
+```
+```{r, echo=TRUE}
+# Build full model with all predictors
+fm <- lm(price^(lambda) ~ MS.Zoning + Lot.Area + Land.Contour + Lot.Config + 
+    Land.Slope + Neighborhood + Condition.1 + Bldg.Type + Overall.Qual + 
+    Overall.Cond + Year.Built + Year.Remod.Add + Roof.Matl + 
+    Mas.Vnr.Type + Mas.Vnr.Area + Exter.Qual + Bsmt.Qual + Bsmt.Exposure + 
+    BsmtFin.SF.1 + BsmtFin.Type.2 + BsmtFin.SF.2 + Bsmt.Unf.SF + 
+    Central.Air + X1st.Flr.SF + X2nd.Flr.SF + Full.Bath + Half.Bath + 
+    Bedroom.AbvGr + Kitchen.AbvGr + Kitchen.Qual + Functional + 
+    Fireplaces + Garage.Area + Wood.Deck.SF + Screen.Porch + 
+    Sale.Condition, data = ames.test_data.df)
+# Build null model with no predictors
+nm <- lm(price^(lambda) ~ 1, data = ames.test_data.df)
+
+# Stepwise selection using both AIC and BIC
+sm_both_aic <- step(fm, direction = "both", scope = list(lower = nm, upper = fm), trace = FALSE, k = 2)
+
+PredictedTest1.2 <- predict(sm_both_aic,ames.test_data.df)
+ModelTest1.2 <- data.frame(obs = ames.test_data.df$price, pred=PredictedTest1.2)
+defaultSummary(ModelTest1.2)
+```
+Summary of model performances
+
+```{r, echo=TRUE}
+out <- rbind(defaultSummary(ModelTest1),defaultSummary(ModelTest1.2),defaultSummary(ModelTest2),defaultSummary(ModelTest2.2))
+dimnames(out)[[1]] <- c("Best Linear (Train)","Best Linear (Test)","Best Regression Tree (Train)","Best Regression Tree (Test)")
+out
+```
+Based on the observations above, the champion model should be the Linear Regression Model.
 
 12. Create a model development document that describes the model
     following this template, input the name of the authors, Harvard IDs,
